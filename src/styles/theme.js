@@ -1,0 +1,74 @@
+const DEVICE_SIZES = {
+  tabletOrMobile: "768px",
+  desktop: "1024px",
+};
+
+export const GLOBAL_THEME = {
+  colors: {
+    primary: "#5120bd",
+    primaryHover: "#785db3",
+    screen: {
+      bg: "#F3F4F6",
+    },
+    navigator: {
+      bg: "#5120bd",
+    },
+    listItems: {
+      text: {
+        default: "#fff",
+        selected: "#111827",
+        hover: "#111827",
+      },
+      background: {
+        default: "",
+        selected: "#E2E4E7",
+        hover: "#785db3",
+      },
+    },
+    alerts: {
+      error: {
+        bg: "#fce1e1",
+        text: "#ef4444",
+        icon: "❌",
+      },
+      success: {
+        bg: "#ECFDF5",
+        text: "#10b981",
+        icon: "✅",
+      },
+    },
+  },
+  borders: {
+    radius: "0.375rem",
+    color: "#e5e7eb",
+    width: "1.25px",
+  },
+  spacing: {
+    padding: {
+      navigator: {
+        desktop: "1rem",
+        tabletOrMobile: "0.5rem",
+      },
+      container: {
+        desktop: "2rem",
+        tabletOrMobile: "1rem",
+      },
+      listItems: {
+        desktop: "0.75rem",
+        tabletOrMobile: "0.75rem",
+      },
+    },
+  },
+  devices: {
+    tabletOrMobile: `@media (max-width: ${DEVICE_SIZES.tabletOrMobile})`,
+    desktop: `@media (max-width: ${DEVICE_SIZES.desktop})`,
+  },
+  svg: {
+    fontSize: "1.5rem",
+  },
+  font: {
+    listItems: {
+      size: "0.875rem",
+    },
+  },
+};

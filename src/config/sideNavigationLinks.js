@@ -1,0 +1,113 @@
+import DataDisplay from "assets/svgs/DataDisplay";
+import MultiplePeopleCrm from "assets/svgs/MultiplePeopleCrm";
+import Profile from "assets/svgs/Profile";
+
+export const navItems = {
+  admin: [
+    {
+      id: 0,
+      title: "Painel Administrativo",
+      icon: <DataDisplay />,
+      subMenus: [
+        {
+          title: "Dashboards",
+          url: "admin/dashboards",
+        },
+        {
+          title: "Empresas",
+          url: "admin/usuarios",
+        },
+      ],
+    },
+    {
+      id: 1,
+      title: "Histórico",
+      icon: <MultiplePeopleCrm />,
+      subMenus: [
+        {
+          title: "Atendimentos",
+          url: "admin/chamadas",
+        },
+        {
+          title: "Agendamentos",
+          url: "admin/agendamentos",
+        },
+      ],
+    },
+    // {
+    //   id: 2,
+    //   title: "Minha Conta",
+    //   icon: <Profile />,
+    //   subMenus: [
+    //     {
+    //       title: "Configurações",
+    //       url: "perfil",
+    //     },
+    //   ],
+    // },
+  ],
+  company: [
+    {
+      id: 0,
+      title: "Painel Administrativo",
+      icon: <Profile />,
+      subMenus: [
+        {
+          title: "Dashboards",
+          url: "enterprise/dashboards",
+        },
+        {
+          title: "Funcionários",
+          url: "enterprise/usuarios",
+        },
+      ],
+    },
+    {
+      id: 1,
+      title: "Histórico",
+      icon: <MultiplePeopleCrm />,
+      subMenus: [
+        {
+          title: "Agendamentos",
+          url: "enterprise/agendamentos",
+        },
+        {
+          title: "Atendimentos",
+          url: "enterprise/chamadas",
+        },
+        {
+          title: "Credenciais",
+          url: "enterprise/credentials",
+        },
+      ],
+    },
+  ],
+  agent: [
+    {
+      id: 0,
+      title: "Painel",
+      icon: <Profile />,
+      subMenus: [
+        {
+          title: "Disponibilidade",
+          url: "/agenda",
+        },
+        {
+          title: "Agendamentos",
+          url: "/schedule",
+        },
+      ],
+    },
+    {
+      id: 1,
+      title: "Histórico",
+      icon: <MultiplePeopleCrm />,
+      subMenus: [
+        {
+          title: "Atendimentos",
+          url: "chamadas",
+        },
+      ],
+    },
+  ],
+};
