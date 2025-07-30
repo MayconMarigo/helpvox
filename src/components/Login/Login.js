@@ -19,10 +19,12 @@ import {
   TotpInput,
   TotpInputContainer,
 } from "./Login.styles";
+import * as logo from "../../assets/imgs/logo-login.png";
 
 export default function Login() {
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
+  const LoginLogo = logo.default;
 
   useEffect(() => {
     if (user === null) return;
@@ -146,6 +148,7 @@ export default function Login() {
     loginForm: (
       <LoginForm onSubmit={handleSubmitForm}>
         <FormHeader>
+          <Image src={LoginLogo} width={250} alt="login"/>
           <h3>Entrar</h3>
           <p>Insira suas credenciais para acessar o sistema</p>
         </FormHeader>

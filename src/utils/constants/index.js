@@ -1,6 +1,6 @@
 export const BASE_API_URL = process.env.NEXT_PUBLIC_IS_LOCAL
   ? "http://localhost:8080/api"
-  : "https://saude.nr1pro.com.br/api";
+  : "https://api.bemmaiscard.com.br/api";
 export const BASE_SOCKET_API_URL = process.env.NEXT_PUBLIC_IS_LOCAL
   ? "http://localhost:8081"
   : "wss://saude.nr1pro.com.br";

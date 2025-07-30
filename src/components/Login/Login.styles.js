@@ -14,8 +14,8 @@ export const LoginForm = styled.form`
   background-color: #fff;
   max-width: 450px;
   width: 100%;
-  min-height: 450px;
-  padding: 2.5rem;
+  min-height: 500px;
+  padding: 2rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -47,6 +47,10 @@ export const FormHeader = styled.div`
   p {
     /* color: ${({ theme }) => theme.colors.listItems.text.default}; */
     color: #000;
+  }
+
+  img {
+    margin-bottom: 0.5rem;
   }
 `;
 
