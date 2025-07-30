@@ -30,7 +30,7 @@ export const MobileContainer = styled.div`
     text-align: center;
   }
 
-  button{
+  button {
     max-width: 95%;
   }
 `;
@@ -93,14 +93,23 @@ export const NavigatorHeader = styled.div`
 
 export const HeaderImage = styled.img`
   width: 100%;
-  max-width: 80px;
   height: 100%;
-  mix-blend-mode: multiply;
+  max-width: 210px;
+  margin-top: 0.5rem;
+  padding: 0.5rem;
+  /* mix-blend-mode: multiply; */
   display: ${({ notShow }) => (notShow ? "none" : "")};
+
+  ${({ theme }) => theme.devices.tabletOrMobile} {
+    max-width: 150px;
+    margin-top: 0;
+    padding: 0.5rem 1rem;
+  }
 `;
 
 export const NavigatorBody = styled.div`
   padding: ${({ theme }) => theme.spacing.padding.navigator.desktop};
+  padding-top: 4rem;
   background-color: ${({ theme }) => theme.colors.navigator.bg};
   height: calc(100vh - 4rem);
 

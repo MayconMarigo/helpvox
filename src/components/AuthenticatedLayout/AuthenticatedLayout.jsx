@@ -29,8 +29,11 @@ import {
   RightContent,
 } from "./AuthenticatedLayout.styles";
 
+import * as logo from "../../assets/imgs/logo-bemmais.png";
+
 const AuthenticatedLayout = ({ children }) => {
   const { user } = useUser();
+  const image = logo.default;
 
   const { setPositionOnQueue, setRedirectToRoom, setCallObject } =
     useCompanySocketObjects();
@@ -106,10 +109,12 @@ const AuthenticatedLayout = ({ children }) => {
   }, [isNavigatorOpen]);
 
   useEffect(() => {
-    setIsNavigatorOpen(false)
-  }, [window.location.href])
+    setIsNavigatorOpen(false);
+  }, [window.location.href]);
 
   const handleLogout = async () => await AuthenticationService.logout();
+
+  console.log(image);
 
   return (
     <>
@@ -117,11 +122,11 @@ const AuthenticatedLayout = ({ children }) => {
         <LayoutContainer>
           <NavigatorContainer>
             <NavigatorHeader isNavigatorOpen={isNavigatorOpen}>
-              <MobileHeaderContainer justifyEnd={isAgent || !user?.logoImage}>
+              <MobileHeaderContainer justifyEnd={isAgent}>
                 {!isAgent && (
                   <HeaderImage
-                    notShow={!user?.logoImage}
-                    src={user?.logoImage}
+                    // notShow={!user.logoImage}
+                    src={user.logoImage || image.src}
                   />
                 )}
                 <HandleLogo />

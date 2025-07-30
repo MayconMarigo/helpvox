@@ -57,7 +57,7 @@ export const navItems = {
           url: "enterprise/dashboards",
         },
         {
-          title: "Funcionários",
+          title: "Usuários",
           url: "enterprise/usuarios",
         },
       ],

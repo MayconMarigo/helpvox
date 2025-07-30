@@ -133,15 +133,17 @@ export default function Cadastro() {
         />
       </InputContainer>
       <InputContainer>
-        <StyledInput
-          disabled={loading}
-          value={password}
-          htmlLabel={"Senha"}
-          placeHolder="Digite a senha..."
-          setValue={setPassword}
-          type="password"
-          fullWidth
-        />
+        {user.type != "company" && (
+          <StyledInput
+            disabled={loading}
+            value={password}
+            htmlLabel={"Senha"}
+            placeHolder="Digite a senha..."
+            setValue={setPassword}
+            type="password"
+            fullWidth
+          />
+        )}
         <StyledInput
           disabled={loading}
           value={phoneMask(phone)}
@@ -152,12 +154,14 @@ export default function Cadastro() {
           required={false}
           maxLength={15}
         />
-        <Dropdown
-          value={userType}
-          htmlLabel={"Tipo de usuário"}
-          onChange={setUserType}
-          fullWidth
-        />
+        {user.type != "company" && (
+          <Dropdown
+            value={userType}
+            htmlLabel={"Tipo de usuário"}
+            onChange={setUserType}
+            fullWidth
+          />
+        )}
       </InputContainer>
       {user.type == "admin" && userType == "2" && (
         <InputContainer>
