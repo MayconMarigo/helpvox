@@ -94,14 +94,13 @@ export const NavigatorHeader = styled.div`
 export const HeaderImage = styled.img`
   width: 100%;
   height: 100%;
-  max-width: 210px;
+  max-height: 200px;
   margin-top: 0.5rem;
   padding: 0.5rem;
-  /* mix-blend-mode: multiply; */
   display: ${({ notShow }) => (notShow ? "none" : "")};
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
-    max-width: 150px;
+    max-width: 120px;
     margin-top: 0;
     padding: 0.5rem 1rem;
   }
@@ -109,7 +108,7 @@ export const HeaderImage = styled.img`
 
 export const NavigatorBody = styled.div`
   padding: ${({ theme }) => theme.spacing.padding.navigator.desktop};
-  padding-top: 4rem;
+  padding-top: 9rem;
   background-color: ${({ theme }) => theme.colors.navigator.bg};
   height: calc(100vh - 4rem);
 

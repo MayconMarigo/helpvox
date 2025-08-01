@@ -18,6 +18,7 @@ export default function CredentialsManagementComponent() {
   const [credentials, setCredentials] = useState([]);
   const { user } = useUser();
   const [triggerRefetch, setTriggerRefetch] = useState(false);
+  const [filteredContent, setFilteredContent] = useState([]);
 
   const { setPageLoading } = usePageLoader();
 
@@ -44,9 +45,16 @@ export default function CredentialsManagementComponent() {
     fetchCredentials();
   }, []);
 
-  const filteredContent = credentials.filter((line) =>
-    line[filterType].includes(filter)
-  );
+  useEffect(() => {
+    if (credentials.length == 0) return;
+
+    console.log(credentials)
+
+    const f = credentials.filter((line) =>
+      line[filterType].includes(filter)
+    );
+    setFilteredContent(f);
+  }, [credentials]);
 
   const generateCredentials = async () => {
     try {
@@ -90,7 +98,7 @@ export default function CredentialsManagementComponent() {
       <TableContainer>
         <Table
           headers={[{ name: "Credencial" }, { name: "Status", width: 100 }]}
-          content={filteredContent}
+          content={filteredContent || []}
           modal={{ type: "credential", title: "Editar Credencial" }}
         />
       </TableContainer>

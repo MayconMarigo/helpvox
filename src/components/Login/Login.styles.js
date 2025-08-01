@@ -14,7 +14,7 @@ export const LoginForm = styled.form`
   background-color: #fff;
   max-width: 450px;
   width: 100%;
-  min-height: 500px;
+  min-height: 450px;
   padding: 2rem;
   display: flex;
   flex-direction: column;

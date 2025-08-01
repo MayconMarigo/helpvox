@@ -11,6 +11,14 @@ import "react-date-range/dist/theme/default.css";
 import { ThemeProvider } from "styled-components";
 import { GLOBAL_THEME } from "styles/theme";
 
+import { Inter } from "next/font/google";
+
+const inter = Inter({
+  subsets: ["latin"],
+  variable: "--font-inter",
+  display: "swap",
+});
+
 export default function App({ Component, pageProps }) {
   const getLayout = Component.getLayout || ((page) => page);
   return (
@@ -22,7 +30,9 @@ export default function App({ Component, pageProps }) {
               <PageLoadProvider>
                 <AlertProvider>
                   <CallingCallProvider>
-                    {getLayout(<Component {...pageProps} />)}
+                    {getLayout(
+                      <Component classname={inter.className} {...pageProps} />
+                    )}
                   </CallingCallProvider>
                 </AlertProvider>
               </PageLoadProvider>

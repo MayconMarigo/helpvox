@@ -152,6 +152,19 @@ export default function AgendaHistoryCard({
       );
   }, []);
 
+  const formatDate = (dateValue) => {
+    const day = dateValue.split("-")[0];
+    const month = dateValue.split("-")[1];
+    const year = dateValue.split("-")[2];
+
+    const returnedDay = day.length == 1 ? `0${day}` : day;
+    const returnedMonth = month.length == 1 ? `0${month}` : month;
+
+    const returnedDate = `${returnedDay}/${returnedMonth}/${year}`;
+
+    return returnedDate;
+  };
+
   return (
     <Container>
       {isOpen && (
@@ -230,7 +243,7 @@ export default function AgendaHistoryCard({
         </Modal>
       )}
 
-      <h4>{date}</h4>
+      <h4>{formatDate(date)}</h4>
       <TimeHistoryContainer>
         {history?.length > 0 ? (
           history.map((registry) => (

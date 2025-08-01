@@ -31,7 +31,7 @@ export default function UsersManagement() {
 
   return (
     <Container>
-      <h2>{user.type == "admin" ? "Empresas" : "Funcionários"}</h2>
+      <h2>{user.type == "admin" ? "Cadastrar Empresa ou Médico" : "Funcionários"}</h2>
 
       <TabsContainer colorScheme={user.colorScheme || "#5120bd"}>
         {settings?.map((setting) => (

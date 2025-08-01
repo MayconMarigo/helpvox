@@ -1,15 +1,18 @@
 import styled from "styled-components";
 
 export const Header = styled.div`
-  height: 6rem;
+  height: 8rem;
   display: flex;
   justify-content: center;
   align-items: center;
+  background-color: #fff;
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
     height: 4rem;
-    svg {
-        width: 120px;
+
+    img {
+      width: 120px;
+      height: 60px;
     }
   }
 `;

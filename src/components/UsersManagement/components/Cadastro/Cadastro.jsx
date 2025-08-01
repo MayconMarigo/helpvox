@@ -77,6 +77,8 @@ export default function Cadastro() {
         type: "sucesso",
         isOpen: true,
       });
+
+      resetForm();
     } catch (error) {
       setContent({
         message: error.message,
@@ -86,6 +88,14 @@ export default function Cadastro() {
     } finally {
       setLoading(false);
     }
+  };
+
+  const resetForm = () => {
+    setFullName("");
+    setEmail("");
+    setPassword("");
+    setPhone("");
+    setLogo("");
   };
 
   const onChange = (image) => {
@@ -117,7 +127,9 @@ export default function Cadastro() {
         <StyledInput
           disabled={loading}
           value={fullName}
-          htmlLabel={"Nome Completo"}
+          htmlLabel={
+            user.type == "admin" ? "Empresa ou Médico" : "Nome Completo"
+          }
           placeHolder="Digite o nome completo..."
           setValue={setFullName}
           fullWidth

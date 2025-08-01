@@ -21,6 +21,7 @@ import {
   InputContainer,
 } from "./AgendasPerUserComponent.styles";
 import AgendaHistoryCard from "./components/AgendaHistoryCard";
+import { ptBR } from "date-fns/locale";
 
 export default function AgendasPerUserComponent() {
   const { user } = useUser();
@@ -108,6 +109,15 @@ export default function AgendasPerUserComponent() {
 
   const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd";
 
+  useEffect(() => {
+    const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+    const spans = document.querySelectorAll(".rdrWeekDays span");
+
+    spans.forEach((span, index) => {
+      span.textContent = dias[index] || "";
+    });
+  }, [showDatePicker]);
+
   return (
     <Container>
       <LoaderContainer />
@@ -119,6 +129,8 @@ export default function AgendasPerUserComponent() {
           title="Selecionar Período"
         >
           <DateRange
+            locale={ptBR}
+            weekStartsOn={1}
             editableDateInputs={true}
             onChange={(item) => setDate([item.selection])}
             moveRangeOnFirstSelection={false}

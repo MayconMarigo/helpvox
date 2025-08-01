@@ -148,7 +148,7 @@ export default function Login() {
     loginForm: (
       <LoginForm onSubmit={handleSubmitForm}>
         <FormHeader>
-          <Image src={LoginLogo} width={250} alt="login"/>
+          <Image src={LoginLogo} width={250} alt="login" />
           <h3>Entrar</h3>
           <p>Insira suas credenciais para acessar o sistema</p>
         </FormHeader>
@@ -178,12 +178,9 @@ export default function Login() {
     qrCodeForm: (
       <LoginForm onSubmit={handleSubmitTotp}>
         <QrCodeContainer>
-          <h3>Escaneie o QrCode abaixo e abra o seu autenticador.</h3>
+          <Image src={LoginLogo} width={250} alt="login" />
           <Image src={totp.qrCode} alt="Qr Code" width={240} height={240} />
-          <h3>
-            Digite os números que aparecem no aplicativo de nome{" "}
-            <strong>call-receiver-api</strong>
-          </h3>
+          <h3>Digite os números de segurança do autenticador </h3>
           <TotpInputContainer>
             {[1, 2, 3, 4, 5, 6].map((inpt) => (
               <TotpInput

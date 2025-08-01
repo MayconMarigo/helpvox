@@ -114,7 +114,12 @@ const AuthenticatedLayout = ({ children }) => {
 
   const handleLogout = async () => await AuthenticationService.logout();
 
-  console.log(image);
+  const isNotWhiteLabel = () => {
+    const show =
+      window.location.origin == "https://atendimentos.bemmaiscard.com.br";
+
+    return show;
+  };
 
   return (
     <>
@@ -123,12 +128,9 @@ const AuthenticatedLayout = ({ children }) => {
           <NavigatorContainer>
             <NavigatorHeader isNavigatorOpen={isNavigatorOpen}>
               <MobileHeaderContainer justifyEnd={isAgent}>
-                {!isAgent && (
-                  <HeaderImage
-                    // notShow={!user.logoImage}
-                    src={user.logoImage || image.src}
-                  />
-                )}
+                <HeaderImage
+                  src={!isNotWhiteLabel() ? image.src : user.logoImage}
+                />
                 <HandleLogo />
               </MobileHeaderContainer>
               <MobileContainer isNavigatorOpen={isNavigatorOpen}>

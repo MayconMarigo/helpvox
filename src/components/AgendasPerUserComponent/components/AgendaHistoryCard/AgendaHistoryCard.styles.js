@@ -64,7 +64,8 @@ export const TimeContainer = styled.div`
       colorScheme
         ? `rgba(${colorScheme}, 0.6)`
         : theme.colors.listItems.background.hover};
-    color: ${({ theme }) => theme.colors.listItems.text.hover};
+    /* color: ${({ theme }) => theme.colors.listItems.text.hover}; */
+    color: ${({ theme }) => "#fff"};
   }
 `;
 

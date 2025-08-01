@@ -18,6 +18,7 @@ import {
 import StyledButton from "shared/Button";
 import { useUser } from "contexts/User/User";
 import Modal from "shared/Modal";
+import { ptBR } from "date-fns/locale";
 
 export default function AdminCallsManagement() {
   const [callsList, setCallsList] = useState([]);
@@ -108,14 +109,6 @@ export default function AdminCallsManagement() {
       value: "receiverName",
       text: "Médico",
     },
-    {
-      value: "videoUrl",
-      text: "Gravação",
-    },
-    {
-      value: "callDuration",
-      text: "Duração",
-    },
   ];
 
   // useEffect(() => {
@@ -148,6 +141,15 @@ export default function AdminCallsManagement() {
 
   const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd";
 
+  useEffect(() => {
+    const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+    const spans = document.querySelectorAll(".rdrWeekDays span");
+
+    spans.forEach((span, index) => {
+      span.textContent = dias[index] || "";
+    });
+  }, [showDatePicker]);
+
   return (
     <Container>
       <h2>Atendimentos</h2>
@@ -159,6 +161,8 @@ export default function AdminCallsManagement() {
           title="Selecionar Período"
         >
           <DateRange
+            locale={ptBR}
+            weekStartsOn={1}
             editableDateInputs={true}
             onChange={(item) => setDate([item.selection])}
             moveRangeOnFirstSelection={false}

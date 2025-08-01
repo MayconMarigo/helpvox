@@ -25,6 +25,7 @@ import LoaderContainer from "shared/LoaderContainer";
 import { availableTimeToSchedule } from "utils/constants";
 import Checkbox from "shared/Checkbox/Checkbox";
 import { useAlert } from "contexts/Alert/Alert";
+import { ptBR } from "date-fns/locale";
 
 export default function AgentAgendaManagement() {
   const { user } = useUser();
@@ -186,6 +187,15 @@ export default function AgentAgendaManagement() {
     }
   };
 
+  useEffect(() => {
+    const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+    const spans = document.querySelectorAll(".rdrWeekDays span");
+
+    spans.forEach((span, index) => {
+      span.textContent = dias[index] || "";
+    });
+  }, []);
+
   return (
     <>
       <LoaderContainer />
@@ -195,6 +205,7 @@ export default function AgentAgendaManagement() {
         <h4>Selecione uma data abaixo</h4>
         <RegisterContainer>
           <Calendar
+            locale={ptBR}
             weekStartsOn={1}
             date={date}
             onChange={handleChangeDate}
@@ -204,7 +215,9 @@ export default function AgentAgendaManagement() {
           <AlreadyRegisteredDateContainer>
             <h4 style={{ marginBottom: "1rem" }}>Horários cadastrados</h4>
             <AgendaHistoryCard
-              date={`${date.getDate()}-${date.getMonth()}-${date.getFullYear()}`}
+              date={`${date.getDate()}-${
+                date.getMonth() + 1
+              }-${date.getFullYear()}`}
               emptyMessage="Todos os horários disponíveis para cadastro."
               {...firstAgenda}
               dontFetchUsers

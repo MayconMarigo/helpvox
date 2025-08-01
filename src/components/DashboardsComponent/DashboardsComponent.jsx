@@ -29,11 +29,11 @@ export default function DashboardsComponent({ list = [], dataToShow }) {
     if (!data) return { mapper, headers };
     months.forEach((constantMonth, index) => {
       const finder = data.find((date) => constantMonth.value == date.month);
-      mapper.push(finder?.calls_quantity.toString() || "0");
+      mapper.push(finder?.calls_quantity?.toString() || "0");
     });
 
     list.map((object) => {
-      mapper.push(object.value.toString());
+      mapper.push(object.value?.toString());
     });
 
     months.forEach((month) => {

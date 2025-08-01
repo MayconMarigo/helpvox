@@ -13,6 +13,7 @@ import Modal from "shared/Modal";
 import { DateRange } from "react-date-range";
 import Table from "shared/Table";
 import { usePageLoader } from "contexts/Page Loader/PageLoader";
+import { ptBR } from "date-fns/locale";
 
 export default function AgendaManagement() {
   const { user } = useUser();
@@ -107,6 +108,15 @@ export default function AgendaManagement() {
 
   const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd";
 
+  useEffect(() => {
+    const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
+    const spans = document.querySelectorAll(".rdrWeekDays span");
+
+    spans.forEach((span, index) => {
+      span.textContent = dias[index] || "";
+    });
+  }, [showDatePicker]);
+
   return (
     <Container>
       <h2>Agendamentos</h2>
@@ -118,6 +128,8 @@ export default function AgendaManagement() {
           title="Selecionar Período"
         >
           <DateRange
+            locale={ptBR}
+            weekStartsOn={1}
             editableDateInputs={true}
             onChange={(item) => setDate([item.selection])}
             moveRangeOnFirstSelection={false}

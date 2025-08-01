@@ -8,12 +8,13 @@ export default function Redirect() {
   const { user } = useUser();
 
   const redirectUrls = {
-    agent: "/authenticated",
+    agent: "/authenticated/agenda",
     company: "/authenticated/enterprise/dashboards",
     admin: "/authenticated/admin/dashboards",
   };
   useEffect(() => {
-    if (!user) return window.location.replace("/login");
+    if (user == false) return window.location.replace("/login");
+    if (!user) return;
     setPageLoading(true);
     return window.location.replace(redirectUrls[user.type]);
   }, [user]);

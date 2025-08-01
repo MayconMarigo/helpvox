@@ -32,8 +32,8 @@ export const GLOBAL_THEME = {
         icon: "❌",
       },
       success: {
-        bg: "#ECFDF5",
-        text: "#10b981",
+        bg: "green",
+        text: "#fff",
         icon: "✅",
       },
     },
