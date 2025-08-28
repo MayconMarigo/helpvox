@@ -88,7 +88,7 @@ export default function AgentAuthenticatedComponent() {
   }, [callAccepted]);
 
   const joinCall = () => {
-    return (window.location.href = `/public/room?name=${callObject.room.name}&t=${callObject.agent.token}&returnUrl=${window.location.pathname}`);
+    return (window.location.href = `/authenticated/room?name=${callObject.room.name}&t=${callObject.agent.token}&returnUrl=${window.location.pathname}`);
   };
 
   return (

@@ -31,7 +31,7 @@ export default function Table({
   headers,
   content,
   canEdit = true,
-  modal = { type: "user", title: "Editar Usuário" },
+  modal = { type: "2", title: "Editar Usuário" },
 }) {
   const ITEMS_PER_PAGE = 10;
 
@@ -45,11 +45,14 @@ export default function Table({
   const [isOpen, setIsOpen] = useState(false);
   const [loading, setLoading] = useState(false);
   const [fullName, setFullName] = useState("");
+  const [oldEmailOrName, setOldEmailOrName] = useState("");
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [password, setPassword] = useState(null);
   const [phone, setPhone] = useState("");
   const [userType, setUserType] = useState("");
   const [status, setStatus] = useState(true);
+  const [document, setDocument] = useState("");
+  const [speciality, setSpeciality] = useState("");
 
   useEffect(() => {
     const sliced = content.slice(
@@ -82,8 +85,18 @@ export default function Table({
     setFullName(line.name);
     setEmail(line.email);
     setPhone(line.phone);
+    setDocument(line.cpf);
     const userType = handleUserType(line.userTypeId);
     setUserType(userType);
+    const statusStype = handleStatusType(line.status);
+    setStatus(statusStype);
+  };
+
+  const handleEditPhysician = (line) => {
+    setIsOpen(true);
+    setOldEmailOrName(line.name);
+    setFullName(line.name);
+    setSpeciality(line.speciality);
     const statusStype = handleStatusType(line.status);
     setStatus(statusStype);
   };
@@ -136,12 +149,39 @@ export default function Table({
       em: encryptWithCypher(email),
       pn: encryptWithCypher(formatPhoneToBackend(phone)),
       pw: encryptWithCypher(password),
-      // uti: encryptWithCypher(userType),
       sts: encryptWithCypher(status),
     };
 
     try {
-      await AuthenticationService.updateUser(payload, user.type);
+      await AuthenticationService.updateUser(payload, user.type, modal.type);
+
+      setContent({
+        message: SUCCESS_MESSAGES.USER_SUCESSFULL_UPDATED,
+        type: "sucesso",
+        isOpen: true,
+      });
+
+      window.location.reload();
+    } catch (error) {
+      setContent({ message: error.message, type: "erro", isOpen: true });
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const handleSubmitEditPhysician = async (event) => {
+    event.preventDefault();
+    setLoading(true);
+
+    const payload = {
+      nm: encryptWithCypher(fullName),
+      oem: encryptWithCypher(oldEmailOrName),
+      pw: encryptWithCypher(password),
+      sts: encryptWithCypher(status),
+    };
+
+    try {
+      await AuthenticationService.updateUser(payload, user.type, modal.type);
 
       setContent({
         message: SUCCESS_MESSAGES.USER_SUCESSFULL_UPDATED,
@@ -185,17 +225,116 @@ export default function Table({
   };
 
   const handleSubmitByType = {
-    user: handleSubmitEditUser,
+    2: handleSubmitEditUser,
+    3: handleSubmitEditPhysician,
     credential: handleSubmitEditCredential,
   };
 
   const handleEditByType = {
-    user: handleEditUser,
+    2: handleEditUser,
+    3: handleEditPhysician,
     credential: handleEditCredential,
   };
 
   const modalByType = {
-    user: (
+    2: (
+      <>
+        <InputContainer>
+          <StyledInput
+            disabled={loading}
+            value={fullName}
+            htmlLabel={"Nome Completo"}
+            placeHolder="Digite o nome completo..."
+            setValue={setFullName}
+            fullWidth
+            required
+          />
+          <StyledInput
+            disabled
+            value={email}
+            htmlLabel={"Email"}
+            placeHolder="Digite o email..."
+            setValue={setEmail}
+            type="email"
+            fullWidth
+          />
+          <StyledToogle
+            fullWidth
+            htmlLabel={"Status"}
+            active={status}
+            onClick={handleStatus}
+            disabled={loading}
+            colorScheme={user.colorScheme}
+          />
+        </InputContainer>
+        <InputContainer>
+          <StyledInput
+            disabled={loading}
+            value={password}
+            htmlLabel={"Senha"}
+            placeHolder="Digite a senha..."
+            setValue={setPassword}
+            type="password"
+            fullWidth
+          />
+          <StyledInput
+            disabled={loading}
+            value={phoneMask(phone)}
+            htmlLabel={"Telefone"}
+            placeHolder="Digite o telefone..."
+            setValue={setPhone}
+            fullWidth
+            required={false}
+            maxLength={15}
+          />
+        </InputContainer>
+
+        <StyledButton text="Salvar alteração" type="submit" loading={loading} />
+      </>
+    ),
+    3: (
+      <>
+        <InputContainer>
+          <StyledInput
+            required
+            disabled={loading}
+            value={fullName}
+            htmlLabel={"Nome Completo"}
+            placeHolder="Digite o nome completo..."
+            setValue={setFullName}
+            fullWidth
+          />
+          <StyledInput
+            required={false}
+            disabled={loading}
+            value={password}
+            htmlLabel={"Senha"}
+            placeHolder="Digite a senha..."
+            setValue={setPassword}
+            type="password"
+            fullWidth
+          />
+          <StyledToogle
+            fullWidth
+            htmlLabel={"Status"}
+            active={status}
+            onClick={handleStatus}
+            disabled={loading}
+            colorScheme={user.colorScheme}
+          />
+        </InputContainer>
+        <InputContainer>
+          <StyledInput
+            disabled
+            value={speciality}
+            htmlLabel={"Especialidade"}
+            fullWidth
+          />
+        </InputContainer>
+        <StyledButton text="Salvar alteração" type="submit" loading={loading} />
+      </>
+    ),
+    4: (
       <>
         <InputContainer>
           <StyledInput
@@ -235,6 +374,13 @@ export default function Table({
             fullWidth
           />
           <StyledInput
+            disabled={true}
+            value={document}
+            htmlLabel={"CPF"}
+            fullWidth
+            required={false}
+          />
+          <StyledInput
             disabled={loading}
             value={phoneMask(phone)}
             htmlLabel={"Telefone"}
@@ -244,13 +390,6 @@ export default function Table({
             required={false}
             maxLength={15}
           />
-          {/* <Dropdown
-            value={userType}
-            htmlLabel={"Tipo de usuário"}
-            onChange={setUserType}
-            fullWidth
-            disabled={loading}
-          /> */}
         </InputContainer>
 
         <StyledButton text="Salvar alteração" type="submit" loading={loading} />

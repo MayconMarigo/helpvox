@@ -33,6 +33,7 @@ export const ModalContainer = styled.form`
   }
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
+    padding: 1rem;
     button {
       max-width: none;
     }

@@ -1,5 +1,9 @@
 import customFetch from "interceptor";
-import { BASE_API_URL, ERROR_MESSAGES } from "utils/constants";
+import {
+  BASE_API_URL,
+  BASE_SMS_2FA_URL,
+  ERROR_MESSAGES,
+} from "utils/constants";
 import { decryptWithCypher, encryptWithCypher } from "utils/encryption";
 import { deleteValueInCookies, getValueFromCookies } from "utils/storage";
 
@@ -44,6 +48,68 @@ const authenticate = async (payload) => {
   return { qrCodeDataJson, token };
 };
 
+const authenticateWithCredentials = async (payload) => {
+  const { email, credentials } = payload;
+
+  const auth = await customFetch(`${BASE_API_URL}/credentials/auth`, {
+    method: "POST",
+    body: JSON.stringify({
+      em: encryptWithCypher(email),
+      crd: encryptWithCypher(credentials),
+    }),
+    headers: {
+      ...commonHeaders,
+    },
+  });
+
+  const authJson = await auth.json();
+
+  if (authJson.message) throw new Error(authJson.message);
+
+  const authToken = authJson.token;
+
+  const authSMS = btoa(
+    `${process.env.NEXT_PUBLIC_SMS_USER}:${process.env.NEXT_PUBLIC_SMS_API_KEY}`
+  );
+
+  const generateRandomNumber = () => {
+    let rand = Math.floor(Math.random() * 1000000);
+    if (rand.toString().length < 6) {
+      return generateRandomNumber();
+    }
+
+    return rand;
+  };
+
+  const random = generateRandomNumber();
+
+  return { random, authToken };
+
+  const resp = await fetch(BASE_SMS_2FA_URL, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: "Basic " + authSMS,
+    },
+    body: JSON.stringify({
+      messages: [
+        {
+          source: "php",
+          from: "Helpvox",
+          body: `BEM+ Security - O seu código de acesso é ${random}`,
+          to: "+5543991474319",
+        },
+      ],
+    }),
+  });
+
+  const data = await resp.json();
+
+  if (data?.http_code !== 200) throw new Error(ERROR_MESSAGES.SEND_SMS);
+
+  return { random, authToken };
+};
+
 const logout = async () => {
   await deleteValueInCookies("t");
 
@@ -75,14 +141,16 @@ const register = async (payload, userType, userId) => {
   return registerJson;
 };
 
-const updateUser = async (payload, userType) => {
+const updateUser = async (payload, userType, type) => {
   const encryptedToken = await getValueFromCookies("t");
   const token = decryptWithCypher(encryptedToken);
 
   if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
 
   const url =
-    userType == "admin" ? "admin/user/update" : `enterprise/user/update`;
+    userType == "admin"
+      ? `admin/user/update/${type}`
+      : `enterprise/user/update`;
 
   const updated = await customFetch(`${BASE_API_URL}/${url}`, {
     method: "PUT",
@@ -159,14 +227,16 @@ const getuserData = async (token) => {
   return dataJson;
 };
 
-const getAllUsers = async (userType, userId) => {
+const getAllUsers = async (userType, userId, searchType) => {
   const encryptedToken = await getValueFromCookies("t");
   const token = decryptWithCypher(encryptedToken);
 
   if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
 
   const url =
-    userType == "admin" ? "admin/users/get-all" : `${userId}/users/get-all`;
+    userType == "admin"
+      ? `admin/users/get-all/${searchType}`
+      : `${userId}/users/get-all`;
 
   const data = await customFetch(`${BASE_API_URL}/${url}`, {
     headers: {
@@ -471,6 +541,59 @@ const deleteAvailability = async (agendaId) => {
   return dataJson;
 };
 
+const bulkAddUsers = async (payload, companyId) => {
+  const encryptedToken = await getValueFromCookies("t");
+  const token = decryptWithCypher(encryptedToken);
+
+  if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
+
+  const data = await customFetch(
+    `${BASE_API_URL}/${companyId}/users/create/bulk`,
+    {
+      method: "POST",
+      headers: {
+        ...commonHeaders,
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (data.ok) return;
+
+  const dataJson = await data.json();
+
+  if (dataJson.message) throw new Error(dataJson.message);
+
+  return dataJson;
+};
+
+const bulkDeleteUsers = async (companyId) => {
+  const encryptedToken = await getValueFromCookies("t");
+  const token = decryptWithCypher(encryptedToken);
+
+  if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
+
+  const data = await customFetch(
+    `${BASE_API_URL}/${companyId}/users/delete/bulk`,
+    {
+      method: "DELETE",
+      headers: {
+        ...commonHeaders,
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (data.ok) return;
+
+  const dataJson = await data.json();
+
+  if (dataJson.message) throw new Error(dataJson.message);
+
+  return dataJson;
+};
+
 export const AuthenticationService = {
   authenticate,
   logout,
@@ -493,4 +616,7 @@ export const AuthenticationService = {
   updateCredential,
   getUserScheduledyUserId,
   deleteAvailability,
+  bulkAddUsers,
+  bulkDeleteUsers,
+  authenticateWithCredentials,
 };

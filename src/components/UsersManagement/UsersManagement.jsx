@@ -8,8 +8,9 @@ import {
 import Cadastro from "./components/Cadastro";
 import { useUser } from "contexts/User/User";
 import ListUsers from "./components/ListUsers";
+import BatchRegister from "./components/BatchRegister";
 
-export default function UsersManagement() {
+export default function UsersManagement({ title, userListType }) {
   const settings = [
     { value: "Visualização", component: "visualizacao" },
     { value: "Cadastro", component: "cadastro" },
@@ -25,13 +26,24 @@ export default function UsersManagement() {
   };
 
   const bodySettings = {
-    visualizacao: <ListUsers />,
-    cadastro: <Cadastro />,
+    visualizacao: <ListUsers type={userListType} />,
+    cadastro: <Cadastro type={userListType} />,
   };
+
+  if (user.type == "company") {
+    settings.push({ value: "Planilha de Cadastro", component: "planilha" });
+    bodySettings["planilha"] = <BatchRegister type={userListType} />;
+  }
 
   return (
     <Container>
-      <h2>{user.type == "admin" ? "Cadastrar Empresa ou Médico" : "Funcionários"}</h2>
+      <h2>
+        {title
+          ? title
+          : user.type == "admin"
+          ? "Cadastrar Empresa ou Médico"
+          : "Funcionários"}
+      </h2>
 
       <TabsContainer colorScheme={user.colorScheme || "#5120bd"}>
         {settings?.map((setting) => (

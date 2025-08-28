@@ -8,6 +8,8 @@ export const useCallingCall = () => useContext(CallingCall);
 export const CallingCallProvider = ({ children }) => {
   const [modal, setModal] = useState({ open: false, type: "receiver" });
   const [callAccepted, setCallAccepted] = useState(false);
+  const [isOnline, setIsOnline] = useState(true);
+  const [modalCaller, setModalCaller] = useState("");
 
   return (
     <CallingCall.Provider
@@ -16,12 +18,16 @@ export const CallingCallProvider = ({ children }) => {
         setModal,
         callAccepted,
         setCallAccepted,
+        isOnline,
+        setIsOnline,
+        setModalCaller,
       }}
     >
       <CallModal
         modal={modal}
         setModal={setModal}
         setCallAccepted={setCallAccepted}
+        modalCaller={modalCaller}
       />
       {children}
     </CallingCall.Provider>

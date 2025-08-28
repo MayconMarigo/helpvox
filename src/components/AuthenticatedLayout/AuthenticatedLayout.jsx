@@ -37,8 +37,7 @@ const AuthenticatedLayout = ({ children }) => {
 
   const { setPositionOnQueue, setRedirectToRoom, setCallObject } =
     useCompanySocketObjects();
-  const { setModal } = useCallingCall();
-  const { socket, setSocketType } = useSocket();
+  const { setModal, isOnline, setIsOnline } = useCallingCall();
 
   useEffect(() => {
     if (user == null) return;
@@ -47,34 +46,8 @@ const AuthenticatedLayout = ({ children }) => {
     return (window.location.href = "/login");
   }, [user]);
 
-  useEffect(() => {
-    setSocketType(user.type);
-  }, [user]);
-
-  useEffect(() => {
-    if (!socket) return;
-    const type = user.type;
-    if (type == "agent") return;
-    const socketType = {
-      company: () => null,
-      // company: () =>
-      // loadCompanySocketEvents(
-      //   socket,
-      //   setPositionOnQueue,
-      //   setRedirectToRoom,
-      //   setCallObject
-      // ),
-      admin: () => null,
-    };
-
-    socketType[type]();
-
-    return;
-  }, [socket]);
-
   const [selected, setSelected] = useState("");
   const handleSelect = (e) => setSelected(e.target.text);
-  const [isOnline, setIsOnline] = useState(true);
   const [isOpen, setIsOpen] = useState(false);
 
   const handleOpenFloatingContent = () => setIsOpen((previous) => !previous);
@@ -114,22 +87,15 @@ const AuthenticatedLayout = ({ children }) => {
 
   const handleLogout = async () => await AuthenticationService.logout();
 
-  const isNotWhiteLabel = () => {
-    const show =
-      window.location.origin == "https://atendimentos.bemmaiscard.com.br";
-
-    return show;
-  };
-
   return (
     <>
-      {user && (
+      {user && user.type !== "worker" ? (
         <LayoutContainer>
           <NavigatorContainer>
             <NavigatorHeader isNavigatorOpen={isNavigatorOpen}>
               <MobileHeaderContainer justifyEnd={isAgent}>
                 <HeaderImage
-                  src={!isNotWhiteLabel() ? image.src : user.logoImage}
+                  src={user?.logoImage ? user.logoImage : image.src}
                 />
                 <HandleLogo />
               </MobileHeaderContainer>
@@ -175,12 +141,12 @@ const AuthenticatedLayout = ({ children }) => {
             <ContentHeader spacing={isAgent}>
               {isAgent && (
                 <LeftContent onClick={handleOpenFloatingContent}>
-                  {/* <h4>
+                  <h4>
                     Status:{" "}
                     <span style={{ color: isOnline ? "green" : "red" }}>
                       {isOnline ? "Online" : "Offline"}
                     </span>
-                  </h4> */}
+                  </h4>
                   <FloatContent isOpen={isOpen}>
                     <span onClick={handleChangeStatus}>
                       {isOnline ? "Offline" : "Online"}
@@ -196,6 +162,8 @@ const AuthenticatedLayout = ({ children }) => {
                       ? "Empresa"
                       : user?.type == "admin"
                       ? "Admin"
+                      : user?.type == "worker"
+                      ? "Funcionário"
                       : "Médico"}
                   </p>
                   <h5>{user?.name}</h5>
@@ -205,6 +173,8 @@ const AuthenticatedLayout = ({ children }) => {
             <ContentBody>{children}</ContentBody>
           </ContentContainer>
         </LayoutContainer>
+      ) : (
+        children
       )}
     </>
   );

@@ -15,7 +15,11 @@ export const navItems = {
         },
         {
           title: "Empresas",
-          url: "admin/usuarios",
+          url: "admin/empresas",
+        },
+        {
+          title: "Médicos",
+          url: "admin/medicos",
         },
       ],
     },
@@ -34,17 +38,6 @@ export const navItems = {
         },
       ],
     },
-    // {
-    //   id: 2,
-    //   title: "Minha Conta",
-    //   icon: <Profile />,
-    //   subMenus: [
-    //     {
-    //       title: "Configurações",
-    //       url: "perfil",
-    //     },
-    //   ],
-    // },
   ],
   company: [
     {
@@ -95,6 +88,10 @@ export const navItems = {
         {
           title: "Agendamentos",
           url: "/schedule",
+        },
+        {
+          title: "Consultório Online",
+          url: "/attendance",
         },
       ],
     },

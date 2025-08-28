@@ -11,7 +11,7 @@ export const FilterContainer = styled.div`
   }
 
   input {
-    width: 400px;
+    width: 300px;
   }
 
   ${({ theme }) => theme.devices.tabletOrMobile} {

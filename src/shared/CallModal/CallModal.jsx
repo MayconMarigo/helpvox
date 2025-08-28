@@ -1,12 +1,19 @@
 import PhoneGif from "assets/gifs/phone-gif.gif";
 import CiclicLogo from "assets/svgs/CiclicLogo";
+import BemmaisLogo from "assets/imgs/logo-login.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import StyledButton from "shared/Button";
 import { ModalBackground, ModalContainer } from "./CallModal.styles";
 import { useCompanySocketObjects } from "contexts/CompanySocketObjects/CompanySocketObjects";
+import { useUser } from "contexts/User/User";
 
-export default function CallModal({ modal, setModal, setCallAccepted }) {
+export default function CallModal({
+  modal,
+  setModal,
+  setCallAccepted,
+  modalCaller,
+}) {
   const [dots, setDots] = useState(1);
 
   useEffect(() => {
@@ -39,9 +46,12 @@ export default function CallModal({ modal, setModal, setCallAccepted }) {
 
   const text = `${
     modal.type === "caller"
-      ? "Buscando agentes disponíveis"
-      : "Recebendo ligação"
-  }${formatDots(dots)}`;
+      ? "Buscando médicos disponíveis"
+      : `Recebendo ligação de ${modalCaller}`
+  }`;
+  // }${formatDots(dots)}`;
+
+  const { user } = useUser();
 
   const { positionInQueue } = useCompanySocketObjects();
 
@@ -49,12 +59,16 @@ export default function CallModal({ modal, setModal, setCallAccepted }) {
     modal.open && (
       <ModalBackground>
         <ModalContainer>
-          <CiclicLogo width={120} />
+          <img
+            src={user?.userTypeId == "3" ? BemmaisLogo.src : BemmaisLogo.src}
+            alt=""
+            width={120}
+          />
           <h3 style={{ marginTop: "1rem" }}>{text}</h3>
           {modal.type == "caller" && positionInQueue > 0 && (
-            <h4 style={{ marginTop: "1rem" }}>
+            <h3 style={{ marginTop: "1rem" }}>
               Posição na fila: {positionInQueue}
-            </h4>
+            </h3>
           )}
           <Image src={PhoneGif} />
           {modal.type !== "caller" && (

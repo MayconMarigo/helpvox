@@ -2,7 +2,12 @@ import React from "react";
 import StyledButton from "shared/Button";
 import { CSV, CSVLink } from "react-csv";
 
-export default function CSVDownloadButton({ data, headers, name = "" }) {
+export default function CSVDownloadButton({
+  data,
+  headers,
+  name = "",
+  ...props
+}) {
   // const headers = [
   //   { label: "First Name", key: "firstname" },
   //   { label: "Last Name", key: "lastname" },
@@ -32,7 +37,11 @@ export default function CSVDownloadButton({ data, headers, name = "" }) {
   const fileName = formatFileName(name);
   return (
     <>
-      <StyledButton text="Exportar CSV" onClick={handleClick}></StyledButton>
+      <StyledButton
+        text="Exportar CSV"
+        onClick={handleClick}
+        {...props}
+      ></StyledButton>
       {data && (
         <CSVLink
           id="download"

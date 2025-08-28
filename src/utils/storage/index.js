@@ -9,6 +9,7 @@ export const setValueInStorage = (key, value) => {
 
 export const getValueFromStorage = (key) => {
   const value = localStorage.getItem(key);
+  if (!value) return null;
   const decryptedValue = decryptWithCypher(value);
   const parsedValue = JSON.parse(decryptedValue);
 
@@ -20,7 +21,7 @@ export const deleteValueInStorage = (key) => localStorage.removeItem(key);
 export const setValueInCookies = async (key, value, httpOnly = false) => {
   const cookieStore = new Cookies();
   const encryptedValue = encryptWithCypher(value);
-  return cookieStore.set(key, encryptedValue, { httpOnly });
+  return cookieStore.set(key, encryptedValue, { httpOnly, path: "/" });
 };
 
 export const getValueFromCookies = async (key) => {

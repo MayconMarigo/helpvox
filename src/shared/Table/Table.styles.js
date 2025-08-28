@@ -41,6 +41,7 @@ export const TableRow = styled.tr`
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
     flex-direction: column;
+    padding: 1.2rem 0.25rem;
   }
 `;
 export const TableData = styled.td`

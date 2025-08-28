@@ -21,6 +21,8 @@ export const loadCompanySocketEvents = (
 export const handleCallAvailableAgent = (socket, setPositionOnQueue) =>
   socket.emit("callAvailableAgent", (res) => {
     setPositionOnQueue(res);
+
+    console.log(res);
     return;
   });
 
@@ -32,6 +34,7 @@ export const loadAgentSocketEvents = (
   setCallObject
 ) => {
   socket.on("incomingCall", (message) => {
+    console.log(message);
     setModal({ open: true });
     setIsCalling(true);
     setCallObject(message);
@@ -57,8 +60,10 @@ export const handleRegisterNotAnsweredCallSocket = (socket, message) => {
   socket.emit("registerNotAnsweredCall", message);
 };
 
-export const handleGetAvailableAgents = (socket) =>
-  socket.emit("getAvailableAgents", (res) => null);
+export const handleGetAvailableAgents = async (socket, setAvailableAgents) =>
+  socket.emit("getAvailableAgents", (callback) => {
+    setAvailableAgents(callback);
+  });
 
 export const registerCallInformation = async (socket, call) => {
   socket.emit("registerCallInformation", call);
@@ -67,5 +72,7 @@ export const registerCallInformation = async (socket, call) => {
 export const handleChangeAgentStatusToBusy = (socket) =>
   socket.emit("handleChangeAgentStatusToBusy", { id: socket.id });
 
-export const handleChangeAgentStatusToAvailable = (socket) =>
+export const handleChangeAgentStatusToAvailable = (socket) => {
   socket.emit("handleChangeAgentStatusToAvailable", { id: socket.id });
+  socket.emit("checkCompaniesOnHold", (res) => {});
+};

@@ -7,7 +7,11 @@ import { AuthenticationService } from "services/authentication";
 import StyledButton from "shared/Button";
 import StyledInput from "shared/Input";
 import { checkErrorType } from "utils/error";
-import { setValueInCookies } from "utils/storage";
+import {
+  getValueFromStorage,
+  setValueInCookies,
+  setValueInStorage,
+} from "utils/storage";
 import {
   Container,
   FormBody,
@@ -20,23 +24,33 @@ import {
   TotpInputContainer,
 } from "./Login.styles";
 import * as logo from "../../assets/imgs/logo-login.png";
+import { ERROR_MESSAGES } from "utils/constants";
+import { decryptWithCypher } from "utils/encryption";
 
 export default function Login() {
   const { user } = useUser();
   const [loading, setLoading] = useState(true);
   const LoginLogo = logo.default;
+  const [alreadyPreviouslyLoggedUsers, setAlreadyPreviouslyLoggedUsers] =
+    useState([]);
 
   useEffect(() => {
-    if (user === null) return;
+    const APLU = getValueFromStorage("plu");
+    if (!APLU) return;
+    const parsed = JSON.parse(APLU);
+    setAlreadyPreviouslyLoggedUsers(parsed);
+  }, []);
+
+  useEffect(() => {
+    if (user === null || !user || user === undefined) return setLoading(false);
 
     if (user) {
       return (window.location.href = "/authenticated/redirect");
     }
-    setLoading(false);
   }, [user]);
-
+  const [randomSMSValue, setRandomSMSValue] = useState(null);
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [credentials, setCredentials] = useState("");
   const [step, setStep] = useState("loginForm");
   const [totpInput, setTotpInput] = useState({
     1: "",
@@ -72,14 +86,32 @@ export default function Login() {
     e.preventDefault();
     try {
       setLoading(true);
-      const TOTP = await AuthenticationService.authenticate({
+      const data = await AuthenticationService.authenticateWithCredentials({
         email,
-        password,
+        credentials,
       });
 
-      setToken(TOTP.token);
-      setTotp(TOTP.qrCodeDataJson);
-      setStep("qrCodeForm");
+      const findEmailInLoggedHistory = !!alreadyPreviouslyLoggedUsers.find(
+        (user) => user == email
+      );
+
+      if (findEmailInLoggedHistory) {
+        handleSuccessfullLogin();
+        return;
+      }
+
+      const temp = [...alreadyPreviouslyLoggedUsers];
+      temp.push(email);
+      const crypt = JSON.stringify(temp);
+
+      setValueInStorage("plu", crypt);
+
+      const { random, authToken } = data;
+
+      setToken(authToken);
+      setRandomSMSValue(random);
+
+      setStep("smsValidationForm");
     } catch (error) {
       const message = checkErrorType(error.message);
       setContent({ message: message, type: "erro", isOpen: true });
@@ -88,7 +120,7 @@ export default function Login() {
     }
   };
 
-  const handleSuccessfullLogin = async (url) => {
+  const handleSuccessfullLogin = async () => {
     setContent({
       message: "Autenticado com sucesso, estamos redirecionando você.",
       type: "sucesso",
@@ -97,24 +129,19 @@ export default function Login() {
 
     await setValueInCookies("t", token);
 
-    window.location.href = "/authenticated/redirect";
+    window.location.replace = "/authenticated/redirect";
   };
 
-  const handleSubmitTotp = async (e) => {
+  const handleSubmit2faSMS = async (e) => {
     e.preventDefault();
     try {
       setLoading(true);
       const code = Object.values(totpInput).join("");
-      const response = await AuthenticationService.verify2faToken(
-        totp.secret,
-        code,
-        token
-      );
 
-      if (response.success) {
-        handleSuccessfullLogin();
-        return;
-      }
+      if (code.toString() !== randomSMSValue.toString())
+        throw new Error(ERROR_MESSAGES.INVALID_SMS_CODE);
+
+      handleSuccessfullLogin();
     } catch (error) {
       const message = checkErrorType(error.message);
       setContent({ message: message, type: "erro", isOpen: true });
@@ -163,24 +190,23 @@ export default function Login() {
             disabled={loading}
           />
           <StyledInput
-            htmlLabel="Senha"
-            placeHolder="Digite sua senha"
+            htmlLabel="Credencial"
+            placeHolder="Digite sua credencial"
             required={true}
-            type="password"
-            value={password}
-            setValue={setPassword}
+            type="text"
+            value={credentials}
+            setValue={setCredentials}
             disabled={loading}
           />
         </FormBody>
         <StyledButton text="Entrar" type="submit" loading={loading} />
       </LoginForm>
     ),
-    qrCodeForm: (
-      <LoginForm onSubmit={handleSubmitTotp}>
+    smsValidationForm: (
+      <LoginForm onSubmit={handleSubmit2faSMS}>
         <QrCodeContainer>
           <Image src={LoginLogo} width={250} alt="login" />
-          <Image src={totp.qrCode} alt="Qr Code" width={240} height={240} />
-          <h3>Digite os números de segurança do autenticador </h3>
+          <h3>Digite os números de segurança enviado por sms.</h3>
           <TotpInputContainer>
             {[1, 2, 3, 4, 5, 6].map((inpt) => (
               <TotpInput
@@ -202,12 +228,11 @@ export default function Login() {
         </QrCodeContainer>
       </LoginForm>
     ),
-    sms2faForm: <>2fa sms</>,
   };
 
   const RenderSteps = useMemo(() => {
     return steps[step];
-  }, [step, email, password, totpInput, loading]);
+  }, [step, email, credentials, totpInput, loading]);
 
   return loading ? (
     <LoaderContainer>

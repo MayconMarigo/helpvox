@@ -1,5 +1,5 @@
 import { AuthenticationService } from "services/authentication";
-import { decryptWithCypher } from "utils/encryption";
+import { decryptWithCypher, encryptWithCypher } from "utils/encryption";
 import { formatColorSchemeFromBackend } from "utils/formatter";
 import { deleteValueInCookies, getValueFromCookies } from "utils/storage";
 
@@ -11,7 +11,6 @@ const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    if (window.location.pathname === "/public/calls") return;
     if (user) return;
     const fetchUserData = async () => {
       try {

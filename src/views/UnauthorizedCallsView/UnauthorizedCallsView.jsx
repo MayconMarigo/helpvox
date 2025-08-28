@@ -22,14 +22,19 @@ import {
 import { useCompanySocketObjects } from "contexts/CompanySocketObjects/CompanySocketObjects";
 import Image from "next/image";
 import * as logo from "../../assets/imgs/ui-calls.jpg";
+import { useUser } from "contexts/User/User";
+import * as logo2 from "../../assets/imgs/logo-bemmais.png";
 
 export default function UnauthorizedCallsView() {
-  const image = logo.default;
+  const { user } = useUser();
   const { socket, setSocketType, setUser } = useSocket();
   useEffect(() => {
+    if (user == null || user == undefined) return;
+    if (user == false) return window.location.replace("/login");
+
     setSocketType("company");
-    setUser({ name: "Anônimo", id: null });
-  }, []);
+    setUser({ name: user.name, id: user.id });
+  }, [user]);
   const {
     redirectToRoom,
     callObject,
@@ -52,45 +57,42 @@ export default function UnauthorizedCallsView() {
   }, [socket]);
 
   const joinCall = () =>
-    (window.location.href = `/public/room?name=${callObject.room.name}&t=${callObject.company.token}&returnUrl=${window.location.pathname}`);
+    (window.location.href = `/authenticated/room?name=${callObject.room.name}&t=${callObject.company.token}&returnUrl=${window.location.pathname}`);
 
   useEffect(() => {
     if (!redirectToRoom) return;
 
     joinCall();
+
+    return () => socket.disconnect();
   }, [redirectToRoom]);
 
   const callAvailableAgent = () => {
     setModal({ open: true, type: "caller" });
     handleCallAvailableAgent(socket, setPositionOnQueue);
   };
+  const image = logo2.default;
 
   return (
     <LayoutContainer>
-      <NavigatorContainer>
-        <NavigatorHeader></NavigatorHeader>
-        <NavigatorBody></NavigatorBody>
-      </NavigatorContainer>
-      <ContentContainer>
-        <ContentHeader spacing={false}>
-          <RightContent>
-            <Badge name={"AN"} />
-            <CredentialsContainer>
-              <p>Empresa</p>
-              <h5>Anônimo</h5>
-            </CredentialsContainer>
-          </RightContent>
-        </ContentHeader>
-        <ContentBody>
-          <h3>Seja bem vindo</h3>
-          <StyledButton
-            onClick={callAvailableAgent}
-            text="Conectar com agente disponível"
-            type="button"
-          />
-          <Image src={image} alt="" />
-        </ContentBody>
-      </ContentContainer>
+      <ContentBody>
+        <img
+          // src={user?.logoImage}
+          src={image.src}
+          style={{ maxHeight: "auto", maxWidth: "200px" }}
+        />
+        <h3>
+          Bem vindo à central de <br />
+          atendimento médico! ❤️
+        </h3>
+        <Image src={logo.default} alt="" />
+        <StyledButton
+          onClick={callAvailableAgent}
+          text="Iniciar Atendimento"
+          type="button"
+          style={{ borderRadius: "2rem", height: "80px", fontSize: "1.5rem" }}
+        />
+      </ContentBody>
     </LayoutContainer>
   );
 }

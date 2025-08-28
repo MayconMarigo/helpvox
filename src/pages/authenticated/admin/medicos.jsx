@@ -9,12 +9,16 @@ export default function Calls() {
 
   useEffect(() => {
     if (user == null) return;
-    if (user.type !== "company") {
+    if (user.type !== "admin") {
       return (window.location.href = "/login");
     }
   }, [user]);
 
-  return user.type == "company" && <UsersManagementView userListType={4} />;
+  return (
+    user.type == "admin" && (
+      <UsersManagementView title="Cadastrar Médicos" userListType={3} />
+    )
+  );
 }
 
 Calls.getLayout = function getLayout(page) {

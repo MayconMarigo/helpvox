@@ -212,8 +212,8 @@ export default function AdminCallsManagement() {
         headers={[
           { name: "Usuário" },
           { name: "Médico" },
+          { name: "Especialidade", width: 180 },
           { name: "Início", width: 180 },
-          { name: "Término", width: 180 },
           { name: "Gravação", width: 100 },
           { name: "Duração", width: 60 },
         ]}

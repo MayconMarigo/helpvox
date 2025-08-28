@@ -2,19 +2,20 @@ import AuthenticatedLayout from "components/AuthenticatedLayout";
 import { useUser } from "contexts/User/User";
 import { useEffect } from "react";
 import { LayoutWithLoading } from "shared/LayoutWithLoading/LayoutWithLoading";
-import UsersManagementView from "views/UsersManagement/UsersManagement";
+import UnauthorizedCallsView from "views/UnauthorizedCallsView/UnauthorizedCallsView";
 
 export default function Calls() {
   const { user } = useUser();
+  const checkAllowedTypes = (type) => type == "agent" || type == "worker";
 
   useEffect(() => {
     if (user == null) return;
-    if (user.type !== "company") {
+    if (!checkAllowedTypes(user.type)) {
       return (window.location.href = "/login");
     }
   }, [user]);
 
-  return user.type == "company" && <UsersManagementView userListType={4} />;
+  return checkAllowedTypes(user?.type) && <UnauthorizedCallsView />;
 }
 
 Calls.getLayout = function getLayout(page) {

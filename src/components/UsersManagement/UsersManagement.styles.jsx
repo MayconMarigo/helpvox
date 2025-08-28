@@ -46,6 +46,8 @@ export const ContentContainer = styled.div`
   padding: ${({ theme }) => theme.spacing.padding.container.desktop};
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
-    padding: ${({ theme }) => theme.spacing.padding.container.tabletOrMobile};
+    /* padding: ${({ theme }) =>
+      theme.spacing.padding.container.tabletOrMobile}; */
+    padding: 1rem 0;
   }
 `;

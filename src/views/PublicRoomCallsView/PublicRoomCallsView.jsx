@@ -3,8 +3,9 @@ import CiclicLogo from "assets/svgs/CiclicLogo";
 import { useEffect } from "react";
 import { BASE_DAILY_JS_URL } from "utils/constants";
 import { Header } from "./PublicRoomCallsView.styles";
-import * as logo from "../../assets/imgs/logo-login.png";
+import * as logo from "../../assets/imgs/logo-bemmais.png";
 import Image from "next/image";
+import { useUser } from "contexts/User/User";
 
 export default function PublicRoomCallsView() {
   useEffect(() => {
@@ -36,16 +37,27 @@ export default function PublicRoomCallsView() {
   }, []);
   const LoginLogo = logo.default;
 
+  const { user } = useUser();
+
   return (
     <div style={{ height: "calc(100vh)", overflow: "hidden" }}>
       <Header>
-        <Image
-          src={LoginLogo}
-          width={200}
-          alt="login"
-          style={{ cursor: "pointer" }}
-          onClick={() => (window.location.href = "/login")}
-        />
+        {user && (
+          <img
+            src={
+              user.userTypeId == "3"
+                ? LoginLogo.src
+                : user?.logoImage
+                ? user?.logoImage
+                : LoginLogo.src
+            }
+            width={150}
+            height="auto"
+            alt="login"
+            style={{ cursor: "pointer", maxHeight: "80%" }}
+            onClick={() => (window.location.href = "/login")}
+          />
+        )}
       </Header>
       <div id="call-provider" style={{ height: "100%" }}></div>
     </div>

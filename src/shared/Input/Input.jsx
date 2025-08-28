@@ -43,7 +43,7 @@ export default function StyledInput({
       required={required}
       fullWidth={fullWidth}
       {...props}
-      colorScheme={user.colorScheme}
+      colorScheme={user?.colorScheme}
     >
       <label htmlFor={htmlLabel}>{`${htmlLabel}${required ? " *" : ""}`}</label>
       <IconContainer>

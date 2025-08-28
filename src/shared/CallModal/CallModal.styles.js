@@ -21,10 +21,11 @@ export const ModalContainer = styled.div`
   border-radius: ${({ theme }) => theme.borders.radius};
   box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.5), 0 1px 2px -1px rgba(0, 0, 0, 0.5);
   z-index: 2;
+  border: ${({ theme }) => `2px solid ${theme.colors.primary}`};
 
   img {
     mix-blend-mode: multiply;
     max-width: 220px;
     height: auto;
-  };
+  }
 `;

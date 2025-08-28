@@ -1,7 +1,10 @@
-export const BASE_API_URL = "https://api.bemmaiscard.com.br/api";
+// export const BASE_API_URL = "https://api.bemmaiscard.com.br/api";
+export const BASE_API_URL = "http://localhost:8080/api";
 export const BASE_SOCKET_API_URL = process.env.NEXT_PUBLIC_IS_LOCAL
   ? "http://localhost:8081"
   : "wss://saude.nr1pro.com.br";
+
+export const BASE_SMS_2FA_URL = "https://rest.clicksend.com/v3/sms/send";
 
 export const BASE_DAILY_JS_URL = "https://hublab.daily.co";
 
@@ -14,10 +17,14 @@ export const ERROR_MESSAGES = {
   JWT_EXPIRED: "jwt expired",
   NO_AGENTS_AVAILABLE: "Não há agentes disponíveis.",
   USER_ALREADY_EXISTS: "Usuário já existe na base de dados.",
+  SEND_SMS: "Erro ao enviar SMS, tente novamente em alguns instantes.",
+  INVALID_SMS_CODE: "Código inválido, por favor tente novamente.",
 };
 
 export const SUCCESS_MESSAGES = {
   USER_SUCCESSFULL_CREATED: "Usuário criado com sucesso.",
+  USERS_SUCCESSFULL_CREATED: "Usuários da lista adicionados com sucesso.",
+  USERS_SUCCESSFULL_DELETED: "Usuários da lista deletados com sucesso.",
   USER_SUCESSFULL_UPDATED: "Usuário atualizado com sucesso.",
   CREDENTIAL_SUCESSFULL_UPDATED: "Credencial atualizada com sucesso.",
 };
@@ -84,4 +91,22 @@ export const availableTimeToSchedule = [
   "16:30",
   "17:00",
   "17:30",
+];
+
+export const PHYSICIANS_SPECILITIES = [
+  { value: "Clínico Geral", text: "Clínico Geral" },
+  { value: "Cardiologia", text: "Cardiologia" },
+  { value: "Pediatria", text: "Pediatria" },
+  { value: "Ginecologia", text: "Ginecologia" },
+  { value: "Obstetrícia", text: "Obstetrícia" },
+  { value: "Ortopedia", text: "Ortopedia" },
+  { value: "Dermatologia", text: "Dermatologia" },
+  { value: "Oftalmologia", text: "Oftalmologia" },
+  { value: "Otorrinolaringologia", text: "Otorrinolaringologia" },
+  { value: "Urologia", text: "Urologia" },
+  { value: "Psiquiatria", text: "Psiquiatria" },
+  { value: "Psicologia", text: "Psicologia" },
+  { value: "Nutrição", text: "Nutrição" },
+  { value: "Endocrinologia", text: "Endocrinologia" },
+  { value: "Neurologia", text: "Neurologia" },
 ];

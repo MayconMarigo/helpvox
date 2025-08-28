@@ -2,22 +2,22 @@ import AuthenticatedLayout from "components/AuthenticatedLayout";
 import { useUser } from "contexts/User/User";
 import { useEffect } from "react";
 import { LayoutWithLoading } from "shared/LayoutWithLoading/LayoutWithLoading";
-import UsersManagementView from "views/UsersManagement/UsersManagement";
+import AttendanceView from "views/AttendanceView/AttendanceView";
 
-export default function Calls() {
+export default function Schedule() {
   const { user } = useUser();
 
   useEffect(() => {
     if (user == null) return;
-    if (user.type !== "company") {
+    if (user.type !== "agent") {
       return (window.location.href = "/login");
     }
   }, [user]);
 
-  return user.type == "company" && <UsersManagementView userListType={4} />;
+  return user.type == "agent" && <AttendanceView />;
 }
 
-Calls.getLayout = function getLayout(page) {
+Schedule.getLayout = function getLayout(page) {
   return (
     <LayoutWithLoading>
       <AuthenticatedLayout>{page}</AuthenticatedLayout>

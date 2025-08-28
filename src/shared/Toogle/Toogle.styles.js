@@ -5,7 +5,8 @@ export const Container = styled.div`
   width: 200px;
 
   label {
-    color: ${({ theme }) => theme.colors.listItems.text.default};
+    /* color: ${({ theme }) => theme.colors.listItems.text.default}; */
+    color: #000
   }
 
   ${({ theme }) => theme.devices.tabletOrMobile} {

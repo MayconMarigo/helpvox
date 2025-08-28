@@ -8,6 +8,7 @@ export default function Dropdown({
   value = 3,
   disabled,
   content,
+  ...props
 }) {
   const { user } = useUser();
 
@@ -35,7 +36,7 @@ export default function Dropdown({
   const options = content ?? dropdownContentByUserType;
 
   return (
-    <Container fullWidth={fullWidth}>
+    <Container fullWidth={fullWidth} {...props}>
       <label htmlFor={htmlLabel}>{htmlLabel}</label>
       <SelectContainer
         disabled={disabled}

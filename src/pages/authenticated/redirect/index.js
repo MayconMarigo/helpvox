@@ -1,6 +1,6 @@
 import { usePageLoader } from "contexts/Page Loader/PageLoader";
 import { useUser } from "contexts/User/User";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import LoaderContainer from "shared/LoaderContainer";
 
 export default function Redirect() {
@@ -11,10 +11,11 @@ export default function Redirect() {
     agent: "/authenticated/agenda",
     company: "/authenticated/enterprise/dashboards",
     admin: "/authenticated/admin/dashboards",
+    worker: "/authenticated/calls",
   };
   useEffect(() => {
+    if (user == null || user == undefined) return;
     if (user == false) return window.location.replace("/login");
-    if (!user) return;
     setPageLoading(true);
     return window.location.replace(redirectUrls[user.type]);
   }, [user]);

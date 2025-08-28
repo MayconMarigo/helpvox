@@ -2,6 +2,7 @@ import { styled } from "styled-components";
 
 export const LayoutContainer = styled.div`
   display: flex;
+  height: 100vh;
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
     flex-direction: column;
@@ -72,7 +73,9 @@ export const ContentHeader = styled.div`
 export const ContentBody = styled.main`
   height: calc(100% - 4rem - 1px);
   display: flex;
+  width: 100%;
   flex-direction: column;
+  justify-content: center;
   align-items: center;
   padding: ${({ theme }) => theme.spacing.padding.container.desktop};
   gap: 2rem;
