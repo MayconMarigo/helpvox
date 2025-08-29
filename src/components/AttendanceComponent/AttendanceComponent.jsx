@@ -81,7 +81,7 @@ export default function AttendanceComponent() {
     setTriggerNotAnswered(false);
     setModal({ isOpen: false });
     handleChangeAgentStatusToBusy(socket);
-    handleChangeAvailability()
+    handleChangeAvailability();
 
     return;
   }, [triggerNotAnswered]);

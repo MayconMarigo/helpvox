@@ -169,7 +169,7 @@ export default function ListUsers({ type = 2 }) {
         isOpen: true,
       });
 
-      window.location.reload()
+      window.location.reload();
     } catch (error) {
       setContent({
         message: error.message,

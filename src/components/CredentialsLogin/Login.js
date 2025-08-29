@@ -91,6 +91,9 @@ export default function Login() {
         credentials,
       });
 
+      const { authToken } = data;
+      setToken(authToken);
+
       const findEmailInLoggedHistory = !!alreadyPreviouslyLoggedUsers.find(
         (user) => user == email
       );
@@ -100,15 +103,19 @@ export default function Login() {
         return;
       }
 
+      const smsData = await AuthenticationService.generateSMSCredentials({
+        email,
+        credentials,
+      });
+
+      const { random } = smsData;
+
       const temp = [...alreadyPreviouslyLoggedUsers];
       temp.push(email);
       const crypt = JSON.stringify(temp);
 
       setValueInStorage("plu", crypt);
 
-      const { random, authToken } = data;
-
-      setToken(authToken);
       setRandomSMSValue(random);
 
       setStep("smsValidationForm");
@@ -126,10 +133,8 @@ export default function Login() {
       type: "sucesso",
       isOpen: true,
     });
-
     await setValueInCookies("t", token);
-
-    window.location.replace = "/authenticated/redirect";
+    window.location.replace("/authenticated/redirect");
   };
 
   const handleSubmit2faSMS = async (e) => {

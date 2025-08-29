@@ -10,9 +10,10 @@ import { useUser } from "contexts/User/User";
 export default function PublicRoomCallsView() {
   useEffect(() => {
     const name = window.location.search.split("&")[0].split("=")[1];
+    const token = window.location.search.split("&")[1].split("=")[1];
     const returnUrl = window.location.search.split("&")[2]?.split("=")[1];
 
-    if (!name) return;
+    if (!name || !token) return;
 
     const call = Daily.createFrame({
       url: name,
@@ -32,7 +33,7 @@ export default function PublicRoomCallsView() {
     });
 
     call.join({
-      url: `${BASE_DAILY_JS_URL}/${name}`,
+      url: `${BASE_DAILY_JS_URL}/${name}?t=${token}`,
     });
   }, []);
   const LoginLogo = logo.default;

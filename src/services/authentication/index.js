@@ -68,6 +68,10 @@ const authenticateWithCredentials = async (payload) => {
 
   const authToken = authJson.token;
 
+  return { authToken };
+};
+
+const generateSMSCredentials = async () => {
   const authSMS = btoa(
     `${process.env.NEXT_PUBLIC_SMS_USER}:${process.env.NEXT_PUBLIC_SMS_API_KEY}`
   );
@@ -82,8 +86,6 @@ const authenticateWithCredentials = async (payload) => {
   };
 
   const random = generateRandomNumber();
-
-  return { random, authToken };
 
   const resp = await fetch(BASE_SMS_2FA_URL, {
     method: "POST",
@@ -107,7 +109,7 @@ const authenticateWithCredentials = async (payload) => {
 
   if (data?.http_code !== 200) throw new Error(ERROR_MESSAGES.SEND_SMS);
 
-  return { random, authToken };
+  return { random };
 };
 
 const logout = async () => {
@@ -619,4 +621,5 @@ export const AuthenticationService = {
   bulkAddUsers,
   bulkDeleteUsers,
   authenticateWithCredentials,
+  generateSMSCredentials,
 };
