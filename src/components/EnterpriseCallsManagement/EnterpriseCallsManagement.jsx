@@ -54,8 +54,15 @@ export default function EnterpriseCallsManagement() {
         endDate,
         user.id
       );
+      const mapper = response.calls.map((call) => {
+        return {
+          ...call,
+          rating: call.rating ? `${call.rating}⭐` : "",
+          callDuration: `${call.callDuration} min`,
+        };
+      });
 
-      setCallsList(response?.calls);
+      setCallsList(mapper);
       setDashboardItemsList(response?.dashboardItems);
     } catch (error) {
       console.log(error);
@@ -73,10 +80,18 @@ export default function EnterpriseCallsManagement() {
 
   const handleFilterCalls = (e) => {
     const sumCallDurations = (calls) => {
-      return calls.reduce((total, call) => {
-        const [hours, minutes] = call.callDuration.split(":").map(Number);
-        const durationInMinutes = hours * 60 + minutes;
-        return total + durationInMinutes;
+      const mapper = calls.map((call) => {
+        return {
+          ...call,
+          callDuration: Number(String(call.callDuration?.split(" min")[0])),
+        };
+      });
+
+      return mapper.reduce((total, call) => {
+        // const [hours, minutes] = call.callDuration.split(":").map(Number);
+        // const durationInMinutes = hours * 60 + minutes;
+        // return total + durationInMinutes;
+        return total + call.callDuration;
       }, 0);
     };
 
@@ -241,6 +256,7 @@ export default function EnterpriseCallsManagement() {
           { name: "Especialidade", width: 180 },
           { name: "Início", width: 180 },
           { name: "Duração", width: 60 },
+          { name: "", width: 60 },
         ]}
         content={filteredCalls || callsList}
       />

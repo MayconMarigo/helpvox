@@ -163,23 +163,18 @@ export default function DashboardsComponent({
         <Container>
           <h2>Dashboards</h2>
 
-          <FilterContainer>
-            <Dropdown
-              fullWidth
-              content={dropdownContent}
-              htmlLabel="Buscar por empresa"
-              onChange={setCompany}
-              value={company}
-            />
-            <StyledButton text="Buscar" onClick={handleRefetch} />
-            {/* <StyledButton
-              text="Limpar Filtro"
-              onClick={() => {
-                setCompany(null);
-                setRefetch(true);
-              }}
-            /> */}
-          </FilterContainer>
+          {user.type == "admin" && (
+            <FilterContainer>
+              <Dropdown
+                fullWidth
+                content={dropdownContent}
+                htmlLabel="Buscar por empresa"
+                onChange={setCompany}
+                value={company}
+              />
+              <StyledButton text="Buscar" onClick={handleRefetch} />
+            </FilterContainer>
+          )}
 
           <CardsContainer>
             {list.map((item) => (

@@ -114,6 +114,7 @@ const AuthenticatedLayout = ({ children }) => {
                   text="Sair da conta"
                   type="button"
                   onClick={handleLogout}
+                  style={{ backgroundColor: "#ffdb70", color: "#000" }}
                 />
               </MobileContainer>
             </NavigatorHeader>
@@ -134,6 +135,7 @@ const AuthenticatedLayout = ({ children }) => {
                 text="Sair da conta"
                 type="button"
                 onClick={handleLogout}
+                style={{ backgroundColor: "#ffdb70", color: "#000" }}
               />
             </NavigatorBody>
           </NavigatorContainer>
@@ -141,16 +143,16 @@ const AuthenticatedLayout = ({ children }) => {
             <ContentHeader spacing={isAgent}>
               {isAgent && (
                 <LeftContent onClick={handleOpenFloatingContent}>
-                  <h4>
+                  {/* <h4>
                     Status:{" "}
                     <span style={{ color: isOnline ? "green" : "red" }}>
                       {isOnline ? "Online" : "Offline"}
                     </span>
-                  </h4>
+                  </h4> */}
                   <FloatContent isOpen={isOpen}>
-                    <span onClick={handleChangeStatus}>
+                    {/* <span onClick={handleChangeStatus}>
                       {isOnline ? "Offline" : "Online"}
-                    </span>
+                    </span> */}
                   </FloatContent>
                 </LeftContent>
               )}

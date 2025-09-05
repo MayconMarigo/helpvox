@@ -16,6 +16,8 @@ import {
 } from "services/socket";
 import { formatDateToBackend } from "utils/date/date";
 import { CALL_RESPONSE_TIME } from "utils/constants";
+import * as logo2 from "../../assets/imgs/logo-login.png";
+import * as logo from "../../assets/imgs/ui-calls.jpg";
 
 export default function AttendanceComponent() {
   const [triggerNotAnswered, setTriggerNotAnswered] = useState(false);
@@ -142,12 +144,26 @@ export default function AttendanceComponent() {
     return;
   }, [isOnline]);
 
+  const image = logo2.default;
+
   return (
     <>
       <LoaderContainer />
       <Container>
-        <h2>Consultório Online</h2>
+        <h2 style={{ padding: "2rem" }}>Consultório Online</h2>
+        <img src={image.src} style={{ maxHeight: "auto", maxWidth: "200px" }} />
 
+        <h4 style={{ fontSize: "2rem" }}>
+          Você está
+          <span style={{ color: isOnline ? "green" : "red", fontSize: "2rem" }}>
+            {isOnline ? " Online" : " Offline"}
+          </span>
+        </h4>
+
+        <img
+          src={logo.default.src}
+          style={{ maxHeight: "auto", maxWidth: "600px" }}
+        />
         <div style={{ maxWidth: 300 }}>
           <StyledButton text={buttonText} onClick={handleChangeAvailability} />
         </div>

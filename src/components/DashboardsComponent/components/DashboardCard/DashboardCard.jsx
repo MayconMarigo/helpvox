@@ -5,6 +5,7 @@ import { useUser } from "contexts/User/User";
 export default function DashboardCard({ title, value }) {
   const { user } = useUser();
 
+  console.log(value);
   return (
     <Card colorScheme={user?.colorScheme}>
       <span>{title || "calculando..."}</span>

@@ -10,8 +10,10 @@ import {
 } from "./RatingView.styles";
 import LoaderContainer from "shared/LoaderContainer";
 import { useAlert } from "contexts/Alert/Alert";
+import { useUser } from "contexts/User/User";
 
 export default function RatingView() {
+  const { user } = useUser();
   const [hovered, setHovered] = useState(0);
   const handleHover = (index) => {
     setHovered(index);
@@ -66,13 +68,16 @@ export default function RatingView() {
       <Container>
         <LoaderContainer />
         <RatingContainer>
+          <img
+            src={user?.logoImage}
+            style={{ height: "auto", width: "100%", maxWidth: 200 }}
+          />
           <div style={{ textAlign: "center", color: "#fff" }}>
-            <h2>Gostaríamos de saber sua opinião.</h2>
-            <h2>Como você avalia o atendimento realizado?</h2>
+            <h2 style={{ fontWeight: 500 }}>Avalie o seu atendimento</h2>
           </div>
           <StarContainer>
             {Array(5)
-              .fill("⭐")
+              .fill("★")
               .map((value, index) => (
                 <Star
                   onClick={() => {
@@ -90,7 +95,7 @@ export default function RatingView() {
           </StarContainer>
 
           <StyledButton
-            text="Enviar avaliação"
+            text="ENVIAR"
             inverse
             type="button"
             onClick={handleSubmitRating}
