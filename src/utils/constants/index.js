@@ -1,8 +1,9 @@
-// export const BASE_API_URL = "https://api.bemmaiscard.com.br/api";
-export const BASE_API_URL = "http://localhost:8080/api";
-export const BASE_SOCKET_API_URL = process.env.NEXT_PUBLIC_IS_LOCAL
-  ? "http://localhost:8081"
-  : "wss://saude.nr1pro.com.br";
+export const BASE_API_URL = "https://api.bemmaiscard.com.br/api";
+// export const BASE_API_URL = "http://localhost:8080/api";
+// export const BASE_SOCKET_API_URL = process.env.NEXT_PUBLIC_IS_LOCAL
+//   ? "http://localhost:8081"
+//   : "wss://saude.nr1pro.com.br";
+export const BASE_SOCKET_API_URL = "wss://saude.nr1pro.com.br";
 
 export const BASE_SMS_2FA_URL = "https://rest.clicksend.com/v3/sms/send";
 
