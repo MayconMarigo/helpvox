@@ -6,7 +6,6 @@ import { AuthenticationService } from "services/authentication";
 import StyledButton from "shared/Button";
 import Dropdown from "shared/Dropdown";
 import StyledInput from "shared/Input";
-import * as XLSX from "xlsx";
 import {
   ERROR_MESSAGES,
   PHYSICIANS_SPECILITIES,
