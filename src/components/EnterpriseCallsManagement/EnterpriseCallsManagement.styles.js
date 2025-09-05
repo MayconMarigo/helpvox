@@ -9,7 +9,6 @@ export const Container = styled.div`
 `;
 
 export const FilterContainer = styled.div`
-  margin-bottom: 2rem;
   display: flex;
   width: 100%;
   align-items: flex-end;
@@ -51,5 +50,16 @@ export const DateShowContainer = styled.div`
     button {
       max-width: none;
     }
+  }
+`;
+
+export const CardsContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+
+  ${({ theme }) => theme.devices.tabletOrMobile} {
+    flex-direction: column;
+    text-align: center;
   }
 `;

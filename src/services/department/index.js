@@ -7,19 +7,21 @@ const commonHeaders = {
   "Content-Type": "Application/json",
 };
 
-const getDashboardInfo = async (companyId = null) => {
+const createDepartment = async (payload, companyId) => {
   const encryptedToken = await getValueFromCookies("t");
   const token = decryptWithCypher(encryptedToken);
 
   if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
 
   const data = await customFetch(
-    `${BASE_API_URL}/admin/dashboards/${companyId}/get-all`,
+    `${BASE_API_URL}/${companyId}/department/create`,
     {
+      method: "POST",
       headers: {
         ...commonHeaders,
         authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify(payload),
     }
   );
 
@@ -30,18 +32,25 @@ const getDashboardInfo = async (companyId = null) => {
   return dataJson;
 };
 
-const getDashboardCSVInfo = async () => {
+const bulkAddDepartments = async (payload, companyId) => {
   const encryptedToken = await getValueFromCookies("t");
   const token = decryptWithCypher(encryptedToken);
 
   if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
 
-  const data = await customFetch(`${BASE_API_URL}/admin/dashboards/csv`, {
-    headers: {
-      ...commonHeaders,
-      authorization: `Bearer ${token}`,
-    },
-  });
+  const data = await customFetch(
+    `${BASE_API_URL}/${companyId}/departments/create/bulk`,
+    {
+      method: "POST",
+      headers: {
+        ...commonHeaders,
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(payload),
+    }
+  );
+
+  if (data.ok) return;
 
   const dataJson = await data.json();
 
@@ -50,28 +59,7 @@ const getDashboardCSVInfo = async () => {
   return dataJson;
 };
 
-const getUsersListWithId = async () => {
-  const encryptedToken = await getValueFromCookies("t");
-  const token = decryptWithCypher(encryptedToken);
-
-  if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
-
-  const data = await customFetch(`${BASE_API_URL}/admin/users/list`, {
-    headers: {
-      ...commonHeaders,
-      authorization: `Bearer ${token}`,
-    },
-  });
-
-  const dataJson = await data.json();
-
-  if (dataJson.message) throw new Error(dataJson.message);
-
-  return dataJson;
-};
-
-export const AdminService = {
-  getDashboardInfo,
-  getDashboardCSVInfo,
-  getUsersListWithId,
+export const DepartmentService = {
+  createDepartment,
+  bulkAddDepartments,
 };

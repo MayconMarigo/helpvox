@@ -79,7 +79,6 @@ export default function AgentAgendaManagement() {
         .join("-");
       let firstAgendaShift = [];
       if (agendaResponse.find((value) => value.date == compare)) {
-        firstAgendaShift = agendaResponse.shift();
         setFirstAgenda(firstAgendaShift);
       } else {
         setFirstAgenda([]);
@@ -200,7 +199,7 @@ export default function AgentAgendaManagement() {
     <>
       <LoaderContainer />
       <Container>
-        <h2>Cadastro de disponibilidade</h2>
+        <h2 style={{ color: "#5120bd" }}>Cadastro de disponibilidade</h2>
 
         <h4>Selecione uma data abaixo</h4>
         <RegisterContainer>
@@ -211,18 +210,6 @@ export default function AgentAgendaManagement() {
             onChange={handleChangeDate}
             color={user?.colorScheme ? `rgb(${user?.colorScheme})` : "#5120bd"}
           />
-
-          <AlreadyRegisteredDateContainer>
-            <h4 style={{ marginBottom: "1rem" }}>Horários cadastrados</h4>
-            <AgendaHistoryCard
-              date={`${date.getDate()}-${
-                date.getMonth() + 1
-              }-${date.getFullYear()}`}
-              emptyMessage="Todos os horários disponíveis para cadastro."
-              {...firstAgenda}
-              dontFetchUsers
-            />
-          </AlreadyRegisteredDateContainer>
 
           <RegisterNewAgendaContainer>
             <CheckboxContainer>

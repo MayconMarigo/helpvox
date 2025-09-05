@@ -5,15 +5,16 @@ import * as XLSX from "xlsx";
 import {
   BulkRegisterButtonsContainer,
   BulkRegisterContainer,
-} from "./BatchRegister.styles";
+} from "./BatchRegisterDepartments.styles";
 import StyledButton from "shared/Button";
 import { useAlert } from "contexts/Alert/Alert";
 import { AuthenticationService } from "services/authentication";
 import { useUser } from "contexts/User/User";
 import LoaderContainer from "shared/LoaderContainer";
 import { SUCCESS_MESSAGES } from "utils/constants";
+import { DepartmentService } from "services/department";
 
-export default function BatchRegister() {
+export default function BatchRegisterDepartments() {
   const [fileName, setFileName] = useState("");
   const [bulkUsers, setBulkUsers] = useState(null);
   const { setPageLoading } = usePageLoader();
@@ -43,15 +44,7 @@ export default function BatchRegister() {
       const sheet = workbook.Sheets[sheetName];
       const json = XLSX.utils.sheet_to_json(sheet);
 
-      const CSVRows = [
-        "Id",
-        "Nome",
-        "Usuário",
-        "Telefone",
-        "CPF",
-        "Setor",
-        "Senha",
-      ];
+      const CSVRows = ["Id", "Nome", "Código"];
 
       let error = false;
 
@@ -88,37 +81,23 @@ export default function BatchRegister() {
       setPageLoading(true);
 
       const payload = [];
-      const c = ["uid", "nm", "em", "pn", "doc", "esp", "pw"];
+      const c = ["id", "dptnm", "dptcd"];
 
       bulkUsers.forEach((user, outerIndex) => {
         const obj = {};
         let counter = 0;
         for (const [key, value] of Object.entries(user)) {
           const payloadKey = c[counter];
-          if (
-            String(value).toLowerCase() == "ativo" ||
-            String(value).toLowerCase() == "inativo"
-          ) {
-            const types = {
-              Ativo: 1,
-              Inativo: 0,
-            };
-            obj[payloadKey] = encryptWithCypher(types[value].toString());
-          } else if (key == "Setor") {
-            obj[payloadKey] = value;
-          } else {
-            obj[payloadKey] = encryptWithCypher(value.toString());
-          }
+          obj[payloadKey] = encryptWithCypher(value.toString());
           counter++;
         }
         payload.push(obj);
         counter = 0;
       });
-
-      await AuthenticationService.bulkAddUsers(payload, user.id);
+      await DepartmentService.bulkAddDepartments(payload, user.id);
 
       setContent({
-        message: SUCCESS_MESSAGES.USERS_SUCCESSFULL_CREATED,
+        message: SUCCESS_MESSAGES.DEPARTMENTS_SUCCESSFULL_CREATED,
         type: "sucesso",
         isOpen: true,
       });
@@ -158,7 +137,7 @@ export default function BatchRegister() {
         </p>
         <p>
           <strong>passo 4</strong>: Clique em{" "}
-          <strong>"Cadastrar Usuários"</strong> para finalizar o cadastro.
+          <strong>"Cadastrar Departamentos"</strong> para finalizar o cadastro.
         </p>
         <input type="file" name="file" id="file" onChange={handleUploadCSV} />
         <StyledButton
@@ -167,7 +146,11 @@ export default function BatchRegister() {
           style={{ marginTop: "1rem" }}
           onClick={handleDownloadCSVExample}
         />
-        <a href="/planilha_exemplo_usuarios.xlsx" download id="download-csv" />
+        <a
+          href="/planilha_exemplo_departamentos.xlsx"
+          download
+          id="download-csv"
+        />
         <div>
           <StyledButton
             text="Carregar Planilha"
@@ -178,7 +161,7 @@ export default function BatchRegister() {
             <>
               <p>Arquivo carregado: {fileName}</p>
               <StyledButton
-                text="Cadastrar Usuários"
+                text="Cadastrar Departamentos"
                 type="button"
                 onClick={handleAddBulkUsersFromCSV}
                 style={{ marginTop: "1rem" }}

@@ -4,16 +4,17 @@ import {
   ContentContainer,
   Tabs,
   TabsContainer,
-} from "./UsersManagement.styles";
-import Cadastro from "./components/Cadastro";
+} from "./DepartmentManagement.styles";
 import { useUser } from "contexts/User/User";
-import ListUsers from "./components/ListUsers";
-import BatchRegister from "./components/BatchRegister";
+import ListDepartments from "./components/ListDepartments";
+import BatchRegisterDepartments from "./components/BatchRegisterDepartments";
+import RegisterDepartments from "./components/RegisterDepartments";
 
-export default function UsersManagement({ title, userListType }) {
+export default function DepartmentManagement({ title, userListType }) {
   const settings = [
     { value: "Visualização", component: "visualizacao" },
     { value: "Cadastro", component: "cadastro" },
+    { value: "Planilha de Cadastro", component: "planilha" },
   ];
   const [selected, setSelected] = useState("Visualização");
   const [step, setStep] = useState("visualizacao");
@@ -26,24 +27,14 @@ export default function UsersManagement({ title, userListType }) {
   };
 
   const bodySettings = {
-    visualizacao: <ListUsers type={userListType} canEdit={true}/>,
-    cadastro: <Cadastro type={userListType} />,
+    visualizacao: <ListDepartments type={userListType} />,
+    cadastro: <RegisterDepartments type={userListType} />,
+    planilha: <BatchRegisterDepartments type={userListType} />,
   };
-
-  if (user.type == "company") {
-    settings.push({ value: "Planilha de Cadastro", component: "planilha" });
-    bodySettings["planilha"] = <BatchRegister type={userListType} />;
-  }
 
   return (
     <Container>
-      <h2>
-        {title
-          ? title
-          : user.type == "admin"
-          ? "Cadastrar Empresa ou Médico"
-          : "Funcionários"}
-      </h2>
+      <h2>Departamentos</h2>
 
       <TabsContainer colorScheme={user.colorScheme || "#5120bd"}>
         {settings?.map((setting) => (

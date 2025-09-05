@@ -8,6 +8,8 @@ import Image from "next/image";
 import { useUser } from "contexts/User/User";
 
 export default function PublicRoomCallsView() {
+  const { user } = useUser();
+
   useEffect(() => {
     const name = window.location.search.split("&")[0].split("=")[1];
     const token = window.location.search.split("&")[1].split("=")[1];
@@ -29,7 +31,12 @@ export default function PublicRoomCallsView() {
     parent.appendChild(call.iframe());
 
     call.on("left-meeting", () => {
-      window.location.href = returnUrl || "/login";
+      if (user.userTypeId == "4") {
+        window.location.replace(`/authenticated/calls/rating?callId=${name}`);
+        return;
+      }
+
+      window.location.replace("/authenticated/attendance");
     });
 
     call.join({
@@ -37,8 +44,6 @@ export default function PublicRoomCallsView() {
     });
   }, []);
   const LoginLogo = logo.default;
-
-  const { user } = useUser();
 
   return (
     <div style={{ height: "calc(100vh)", overflow: "hidden" }}>

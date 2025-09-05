@@ -60,7 +60,7 @@ const getAllCallsByCompanyId = async (startDate, endDate, userId) => {
   if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
 
   const data = await customFetch(
-    `${BASE_API_URL}/calls/${userId}/get-all?startDate=${startDate}&endDate=${endDate}`,
+    `${BASE_API_URL}/enterprise/calls/${userId}/get-all?startDate=${startDate}&endDate=${endDate}`,
     {
       headers: {
         ...commonHeaders,
@@ -76,8 +76,34 @@ const getAllCallsByCompanyId = async (startDate, endDate, userId) => {
   return dataJson;
 };
 
+const submitCallRating = async (callId, rating) => {
+  const encryptedToken = await getValueFromCookies("t");
+  const token = decryptWithCypher(encryptedToken);
+
+  if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
+
+  const data = await customFetch(
+    `${BASE_API_URL}/enterprise/calls/rating/${callId}`,
+    {
+      method: "POST",
+      headers: {
+        ...commonHeaders,
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ rating }),
+    }
+  );
+
+  const dataJson = await data.json();
+
+  if (dataJson.message) throw new Error(dataJson.message);
+
+  return dataJson;
+};
+
 export const CallsService = {
   getAllCalls,
   userGetAllCalls,
   getAllCallsByCompanyId,
+  submitCallRating,
 };

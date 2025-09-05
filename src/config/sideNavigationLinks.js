@@ -53,6 +53,10 @@ export const navItems = {
           title: "Usuários",
           url: "enterprise/usuarios",
         },
+        {
+          title: "Setores",
+          url: "enterprise/setores",
+        },
       ],
     },
     {

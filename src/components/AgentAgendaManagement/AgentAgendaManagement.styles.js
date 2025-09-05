@@ -57,7 +57,7 @@ export const NextDaysAgendaContainer = styled.div`
 
 export const CardsContainer = styled.div`
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 1rem;
 
   ${({ theme }) => theme.devices.tabletOrMobile} {

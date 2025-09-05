@@ -26,7 +26,7 @@ export const setValueInCookies = async (key, value, httpOnly = false) => {
 
 export const getValueFromCookies = async (key) => {
   const cookieStore = new Cookies();
-  return cookieStore.get(key);
+  return cookieStore.get(key, { path: "/" });
 };
 
 export const deleteValueInCookies = async (key) => {

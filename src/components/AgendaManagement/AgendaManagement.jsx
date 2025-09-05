@@ -40,17 +40,6 @@ export default function AgendaManagement() {
 
   const handleFilterCallsByDateRange = (date) => {
     const { startDate, endDate } = date[0];
-
-    // const filter = callsList.filter(
-    //   (call) =>
-    //     formatStartDate(startDate) < call.formattedStartTime &&
-    //     formatEndDate(endDate) > call.formattedEndTime
-    // );
-
-    // setFilteredCalls(filter);
-    // setShowDatePicker(false);
-
-    // setPageLoading(false);
   };
 
   const cleanFilters = () => {
@@ -137,23 +126,12 @@ export default function AgendaManagement() {
             rangeColors={[color]}
           />
           <div style={{ display: "flex", justifyContent: "center" }}>
-            <StyledButton
-              text="Aplicar filtro"
-              type="button"
-              //   onClick={() => handleFilterCallsByDateRange(date)}
-            />
+            <StyledButton text="Aplicar filtro" type="button" />
           </div>
         </Modal>
       )}
 
       <FilterContainer>
-        {/* <StyledInput
-          id="type"
-          fullWidth
-          htmlLabel={"Filtrar por tipo"}
-          required={false}
-            onChange={handleFilterCalls}
-        /> */}
         <Dropdown
           value={filterType}
           onChange={setFilterType}

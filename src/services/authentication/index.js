@@ -55,7 +55,7 @@ const authenticateWithCredentials = async (payload) => {
     method: "POST",
     body: JSON.stringify({
       em: encryptWithCypher(email),
-      crd: encryptWithCypher(credentials),
+      pw: encryptWithCypher(credentials),
     }),
     headers: {
       ...commonHeaders,
@@ -112,8 +112,12 @@ const generateSMSCredentials = async () => {
   return { random };
 };
 
-const logout = async () => {
+const logout = async (userType) => {
   await deleteValueInCookies("t");
+
+  if (userType == "4") {
+    return window.location.replace("/credentials/login");
+  }
 
   return (window.location.href = "/login");
 };
@@ -596,6 +600,72 @@ const bulkDeleteUsers = async (companyId) => {
   return dataJson;
 };
 
+const getAllDepartmentsByCompanyId = async (companyId) => {
+  const encryptedToken = await getValueFromCookies("t");
+  const token = decryptWithCypher(encryptedToken);
+
+  if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
+
+  const data = await customFetch(
+    `${BASE_API_URL}/departments/${companyId}/get-all`,
+    {
+      headers: {
+        ...commonHeaders,
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const dataJson = await data.json();
+
+  if (dataJson.message) throw new Error(dataJson.message);
+
+  return dataJson;
+};
+
+const getDashboardCSVInfo = async (companyId) => {
+  const encryptedToken = await getValueFromCookies("t");
+  const token = decryptWithCypher(encryptedToken);
+
+  if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
+
+  const data = await customFetch(
+    `${BASE_API_URL}/${companyId}/dashboards/csv`,
+    {
+      headers: {
+        ...commonHeaders,
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  const dataJson = await data.json();
+
+  if (dataJson.message) throw new Error(dataJson.message);
+
+  return dataJson;
+};
+
+// const adminGetAllCompanyUsers = async (companyId) => {
+//   const encryptedToken = await getValueFromCookies("t");
+//   const token = decryptWithCypher(encryptedToken);
+
+//   if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
+
+//   const data = await customFetch(`${BASE_API_URL}/admin/company/get-all`, {
+//     headers: {
+//       ...commonHeaders,
+//       authorization: `Bearer ${token}`,
+//     },
+//   });
+
+//   const dataJson = await data.json();
+
+//   if (dataJson.message) throw new Error(dataJson.message);
+
+//   return dataJson;
+// };
+
 export const AuthenticationService = {
   authenticate,
   logout,
@@ -622,4 +692,6 @@ export const AuthenticationService = {
   bulkDeleteUsers,
   authenticateWithCredentials,
   generateSMSCredentials,
+  getAllDepartmentsByCompanyId,
+  getDashboardCSVInfo,
 };

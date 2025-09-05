@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { getContrastFontColorFromRGB } from "utils/formatter";
 
 export const TableContainer = styled.table`
   width: 100%;
@@ -12,7 +13,8 @@ export const TableHead = styled.th`
   padding: 0.7rem 1rem;
   display: flex;
   flex: 1;
-  color: #fff;
+  color: ${({ colorScheme }) =>
+    colorScheme ? getContrastFontColorFromRGB(colorScheme) : "#fff"};
 
   border-top-right-radius: 0.5rem;
   border-top-left-radius: 0.5rem;
@@ -21,6 +23,15 @@ export const TableHead = styled.th`
     display: none;
   }
 `;
+
+export const TableBody = styled.div`
+  border: ${({ theme }) =>
+    `${theme.borders.width} solid ${theme.borders.color}`};
+
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+`;
+
 export const TableRow = styled.tr`
   display: flex;
   flex: 1;

@@ -2,11 +2,12 @@ import AuthenticatedLayout from "components/AuthenticatedLayout";
 import { useUser } from "contexts/User/User";
 import { useEffect } from "react";
 import { LayoutWithLoading } from "shared/LayoutWithLoading/LayoutWithLoading";
+import RatingView from "views/RatingView/RatingView";
 import UnauthorizedCallsView from "views/UnauthorizedCallsView/UnauthorizedCallsView";
 
 export default function Calls() {
   const { user } = useUser();
-  const checkAllowedTypes = (type) => type == "worker";
+  const checkAllowedTypes = (type) => type == "agent" || type == "worker";
 
   useEffect(() => {
     if (user == null) return;
@@ -15,7 +16,7 @@ export default function Calls() {
     }
   }, [user]);
 
-  return checkAllowedTypes(user?.type) && <UnauthorizedCallsView />;
+  return checkAllowedTypes(user?.type) && <RatingView />;
 }
 
 Calls.getLayout = function getLayout(page) {

@@ -169,4 +169,3 @@ export const CredentialsContainer = styled.div`
     display: none;
   }
 `;
-// export const RightContent = styled.div``

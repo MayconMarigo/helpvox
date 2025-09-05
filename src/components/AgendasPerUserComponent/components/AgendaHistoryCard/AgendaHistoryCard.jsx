@@ -165,6 +165,7 @@ export default function AgendaHistoryCard({
     return returnedDate;
   };
 
+  console.log(history);
   return (
     <Container>
       {isOpen && (
@@ -248,12 +249,13 @@ export default function AgendaHistoryCard({
         {history?.length > 0 ? (
           history.map((registry) => (
             <TimeContainer
+              isUnavailable={registry.applicant}
               key={registry.startTime}
               onClick={() => handleModal(registry)}
             >
-              <span>{registry.startTime}</span>
+              <span>{registry.startTime}h</span>
               <span>às</span>
-              <span> {registry.endTime}</span>
+              <span> {registry.endTime}h</span>
             </TimeContainer>
           ))
         ) : (

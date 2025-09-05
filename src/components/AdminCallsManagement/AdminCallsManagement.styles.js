@@ -53,3 +53,14 @@ export const DateShowContainer = styled.div`
     }
   }
 `;
+
+export const CardsContainer = styled.div`
+  display: flex;
+  gap: 1rem;
+  margin: 2rem 0;
+
+  ${({ theme }) => theme.devices.tabletOrMobile} {
+    flex-direction: column;
+    text-align: center;
+  }
+`;

@@ -27,4 +27,15 @@ export const CustomButton = styled.button`
     background-color: ${({ theme, colorScheme }) =>
       colorScheme ? `rgba(${colorScheme}, 0.6)` : theme.colors.primaryHover};
   }
+
+  ${({ inverse, theme }) =>
+    inverse &&
+    `
+      background-color: #fff;
+      color: ${theme.colors.primary};
+
+      &:hover {
+        color: #fff;
+      }
+    `}
 `;

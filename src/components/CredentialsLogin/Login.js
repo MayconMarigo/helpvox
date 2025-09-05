@@ -99,7 +99,7 @@ export default function Login() {
       );
 
       if (findEmailInLoggedHistory) {
-        handleSuccessfullLogin();
+        handleSuccessfullLogin(authToken);
         return;
       }
 
@@ -127,13 +127,14 @@ export default function Login() {
     }
   };
 
-  const handleSuccessfullLogin = async () => {
+  const handleSuccessfullLogin = async (authToken) => {
     setContent({
       message: "Autenticado com sucesso, estamos redirecionando você.",
       type: "sucesso",
       isOpen: true,
     });
-    await setValueInCookies("t", token);
+    await setValueInCookies("t", authToken || token);
+
     window.location.replace("/authenticated/redirect");
   };
 
@@ -186,19 +187,18 @@ export default function Login() {
         </FormHeader>
         <FormBody>
           <StyledInput
-            htmlLabel="Email"
-            placeHolder="Digite seu email"
+            htmlLabel="Usuário"
+            placeHolder="Digite seu Usuário"
             required={true}
-            type="email"
             value={email}
             setValue={setEmail}
             disabled={loading}
           />
           <StyledInput
-            htmlLabel="Credencial"
-            placeHolder="Digite sua credencial"
+            htmlLabel="Senha"
+            placeHolder="Digite sua senha"
             required={true}
-            type="text"
+            type="password"
             value={credentials}
             setValue={setCredentials}
             disabled={loading}

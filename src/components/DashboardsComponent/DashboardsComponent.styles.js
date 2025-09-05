@@ -35,3 +35,22 @@ export const ButtonContainer = styled.div`
     max-width: 300px;
   }
 `;
+
+export const FilterContainer = styled.div`
+  display: flex;
+  align-items: end;
+  gap: 1rem;
+  margin-bottom: 1rem;
+
+  button {
+    max-width: 250px;
+  }
+
+  ${({ theme }) => theme.devices.tabletOrMobile} {
+    flex-direction: column;
+
+    button {
+      max-width: none;
+    }
+  }
+`;

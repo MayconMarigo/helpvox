@@ -23,7 +23,8 @@ import { useCompanySocketObjects } from "contexts/CompanySocketObjects/CompanySo
 import Image from "next/image";
 import * as logo from "../../assets/imgs/ui-calls.jpg";
 import { useUser } from "contexts/User/User";
-import * as logo2 from "../../assets/imgs/logo-bemmais.png";
+import * as logo2 from "../../assets/imgs/logo-login.png";
+import { AuthenticationService } from "services/authentication";
 
 export default function UnauthorizedCallsView() {
   const { user } = useUser();
@@ -73,6 +74,9 @@ export default function UnauthorizedCallsView() {
   };
   const image = logo2.default;
 
+  const handleLogout = async (userType) =>
+    await AuthenticationService.logout(userType);
+
   return (
     <LayoutContainer>
       <ContentBody>
@@ -92,6 +96,12 @@ export default function UnauthorizedCallsView() {
           type="button"
           style={{ borderRadius: "2rem", height: "80px", fontSize: "1.5rem" }}
         />
+        <p
+          onClick={() => handleLogout("4")}
+          style={{ cursor: "pointer", marginTop: "3rem" }}
+        >
+          Fazer Logout
+        </p>
       </ContentBody>
     </LayoutContainer>
   );

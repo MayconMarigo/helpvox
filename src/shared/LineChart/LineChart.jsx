@@ -1,11 +1,15 @@
 import * as React from "react";
 import { LineChart } from "@mui/x-charts/LineChart";
-import { MONTHS_THIS_YEAR, CHART_NO_DATA_TO_SHOW } from "utils/constants";
+import {
+  MONTHS_THIS_YEAR,
+  CHART_NO_DATA_TO_SHOW,
+  months,
+} from "utils/constants";
 import { useEffect } from "react";
 import { useState } from "react";
 import { useUser } from "contexts/User/User";
 
-export default function BasicLineChart({ dataToShow = [] }) {
+export default function BasicLineChart({ firstLabel = [], secondLabel = [] }) {
   const [text, setText] = useState([]);
   const { user } = useUser();
 
@@ -15,11 +19,25 @@ export default function BasicLineChart({ dataToShow = [] }) {
     getTextByTagName();
 
     if (!text[0]) return;
-    if (dataToShow) return;
+    if (firstLabel) return;
     text[0].innerHTML = CHART_NO_DATA_TO_SHOW;
-  }, [dataToShow]);
+  }, [firstLabel]);
 
   const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd";
+
+  const formattedSecondLabel = (values) => {
+    const total = months.map((month) => {
+      const finder = values.find((label) => label.month == month.value - 1);
+      if (finder) {
+        // console.log(finder);
+        return finder.minutes_count;
+      }
+
+      return 0;
+    });
+
+    return total;
+  };
 
   return (
     <LineChart
@@ -32,7 +50,13 @@ export default function BasicLineChart({ dataToShow = [] }) {
       ]}
       series={[
         {
-          data: dataToShow,
+          data: firstLabel,
+          label: "Atendimentos",
+          color: "#ffc726",
+        },
+        {
+          data: formattedSecondLabel(secondLabel),
+          label: "Minutagem total",
         },
       ]}
       height={400}

@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import {
+  CardsContainer,
   Container,
   DateShowContainer,
   FilterContainer,
@@ -19,9 +20,14 @@ import StyledButton from "shared/Button";
 import { useUser } from "contexts/User/User";
 import Modal from "shared/Modal";
 import { ptBR } from "date-fns/locale";
+import DashboardCard from "components/DashboardsComponent/components/DashboardCard/DashboardCard";
 
 export default function EnterpriseCallsManagement() {
   const [callsList, setCallsList] = useState([]);
+  const [dashboardItemsList, setDashboardItemsList] = useState([
+    { title: "Atendimentos", value: "Calculando" },
+    { title: "Total de Minutos", value: "Calculando" },
+  ]);
   const [filter, setFilter] = useState("");
   const { user } = useUser();
 
@@ -43,13 +49,14 @@ export default function EnterpriseCallsManagement() {
       const startDate = formatDateToDayMonthAndYear(date[0]?.startDate);
       const endDate = formatDateToDayMonthAndYear(date[0]?.endDate);
 
-      const calls = await CallsService.getAllCallsByCompanyId(
+      const response = await CallsService.getAllCallsByCompanyId(
         startDate,
         endDate,
         user.id
       );
 
-      setCallsList(calls);
+      setCallsList(response?.calls);
+      setDashboardItemsList(response?.dashboardItems);
     } catch (error) {
       console.log(error);
     } finally {
@@ -65,39 +72,51 @@ export default function EnterpriseCallsManagement() {
   const [filteredCalls, setFilteredCalls] = useState(null);
 
   const handleFilterCalls = (e) => {
+    const sumCallDurations = (calls) => {
+      return calls.reduce((total, call) => {
+        const [hours, minutes] = call.callDuration.split(":").map(Number);
+        const durationInMinutes = hours * 60 + minutes;
+        return total + durationInMinutes;
+      }, 0);
+    };
+
     setFilter(e.target.value);
-    if (!e?.target?.value) return setFilteredCalls(callsList);
+    if (!e?.target?.value) {
+      setFilteredCalls(callsList);
+      const durationInMinutes = sumCallDurations(callsList);
+      const totalCalls = callsList.length;
+
+      const filteredDashboardItemsList = [
+        { title: "Atendimentos", value: totalCalls },
+        { title: "Total de Minutos", value: durationInMinutes },
+      ];
+
+      setDashboardItemsList(filteredDashboardItemsList);
+
+      return;
+    }
 
     const filter = callsList.filter((calls) =>
       calls[filterType].toLowerCase().includes(e.target.value.toLowerCase())
     );
 
+    const durationInMinutes = sumCallDurations(filter || callsList);
+    const totalCalls = filter.length;
+
+    const filteredDashboardItemsList = [
+      { title: "Atendimentos", value: totalCalls },
+      { title: "Total de Minutos", value: durationInMinutes },
+    ];
     setFilteredCalls(filter);
+    setDashboardItemsList(filteredDashboardItemsList);
   };
 
   useEffect(() => {}, [filterType]);
 
-  // const formatEndDate = (date) =>
-  //   `${toISOStringWithTimezone(date).split("T")[0]}T23:59:00.000Z`;
-
-  // const formatStartDate = (date) =>
-  //   `${toISOStringWithTimezone(date).split("T")[0]}T00:00:00.000Z`;
-
   const handleFilterCallsByDateRange = (date) => {
-    // const { startDate, endDate } = date[0];
-
-    // const filter = callsList.filter(
-    //   (call) =>
-    //     formatStartDate(startDate) < call.formattedStartTime &&
-    //     formatEndDate(endDate) > call.formattedEndTime
-    // );
-
-    // setFilteredCalls(filter);
     setDate(date);
     fetchCalls();
     setShowDatePicker(false);
-
-    // setPageLoading(false);
   };
 
   const dropDownContent = [
@@ -109,19 +128,11 @@ export default function EnterpriseCallsManagement() {
       value: "receiverName",
       text: "Médico",
     },
-    // {
-    //   value: "videoUrl",
-    //   text: "Gravação",
-    // },
-    // {
-    //   value: "callDuration",
-    //   text: "Duração",
-    // },
+    {
+      value: "department",
+      text: "Setor",
+    },
   ];
-
-  // useEffect(() => {
-  //   handleFilterCallsByDateRange(date);
-  // }, [callsList]);
 
   const handleToogleDatePicker = () => setShowDatePicker(true);
 
@@ -214,13 +225,22 @@ export default function EnterpriseCallsManagement() {
         </DateShowContainer>
         <StyledButton text={"Limpar filtros"} onClick={cleanFilters} />
       </FilterContainer>
+
+      <CardsContainer>
+        {dashboardItemsList.map((card) => (
+          <DashboardCard title={card?.title} value={card?.value} />
+        ))}
+      </CardsContainer>
+
       <Table
         canEdit={false}
         headers={[
           { name: "Usuário" },
           { name: "Médico" },
+          { name: "Setor", width: 180 },
           { name: "Especialidade", width: 180 },
           { name: "Início", width: 180 },
+          { name: "Duração", width: 60 },
         ]}
         content={filteredCalls || callsList}
       />

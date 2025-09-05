@@ -13,9 +13,9 @@ import Modal from "shared/Modal";
 import Table from "shared/Table";
 import { SUCCESS_MESSAGES } from "utils/constants";
 import { phoneMask } from "utils/mask/mask";
-import { FilterContainer } from "./ListUsers.styles";
+import { FilterContainer } from "./ListDepartments.styles";
 
-export default function ListUsers({ type = 2, canEdit = true }) {
+export default function ListDepartments({ type = 2 }) {
   const [usersList, setUsersList] = useState([]);
   const [availableAgents, setAvailableAgents] = useState(null);
   const [usersForCSV, setUsersForCSV] = useState(null);
@@ -40,33 +40,15 @@ export default function ListUsers({ type = 2, canEdit = true }) {
   }, [socket]);
 
   useEffect(() => {
-    if (availableAgents == null) return;
     const fetchUsers = async () => {
       setPageLoading(true);
       try {
-        const users = await AuthenticationService.getAllUsers(
-          user.type,
-          user.id,
-          type
-        );
-        const copy = JSON.parse(JSON.stringify(users));
-        setUsersForCSV(copy);
+        const departments =
+          await AuthenticationService.getAllDepartmentsByCompanyId(user.id);
+        setUsersForCSV(departments);
 
-        users.map((user) => {
-          if (user.phone) user.phone = phoneMask(user.phone);
-          delete user.id;
-          return user;
-        });
-        if (type == 3) {
-          users.map((user) => {
-            if (availableAgents.find((agent) => agent == user.name)) {
-              return (user.online = "🟢");
-            }
-
-            user.online = "🔴";
-          });
-        }
-        setUsersList(users);
+        console.log(departments);
+        setUsersList(departments);
       } catch (error) {
       } finally {
         setPageLoading(false);
@@ -82,41 +64,44 @@ export default function ListUsers({ type = 2, canEdit = true }) {
     if (!e.target.value) setFilteredUsers(null);
 
     const filter = usersList.filter((user) =>
-      user.email.includes(e.target.value)
+      user.name.includes(e.target.value)
     );
 
     setFilteredUsers(filter);
   };
 
-  const CSVHeadersByType = (type) => {
-    const types = {
-      2: [
-        { label: "Nome", key: "name" },
-        { label: "Email", key: "email" },
-        { label: "Telefone", key: "phone" },
-        { label: "Status", key: "status" },
-      ],
-      3: [
-        { label: "Nome", key: "name" },
-        { label: "Especialidade", key: "speciality" },
-        { label: "Status", key: "status" },
-        { label: "Online", key: "online" },
-      ],
-      4: [
-        { label: "Id", key: "id" },
-        { label: "Nome", key: "name" },
-        { label: "Email", key: "email" },
-        { label: "Telefone", key: "phone" },
-        { label: "CPF", key: "cpf" },
-        { label: "Setor", key: "speciality" },
-        { label: "Status", key: "status" },
-      ],
-    };
+  // const CSVHeadersByType = (type) => {
+  //   const types = {
+  //     2: [
+  //       { label: "Nome", key: "name" },
+  //       { label: "Email", key: "email" },
+  //       { label: "Telefone", key: "phone" },
+  //       { label: "Status", key: "status" },
+  //     ],
+  //     3: [
+  //       { label: "Nome", key: "name" },
+  //       { label: "Especialidade", key: "speciality" },
+  //       { label: "Status", key: "status" },
+  //       { label: "Online", key: "online" },
+  //     ],
+  //     4: [
+  //       { label: "Id", key: "id" },
+  //       { label: "Nome", key: "name" },
+  //       { label: "Email", key: "email" },
+  //       { label: "Telefone", key: "phone" },
+  //       { label: "Status", key: "status" },
+  //       { label: "CPF", key: "cpf" },
+  //     ],
+  //   };
 
-    return types[type];
-  };
+  //   return types[type];
+  // };
 
-  const CSVHeaders = CSVHeadersByType(type);
+  const CSVHeaders = [
+    { label: "Id", key: "id" },
+    { label: "Setor", key: "name" },
+    { label: "Código", key: "code" },
+  ];
 
   const CSVData = filteredUsers || usersList;
 
@@ -135,19 +120,22 @@ export default function ListUsers({ type = 2, canEdit = true }) {
         { name: "Online", width: 100 },
       ],
       4: [
-        { name: "Nome", width: 380 },
-        { name: "Email", width: 380 },
+        { name: "Nome" },
+        { name: "Email" },
         { name: "Telefone", width: 160 },
-        { name: "CPF", width: 150 },
-        { name: "Setor", width: 150 },
         { name: "Status", width: 80 },
+        { name: "CPF", width: 120 },
       ],
     };
 
     return types[type];
   };
 
-  const customHeaders = customHeadersByType(type);
+  const customHeaders = [
+    { name: "Id" },
+    { name: "Setor", width: 300 },
+    { name: "Código", width: 200 },
+  ];
 
   const handleTitleByUserId = {
     2: "Editar Usuário",
@@ -185,45 +173,9 @@ export default function ListUsers({ type = 2, canEdit = true }) {
 
   return (
     <>
-      {isOpen && (
-        <Modal handleCloseIconClick={toogleIsOpen}>
-          <h3>AVISO!</h3>
-          <p>
-            Essa ação irá apagar todos os funcionários cadastrados por esse
-            usuário!{" "}
-            <strong style={{ textDecoration: "underline" }}>
-              Essa ação é irreversível.{" "}
-            </strong>
-            Recomendamos primeiramente exportar a planilha de funcionários nessa
-            página clicando em{" "}
-            <strong style={{ textDecoration: "underline" }}>
-              "Exportar CSV"
-            </strong>{" "}
-            antes de prosseguir.
-          </p>
-          <p></p>
-          <div
-            style={{
-              margin: "1rem 0",
-              display: "flex",
-              gap: "0.5rem",
-              alignItems: "center",
-            }}
-          >
-            <Checkbox checked={checked} setChecked={toogleIsChecked} />
-            <p>Estou ciente e concordo em prosseguir.</p>
-          </div>
-
-          <StyledButton
-            text="Remover funcionários"
-            disabled={!checked}
-            onClick={handleDeleteUsers}
-          />
-        </Modal>
-      )}
       <FilterContainer>
         <StyledInput
-          htmlLabel={"Filtrar por email"}
+          htmlLabel={"Filtrar por Setor"}
           required={false}
           onChange={handleFilterUsers}
         />
@@ -232,19 +184,14 @@ export default function ListUsers({ type = 2, canEdit = true }) {
           data={usersForCSV}
           name="Relatorio_Usuarios"
         />
-        {user.type == "company" && (
-          <StyledButton
-            text="Apagar meus Funcionários"
-            onClick={toogleIsOpen}
-          />
-        )}
       </FilterContainer>
-      <Table
-        canEdit={canEdit}
-        headers={customHeaders}
-        content={filteredUsers || usersList}
-        modal={{ type: type, title: handleTitleByUserId[type] }}
-      />
+      {usersList && (
+        <Table
+          headers={customHeaders}
+          content={filteredUsers || usersList}
+          canEdit={false}
+        />
+      )}
     </>
   );
 }

@@ -21,6 +21,7 @@ import {
   InputContainer,
   NumberedButton,
   PaginationContainer,
+  TableBody,
   TableContainer,
   TableData,
   TableHead,
@@ -53,6 +54,32 @@ export default function Table({
   const [status, setStatus] = useState(true);
   const [document, setDocument] = useState("");
   const [speciality, setSpeciality] = useState("");
+  const [role, setRole] = useState();
+  const [companyRoles, setCompanyRoles] = useState(null);
+
+  useEffect(() => {
+    if (user.type !== "company") return;
+
+    const fetchDepartments = async () => {
+      try {
+        const departments =
+          await AuthenticationService.getAllDepartmentsByCompanyId(user.id);
+
+        const clone = departments.map((department) => {
+          return {
+            value: department.name,
+            text: department.name,
+          };
+        });
+        const roles = [{ value: "0", text: "Escolha o setor" }];
+        roles.push(...clone);
+
+        setCompanyRoles(roles);
+        setRole(clone[0].value);
+      } catch (error) {}
+    };
+    fetchDepartments();
+  }, [userType]);
 
   useEffect(() => {
     const sliced = content.slice(
@@ -90,6 +117,20 @@ export default function Table({
     setUserType(userType);
     const statusStype = handleStatusType(line.status);
     setStatus(statusStype);
+  };
+
+  const handleEditWorker = (line) => {
+    setIsOpen(true);
+    setPassword("");
+    setFullName(line.name);
+    setEmail(line.email);
+    setPhone(line.phone);
+    setDocument(line.cpf);
+    const userType = handleUserType(line.userTypeId);
+    setUserType(userType);
+    const statusStype = handleStatusType(line.status);
+    setStatus(statusStype);
+    setRole(line.speciality);
   };
 
   const handleEditPhysician = (line) => {
@@ -152,6 +193,10 @@ export default function Table({
       sts: encryptWithCypher(status),
     };
 
+    if (modal.type == "4") {
+      payload.esp = role;
+    }
+
     try {
       await AuthenticationService.updateUser(payload, user.type, modal.type);
 
@@ -203,7 +248,7 @@ export default function Table({
 
       new Date(value);
 
-      const start = value.split("T")[0].split("-").reverse().join("-");
+      const start = value.split("T")[0].split("-").reverse().join("/");
       const end = value.split("T")[1].split(".")[0];
 
       return `${start} ${end}`;
@@ -228,12 +273,14 @@ export default function Table({
     2: handleSubmitEditUser,
     3: handleSubmitEditPhysician,
     credential: handleSubmitEditCredential,
+    4: handleSubmitEditUser,
   };
 
   const handleEditByType = {
     2: handleEditUser,
     3: handleEditPhysician,
     credential: handleEditCredential,
+    4: handleEditWorker,
   };
 
   const modalByType = {
@@ -255,7 +302,6 @@ export default function Table({
             htmlLabel={"Email"}
             placeHolder="Digite o email..."
             setValue={setEmail}
-            type="email"
             fullWidth
           />
           <StyledToogle
@@ -275,6 +321,7 @@ export default function Table({
             placeHolder="Digite a senha..."
             setValue={setPassword}
             type="password"
+            required={false}
             fullWidth
           />
           <StyledInput
@@ -351,7 +398,6 @@ export default function Table({
             htmlLabel={"Email"}
             placeHolder="Digite o email..."
             setValue={setEmail}
-            type="email"
             fullWidth
           />
           <StyledToogle
@@ -371,6 +417,7 @@ export default function Table({
             placeHolder="Digite a senha..."
             setValue={setPassword}
             type="password"
+            required={false}
             fullWidth
           />
           <StyledInput
@@ -391,6 +438,17 @@ export default function Table({
             maxLength={15}
           />
         </InputContainer>
+        {companyRoles && (
+          <InputContainer>
+            <Dropdown
+              style={{ maxWidth: "300px", width: "100%" }}
+              value={role}
+              htmlLabel={"Setor"}
+              onChange={setRole}
+              content={companyRoles}
+            />
+          </InputContainer>
+        )}
 
         <StyledButton text="Salvar alteração" type="submit" loading={loading} />
       </>
@@ -441,20 +499,22 @@ export default function Table({
           ))}
         </TableHead>
         <LoaderContainer>
-          {filteredContentPerPage?.map((line, i) => (
-            <TableRow
-              colorScheme={user.colorScheme}
-              key={uuidv4()}
-              onClick={() => handleEditByType[modal.type](line)}
-            >
-              {Object.values(line).map((value, index) => (
-                <TableData key={uuidv4()} width={headers[index]?.width}>
-                  <h4>{headers[index]?.name}:&nbsp;</h4>
-                  {limitQuantityOfCharacters(checkValueType(value), 50)}
-                </TableData>
-              ))}
-            </TableRow>
-          ))}
+          <TableBody>
+            {filteredContentPerPage?.map((line, i) => (
+              <TableRow
+                colorScheme={user.colorScheme}
+                key={uuidv4()}
+                onClick={() => canEdit && handleEditByType[modal.type](line)}
+              >
+                {Object.values(line).map((value, index) => (
+                  <TableData key={uuidv4()} width={headers[index]?.width}>
+                    <h4>{headers[index]?.name}:&nbsp;</h4>
+                    {limitQuantityOfCharacters(checkValueType(value), 50)}
+                  </TableData>
+                ))}
+              </TableRow>
+            ))}
+          </TableBody>
           {content.length == 0 && (
             <div
               style={{

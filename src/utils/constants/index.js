@@ -27,6 +27,8 @@ export const SUCCESS_MESSAGES = {
   USERS_SUCCESSFULL_DELETED: "Usuários da lista deletados com sucesso.",
   USER_SUCESSFULL_UPDATED: "Usuário atualizado com sucesso.",
   CREDENTIAL_SUCESSFULL_UPDATED: "Credencial atualizada com sucesso.",
+  DEPARTMENT_SUCCESSFULL_CREATED: "Departamento criado com sucesso.",
+  DEPARTMENTS_SUCCESSFULL_CREATED: "Departamentos criados com sucesso.",
 };
 
 export const ADMIN_BASE_URL = "/admin";

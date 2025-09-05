@@ -8,6 +8,7 @@ export default function StyledButton({
   loading = false,
   disabled = false,
   Component,
+  inverse = false,
   ...props
 }) {
   const { user } = useUser();
@@ -17,6 +18,7 @@ export default function StyledButton({
       type={type}
       disabled={loading || disabled}
       colorScheme={user?.colorScheme}
+      inverse={inverse}
       {...props}
     >
       {loading ? <SyncLoader size={10} color="#fff" /> : text}

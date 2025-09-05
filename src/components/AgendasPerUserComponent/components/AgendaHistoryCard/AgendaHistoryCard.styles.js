@@ -3,12 +3,11 @@ import styled from "styled-components";
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: center;
-  border: ${({ theme }) => `${theme.borders.width} solid #d1d5db`};
+  /* align-items: center; */
+  /* border: ${({ theme }) => `${theme.borders.width} solid #d1d5db`}; */
   border-radius: ${({ theme }) => `${theme.borders.radius}`};
-  min-height: 200px;
-  padding: 1rem 0.5rem;
-  width: 200px;
+  /* padding: 1rem 0rem; */
+  /* width: 200px; */
 `;
 
 export const InputContainer = styled.div`
@@ -39,11 +38,12 @@ export const TimeHistoryContainer = styled.div`
 
   margin-top: 1rem;
   display: flex;
-  flex-direction: column;
+  /* flex-direction: column; */
   align-items: center;
-  gap: 0.25rem;
-  height: 200px;
-  overflow-y: scroll;
+  flex-wrap: wrap;
+  gap: 1rem;
+  /* height: 200px; */
+  /* overflow-y: scroll; */
   width: 100%;
 
   span {
@@ -55,8 +55,16 @@ export const TimeHistoryContainer = styled.div`
 export const TimeContainer = styled.div`
   display: flex;
   justify-content: space-between;
-  padding: 0.25rem 1rem;
-  width: 100%;
+  gap: 0.5rem;
+  background-color: ${({ theme, isUnavailable }) =>
+    isUnavailable ? "red" : theme.colors.primary};
+  padding: 0.75rem;
+  border-radius: 2rem;
+  color: #fff;
+
+  span {
+    font-size: 0.75rem;
+  }
 
   &:hover {
     cursor: pointer;

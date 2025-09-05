@@ -77,27 +77,10 @@ export default function AdminCallsManagement() {
 
   useEffect(() => {}, [filterType]);
 
-  // const formatEndDate = (date) =>
-  //   `${toISOStringWithTimezone(date).split("T")[0]}T23:59:00.000Z`;
-
-  // const formatStartDate = (date) =>
-  //   `${toISOStringWithTimezone(date).split("T")[0]}T00:00:00.000Z`;
-
   const handleFilterCallsByDateRange = (date) => {
-    // const { startDate, endDate } = date[0];
-
-    // const filter = callsList.filter(
-    //   (call) =>
-    //     formatStartDate(startDate) < call.formattedStartTime &&
-    //     formatEndDate(endDate) > call.formattedEndTime
-    // );
-
-    // setFilteredCalls(filter);
     setDate(date);
     fetchCalls();
     setShowDatePicker(false);
-
-    // setPageLoading(false);
   };
 
   const dropDownContent = [

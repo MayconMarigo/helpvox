@@ -1,5 +1,5 @@
 import { useAlert } from "contexts/Alert/Alert";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { RgbColorPicker } from "react-colorful";
 import ImageUploading from "react-images-uploading";
 import { AuthenticationService } from "services/authentication";
@@ -30,6 +30,7 @@ import {
   InputContainer,
 } from "./Cadastro.styles";
 import { useUser } from "contexts/User/User";
+import { DepartmentService } from "services/department";
 
 export default function Cadastro({ type }) {
   const { user } = useUser();
@@ -58,10 +59,34 @@ export default function Cadastro({ type }) {
     specialityDropDownContent[0].value
   );
 
+  const [role, setRole] = useState();
+  const [companyRoles, setCompanyRoles] = useState(null);
+
   const isDisabled =
     userType == "4"
-      ? !fullName || !email || !phone || !document
+      ? !fullName || !email || !phone || !document || !password || loading
       : !fullName || !email || !password || !userType || loading;
+
+  useEffect(() => {
+    if (user.type !== "company") return;
+
+    const fetchDepartments = async () => {
+      try {
+        const departments =
+          await AuthenticationService.getAllDepartmentsByCompanyId(user.id);
+
+        const clone = departments.map((department) => {
+          return {
+            value: department.name,
+            text: department.name,
+          };
+        });
+        setCompanyRoles(clone);
+        setRole(clone[0].value);
+      } catch (error) {}
+    };
+    fetchDepartments();
+  }, [userType]);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -74,6 +99,7 @@ export default function Cadastro({ type }) {
         em: encryptWithCypher(email),
         pw: encryptWithCypher(password),
         uti: encryptWithCypher(userType.toString()),
+        pn: encryptWithCypher(phone),
       };
 
       if (userType == "2") {
@@ -87,6 +113,7 @@ export default function Cadastro({ type }) {
 
       if (userType == "4") {
         payload.doc = encryptWithCypher(document);
+        payload.rl = encryptWithCypher(role);
       }
 
       const { created } = await AuthenticationService.register(
@@ -121,7 +148,7 @@ export default function Cadastro({ type }) {
     setPassword("");
     setPhone("");
     setLogo("");
-    setDocument("")
+    setDocument("");
   };
 
   const onChange = (image) => {
@@ -266,15 +293,28 @@ export default function Cadastro({ type }) {
           setValue={setFullName}
           fullWidth
         />
-        <StyledInput
-          disabled={loading}
-          value={email}
-          htmlLabel={"Email"}
-          placeHolder="Digite o email..."
-          setValue={setEmail}
-          type="email"
-          fullWidth
-        />
+        {user.type == "company" && (
+          <StyledInput
+            disabled={loading}
+            value={email}
+            htmlLabel={"Login (email ou nome de usuário)"}
+            placeHolder="Digite o login..."
+            setValue={setEmail}
+            fullWidth
+          />
+        )}
+
+        {user.type !== "company" && (
+          <StyledInput
+            disabled={loading}
+            value={email}
+            htmlLabel={"Email"}
+            placeHolder="Digite o email..."
+            setValue={setEmail}
+            type="email"
+            fullWidth
+          />
+        )}
       </InputContainer>
       <InputContainer>
         {user.type != "company" && (
@@ -309,6 +349,7 @@ export default function Cadastro({ type }) {
             maxLength={14}
           />
         )}
+
         {user.type != "company" && (
           <Dropdown
             disabled
@@ -319,6 +360,28 @@ export default function Cadastro({ type }) {
           />
         )}
       </InputContainer>
+      {userType == "4" && (
+        <InputContainer>
+          <Dropdown
+            style={{ maxWidth: "300px", width: "100%" }}
+            value={role}
+            htmlLabel={"Setor"}
+            onChange={setRole}
+            content={
+              companyRoles || [{ value: null, text: "Selecionar cargo..." }]
+            }
+          />
+          <StyledInput
+            disabled={loading}
+            value={password}
+            htmlLabel={"Senha"}
+            placeHolder="Digite a senha..."
+            setValue={setPassword}
+            type="password"
+            fullWidth
+          />
+        </InputContainer>
+      )}
       {user.type != "company" && userType == "3" && (
         <InputContainer>
           <Dropdown
