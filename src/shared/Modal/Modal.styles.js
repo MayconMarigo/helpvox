@@ -33,7 +33,9 @@ export const ModalContainer = styled.form`
   }
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
-    padding: 1rem;
+    height: 100%;
+    width: 100%;
+    overflow-y: scroll;
     button {
       max-width: none;
     }

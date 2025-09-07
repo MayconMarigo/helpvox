@@ -8,8 +8,16 @@ export const Container = styled.div`
     margin-bottom: 2rem;
   }
 
+  > div {
+    max-height: calc(100vh - 11rem);
+  }
+
   ${({ theme }) => theme.devices.tabletOrMobile} {
     padding: 1rem;
+
+    > div {
+      max-height: none;
+    }
   }
 `;
 

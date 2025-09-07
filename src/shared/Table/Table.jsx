@@ -441,7 +441,7 @@ export default function Table({
         {companyRoles && (
           <InputContainer>
             <Dropdown
-              style={{ maxWidth: "300px", width: "100%" }}
+              id="dropdown"
               value={role}
               htmlLabel={"Setor"}
               onChange={setRole}

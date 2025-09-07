@@ -150,7 +150,7 @@ export default function AttendanceComponent() {
     <>
       <LoaderContainer />
       <Container>
-        <h2 style={{ padding: "2rem" }}>Consultório Online</h2>
+        <h2>Consultório Online</h2>
         <img src={image.src} style={{ maxHeight: "auto", maxWidth: "200px" }} />
 
         <h4 style={{ fontSize: "2rem" }}>

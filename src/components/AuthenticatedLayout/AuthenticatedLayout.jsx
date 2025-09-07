@@ -93,7 +93,7 @@ const AuthenticatedLayout = ({ children }) => {
         <LayoutContainer>
           <NavigatorContainer>
             <NavigatorHeader isNavigatorOpen={isNavigatorOpen}>
-              <MobileHeaderContainer justifyEnd={isAgent}>
+              <MobileHeaderContainer>
                 <HeaderImage
                   src={user?.logoImage ? user.logoImage : image.src}
                 />

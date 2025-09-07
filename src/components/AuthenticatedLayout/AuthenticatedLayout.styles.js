@@ -39,8 +39,7 @@ export const MobileHeaderContainer = styled.div`
   ${({ theme }) => theme.devices.tabletOrMobile} {
     display: flex;
     flex: 1;
-    justify-content: ${({ justifyEnd }) =>
-      justifyEnd ? "flex-end" : "space-between"};
+    justify-content: space-between;
     align-items: center;
     position: relative;
     padding-right: 1rem;
@@ -100,7 +99,9 @@ export const HeaderImage = styled.img`
   display: ${({ notShow }) => (notShow ? "none" : "")};
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
-    max-width: 120px;
+    height: auto;
+    width: auto;
+    max-height: 70px;
     margin-top: 0;
     padding: 0.5rem 1rem;
   }
@@ -140,7 +141,7 @@ export const ContentHeader = styled.div`
   padding: ${({ theme }) => theme.spacing.padding.container.desktop};
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
-    padding: ${({ theme }) => theme.spacing.padding.navigator.tabletOrMobile};
+    display: none;
   }
 `;
 

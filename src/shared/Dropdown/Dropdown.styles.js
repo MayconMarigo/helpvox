@@ -26,4 +26,5 @@ export const SelectContainer = styled.select`
         colorScheme ? `rgb(${colorScheme})` : theme.colors.primary
       }`};
   }
+
 `;

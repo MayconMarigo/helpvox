@@ -150,8 +150,17 @@ export const InputContainer = styled.div`
     max-width: 200px;
   }
 
+  #dropdown {
+    width: 100%;
+    max-width: 300px;
+  }
+
   ${({ theme }) => theme.devices.tabletOrMobile} {
     flex-direction: column;
     align-items: center;
+
+    #dropdown {
+      max-width: none;
+    }
   }
 `;
