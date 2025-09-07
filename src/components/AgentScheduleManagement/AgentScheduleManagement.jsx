@@ -120,10 +120,10 @@ export default function AgentScheduleManagement() {
           eventContent={renderEventContent}
           eventClick={handleClick}
           eventBackgroundColor={
-            user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd"
+            user.colorScheme ? `rgb(${user.colorScheme})` : "#ff1922"
           }
           eventBorderColor={
-            user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd"
+            user.colorScheme ? `rgb(${user.colorScheme})` : "#ff1922"
           }
           buttonText={{ today: "Hoje" }}
         />

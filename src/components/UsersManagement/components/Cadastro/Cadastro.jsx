@@ -54,9 +54,10 @@ export default function Cadastro({ type }) {
 
   const specialityDropDownContent = PHYSICIANS_SPECILITIES;
 
-  const [speciality, setSpeciality] = useState(
-    specialityDropDownContent[0].value
-  );
+  const [speciality, setSpeciality] = useState("Intérprete");
+  // const [speciality, setSpeciality] = useState(
+  //   specialityDropDownContent[0].value
+  // );
 
   const [role, setRole] = useState();
   const [companyRoles, setCompanyRoles] = useState(null);
@@ -274,7 +275,7 @@ export default function Cadastro({ type }) {
 
   const htmlLabelByUserType = {
     2: "Empresa",
-    3: "Médico",
+    3: "Intérprete",
     4: "Nome Completo",
   };
 
@@ -286,7 +287,7 @@ export default function Cadastro({ type }) {
           value={fullName}
           htmlLabel={htmlLabelByUserType[type]}
           // htmlLabel={
-          //   user.type == "admin" ? "Empresa ou Médico" : "Nome Completo"
+          //   user.type == "admin" ? "Empresa ou Intérprete" : "Nome Completo"
           // }
           placeHolder="Digite o nome completo..."
           setValue={setFullName}
@@ -381,17 +382,17 @@ export default function Cadastro({ type }) {
           />
         </InputContainer>
       )}
-      {user.type != "company" && userType == "3" && (
+      {/* {user.type != "company" && userType == "3" && (
         <InputContainer>
           <Dropdown
             style={{ minWidth: "300px" }}
             value={speciality}
-            htmlLabel={"Especialidade"}
+            htmlLabel={"Função"}
             onChange={setSpeciality}
             content={specialityDropDownContent}
           />
         </InputContainer>
-      )}
+      )} */}
       {user.type == "admin" && userType == "2" && (
         <InputContainer>
           <ImageUploadContainer>

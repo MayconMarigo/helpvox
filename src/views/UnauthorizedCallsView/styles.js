@@ -90,10 +90,18 @@ export const ContentBody = styled.main`
     max-width: 300px;
   }
 
+  iframe {
+    width: 100%;
+    max-width: 560px;
+  }
+
   ${({ theme }) => theme.devices.tabletOrMobile} {
     min-height: calc(100vh - 8rem);
     padding: ${({ theme }) => theme.spacing.padding.container.tabletOrMobile};
 
+    iframe {
+      max-width: none;
+    }
     button {
       max-width: 500px;
     }

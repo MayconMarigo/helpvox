@@ -3,16 +3,18 @@ import { styled } from "styled-components";
 export const Container = styled.div`
   background-color: ${({ theme }) => theme.colors.primary};
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
 
   width: 100%;
   height: 100vh;
+  padding: 1rem;
 `;
 
 export const LoginForm = styled.form`
   background-color: #fff;
-  max-width: 450px;
+  max-width: 500px;
   width: 100%;
   min-height: 450px;
   padding: 2rem;
@@ -112,3 +114,17 @@ export const LoaderContainer = styled.div`
 `;
 
 export const StyledHeader = styled.h4``;
+
+export const IframeContainer = styled.div`
+  ${({ theme }) => theme.devices.tabletOrMobile} {
+    iframe {
+      position: absolute;
+      left: 0.5rem;
+      width: 97%;
+    }
+  }
+`;
+
+export const HowToUseButton = styled.a`
+  color: ${({ theme }) => theme.colors.primary};
+`;

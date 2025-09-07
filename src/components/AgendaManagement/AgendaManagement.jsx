@@ -77,7 +77,7 @@ export default function AgendaManagement() {
     },
     {
       value: "receiverName",
-      text: "Médico",
+      text: "Intérprete",
     },
     {
       value: "videoUrl",
@@ -95,7 +95,7 @@ export default function AgendaManagement() {
 
   const handleToogleDatePicker = () => setShowDatePicker(true);
 
-  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd";
+  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#ff1922";
 
   useEffect(() => {
     const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];

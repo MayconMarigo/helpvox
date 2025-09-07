@@ -16,7 +16,7 @@ import {
 } from "services/socket";
 import { formatDateToBackend } from "utils/date/date";
 import { CALL_RESPONSE_TIME } from "utils/constants";
-import * as logo2 from "../../assets/imgs/logo-login.png";
+import * as logo2 from "../../assets/imgs/logo-kof.png";
 import * as logo from "../../assets/imgs/ui-calls.jpg";
 
 export default function AttendanceComponent() {

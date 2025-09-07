@@ -110,11 +110,12 @@ const AuthenticatedLayout = ({ children }) => {
                     list={collapsible?.subMenus}
                   />
                 ))}
+
                 <StyledButton
                   text="Sair da conta"
                   type="button"
                   onClick={handleLogout}
-                  style={{ backgroundColor: "#ffdb70", color: "#000" }}
+                  style={{ backgroundColor: "#fff", color: "#000" }}
                 />
               </MobileContainer>
             </NavigatorHeader>
@@ -135,7 +136,7 @@ const AuthenticatedLayout = ({ children }) => {
                 text="Sair da conta"
                 type="button"
                 onClick={handleLogout}
-                style={{ backgroundColor: "#ffdb70", color: "#000" }}
+                style={{ backgroundColor: "#fff", color: "#000" }}
               />
             </NavigatorBody>
           </NavigatorContainer>
@@ -159,16 +160,16 @@ const AuthenticatedLayout = ({ children }) => {
               <RightContent>
                 <Badge name={user?.name || "AN"} />
                 <CredentialsContainer>
-                  <p>
+                  <p style={{ color: "#fff" }}>
                     {user?.type == "company"
                       ? "Empresa"
                       : user?.type == "admin"
                       ? "Admin"
                       : user?.type == "worker"
                       ? "Funcionário"
-                      : "Médico"}
+                      : "Intérprete"}
                   </p>
-                  <h5>{user?.name}</h5>
+                  <h5 style={{ color: "#fff" }}>{user?.name}</h5>
                 </CredentialsContainer>
               </RightContent>
             </ContentHeader>

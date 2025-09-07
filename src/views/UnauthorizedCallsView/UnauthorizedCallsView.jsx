@@ -1,6 +1,6 @@
 import { useCallingCall } from "contexts/CallingModal/CallingModal";
 import { useSocket } from "contexts/Socket/Socket";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   handleCallAvailableAgent,
   loadCompanySocketEvents,
@@ -20,10 +20,10 @@ import {
 } from "./styles";
 
 import { useCompanySocketObjects } from "contexts/CompanySocketObjects/CompanySocketObjects";
-import Image from "next/image";
+// import Image from "next/image";
 import * as logo from "../../assets/imgs/ui-calls.jpg";
 import { useUser } from "contexts/User/User";
-import * as logo2 from "../../assets/imgs/logo-login.png";
+import * as logo2 from "../../assets/imgs/logo-kof.png";
 import { AuthenticationService } from "services/authentication";
 
 export default function UnauthorizedCallsView() {
@@ -77,6 +77,47 @@ export default function UnauthorizedCallsView() {
   const handleLogout = async (userType) =>
     await AuthenticationService.logout(userType);
 
+  const [status, setStatus] = useState("Testando conexão...");
+  const [color, setColor] = useState("black");
+
+  function checkConnection() {
+    const startTime = new Date().getTime();
+    const img = new Image();
+    const fileSizeInBytes = 1048576; // 1 MB
+
+    img.onload = function () {
+      const endTime = new Date().getTime();
+      const duration = (endTime - startTime) / 1000; // segundos
+      const bitsLoaded = fileSizeInBytes * 8; // bits
+      const speedBps = bitsLoaded / duration;
+      const speedMbps = speedBps / (1024 * 1024);
+
+      if (speedMbps >= 5) {
+        setStatus("Conexão Boa");
+        setColor("green");
+      } else {
+        setStatus("Conexão Ruim");
+        setColor("red");
+      }
+    };
+
+    img.onerror = function () {
+      setStatus("Erro ao testar a conexão");
+      setColor("gray");
+    };
+
+    // Cache-buster
+    img.src =
+      "https://upload.wikimedia.org/wikipedia/commons/4/47/PNG_transparency_demonstration_1.png?_=" +
+      new Date().getTime();
+  }
+
+  useEffect(() => {
+    checkConnection(); // roda ao montar
+    const interval = setInterval(checkConnection, 10000); // roda a cada 10s
+    return () => clearInterval(interval); // limpa ao desmontar
+  }, []);
+
   return (
     <LayoutContainer>
       <ContentBody>
@@ -85,11 +126,22 @@ export default function UnauthorizedCallsView() {
           src={image.src}
           style={{ maxHeight: "auto", maxWidth: "200px" }}
         />
-        <h3>
+        <h3 style={{ textAlign: "center" }}>
           Bem vindo à central de <br />
-          atendimento médico! ❤️
+          Intérpretes! ❤️
         </h3>
-        <Image src={logo.default} alt="" />
+        {/* <Image src={logo.default} alt="" /> */}
+        <iframe
+          // width="560"
+          height="315"
+          src="https://www.youtube.com/embed/_y46kF5CEaA?rel=0&controls=0&showinfo=0&modestbranding=1&fs=0&autohide=1&loop=1&playlist=_y46kF5CEaA&autoplay=1"
+          title="YouTube video player"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin"
+          allowfullscreen
+        ></iframe>
+        <p style={{ color }}>{status}</p>
         <StyledButton
           onClick={callAvailableAgent}
           text="Iniciar Atendimento"

@@ -23,7 +23,7 @@ export default function BasicLineChart({ firstLabel = [], secondLabel = [] }) {
     text[0].innerHTML = CHART_NO_DATA_TO_SHOW;
   }, [firstLabel]);
 
-  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd";
+  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#ff1922";
 
   const formattedSecondLabel = (values) => {
     const total = months.map((month) => {
@@ -52,7 +52,7 @@ export default function BasicLineChart({ firstLabel = [], secondLabel = [] }) {
         {
           data: firstLabel,
           label: "Atendimentos",
-          color: "#ffc726",
+          color: "#000",
         },
         {
           data: formattedSecondLabel(secondLabel),

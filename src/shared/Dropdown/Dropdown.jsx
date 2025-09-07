@@ -19,7 +19,7 @@ export default function Dropdown({
     },
     {
       value: "3",
-      text: "Médico",
+      text: "Intérprete",
     },
   ];
 

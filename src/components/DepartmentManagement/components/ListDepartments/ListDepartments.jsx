@@ -80,7 +80,7 @@ export default function ListDepartments({ type = 2 }) {
   //     ],
   //     3: [
   //       { label: "Nome", key: "name" },
-  //       { label: "Especialidade", key: "speciality" },
+  //       { label: "Função", key: "speciality" },
   //       { label: "Status", key: "status" },
   //       { label: "Online", key: "online" },
   //     ],
@@ -115,7 +115,7 @@ export default function ListDepartments({ type = 2 }) {
       ],
       3: [
         { name: "Nome" },
-        { name: "Especialidade", width: 250 },
+        { name: "Função", width: 250 },
         { name: "Status", width: 100 },
         { name: "Online", width: 100 },
       ],
@@ -139,7 +139,7 @@ export default function ListDepartments({ type = 2 }) {
 
   const handleTitleByUserId = {
     2: "Editar Usuário",
-    3: "Editar Médico",
+    3: "Editar Intérprete",
   };
 
   const [isOpen, setIsOpen] = useState(false);

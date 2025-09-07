@@ -133,7 +133,8 @@ export const ContentContainer = styled.div`
 export const ContentHeader = styled.div`
   display: flex;
   height: 4rem;
-  background-color: #ffc726;
+  /* background-color: #ffc726; */
+  background-color: #000;
   /* border-bottom: ${({ theme }) =>
     `${theme.borders.width} solid ${theme.borders.color}`}; */
   justify-content: ${({ spacing }) => (spacing ? "space-between" : "flex-end")};

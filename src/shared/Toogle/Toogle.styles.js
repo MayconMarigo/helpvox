@@ -39,7 +39,7 @@ export const ToogleSwitch = styled.div`
       ? "gray"
       : colorScheme
       ? `rgb(${colorScheme})`
-      : "#5120bd"};
+      : "#ff1922"};
   width: 42px;
   height: 100%;
   border-radius: 100%;

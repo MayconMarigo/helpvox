@@ -1,6 +1,6 @@
 import PhoneGif from "assets/gifs/phone-gif.gif";
 import CiclicLogo from "assets/svgs/CiclicLogo";
-import BemmaisLogo from "assets/imgs/logo-login.png";
+import BemmaisLogo from "assets/imgs/logo-kof.png";
 import Image from "next/image";
 import { useEffect, useState } from "react";
 import StyledButton from "shared/Button";
@@ -46,7 +46,7 @@ export default function CallModal({
 
   const text = `${
     modal.type === "caller"
-      ? "Buscando médicos disponíveis"
+      ? "Buscando Intérpretes disponíveis"
       : `Recebendo ligação de ${modalCaller}`
   }`;
   // }${formatDots(dots)}`;

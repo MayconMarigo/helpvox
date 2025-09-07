@@ -107,7 +107,7 @@ export default function AgendasPerUserComponent() {
     }
   };
 
-  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd";
+  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#ff1922";
 
   useEffect(() => {
     const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
@@ -148,7 +148,7 @@ export default function AgendasPerUserComponent() {
       )}
       <InputContainer>
         <Dropdown
-          htmlLabel="Filtrar Médicos"
+          htmlLabel="Filtrar Intérpretes"
           onChange={handleChange}
           content={
             (usersList.length > 0 && usersList) || [{ text: "Carregando..." }]

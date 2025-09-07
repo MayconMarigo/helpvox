@@ -18,8 +18,8 @@ export const navItems = {
           url: "admin/empresas",
         },
         {
-          title: "Médicos",
-          url: "admin/medicos",
+          title: "Intérpretes",
+          url: "admin/interpretes",
         },
       ],
     },

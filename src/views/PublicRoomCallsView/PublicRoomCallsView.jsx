@@ -23,9 +23,19 @@ export default function PublicRoomCallsView() {
         width: "100%",
         height: "calc(100% - 6rem)",
         border: 0,
+        backgroundColor: "#ff1922",
+        color: "#ff1922",
       },
       showLeaveButton: true,
       showFullscreenButton: true,
+    });
+
+    call.setTheme({
+      colors: {
+        accent: "#ff1922",
+        accentText: "#fff",
+        mainAreaBg: "#ff1922",
+      },
     });
     const parent = document.getElementById("call-provider");
     parent.appendChild(call.iframe());

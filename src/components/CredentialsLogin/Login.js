@@ -16,6 +16,8 @@ import {
   Container,
   FormBody,
   FormHeader,
+  HowToUseButton,
+  IframeContainer,
   LoaderContainer,
   LoginForm,
   QrCodeContainer,
@@ -23,9 +25,10 @@ import {
   TotpInput,
   TotpInputContainer,
 } from "./Login.styles";
-import * as logo from "../../assets/imgs/logo-login.png";
+import * as logo from "../../assets/imgs/logo-kof.png";
 import { ERROR_MESSAGES } from "utils/constants";
 import { decryptWithCypher } from "utils/encryption";
+import Modal from "shared/Modal";
 
 export default function Login() {
   const { user } = useUser();
@@ -177,34 +180,66 @@ export default function Login() {
     }
   };
 
+  const [modal, setModal] = useState(false);
+
+  const handleToggleModal = () => setModal((prev) => !prev);
+
   const steps = {
     loginForm: (
       <LoginForm onSubmit={handleSubmitForm}>
+        {modal && (
+          <Modal
+            handleCloseIconClick={handleToggleModal}
+            style={{ overflowY: "hidden" }}
+            inverseCloseButton
+            fullWidth
+          >
+            <IframeContainer>
+              <iframe
+                width="560"
+                height="315"
+                src="https://www.youtube.com/embed/_y46kF5CEaA?rel=0&amp;controls=0&amp;showinfo=0&amp;modestbranding=1&amp;fs=0&amp;autohide=1&amp;loop=1&amp;playlist=_y46kF5CEaA&amp;autoplay=1&amp;mute=1"
+                title="YouTube video player"
+                frameborder="0"
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                referrerpolicy="strict-origin-when-cross-origin"
+                allowfullscreen=""
+              ></iframe>
+            </IframeContainer>
+          </Modal>
+        )}
         <FormHeader>
           <Image src={LoginLogo} width={250} alt="login" />
-          <h3>Entrar</h3>
-          <p>Insira suas credenciais para acessar o sistema</p>
+          <h3>Central de Intérpretes 🤟</h3>
+          <p style={{ textAlign: "center" }}>
+            Por favor, coloque suas credenciais e faça o login no sistema
+          </p>
         </FormHeader>
         <FormBody>
           <StyledInput
-            htmlLabel="Usuário"
-            placeHolder="Digite seu Usuário"
+            htmlLabel="Matrícula RE"
+            placeHolder="Digite sua matrícula"
             required={true}
             value={email}
             setValue={setEmail}
             disabled={loading}
           />
           <StyledInput
-            htmlLabel="Senha"
-            placeHolder="Digite sua senha"
+            htmlLabel="Telefone com DDD na KOF BR"
+            placeHolder="Digite seu telefone"
             required={true}
-            type="password"
             value={credentials}
             setValue={setCredentials}
             disabled={loading}
           />
         </FormBody>
-        <StyledButton text="Entrar" type="submit" loading={loading} />
+        <StyledButton text="Acessar" type="submit" loading={loading} />
+        <div
+          style={{ marginTop: "30px", textAlign: "center", cursor: "pointer" }}
+          onClick={handleToggleModal}
+        >
+          <HowToUseButton>Como utilizar a plataforma?</HowToUseButton>
+        </div>
       </LoginForm>
     ),
     smsValidationForm: (
@@ -237,7 +272,7 @@ export default function Login() {
 
   const RenderSteps = useMemo(() => {
     return steps[step];
-  }, [step, email, credentials, totpInput, loading]);
+  }, [step, email, credentials, totpInput, loading, modal]);
 
   return loading ? (
     <LoaderContainer>

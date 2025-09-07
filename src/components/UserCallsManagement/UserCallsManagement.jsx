@@ -90,7 +90,7 @@ export default function AdminCallsManagement() {
     },
     {
       value: "receiverName",
-      text: "Médico",
+      text: "Intérprete",
     },
   ];
 
@@ -122,7 +122,7 @@ export default function AdminCallsManagement() {
     document.getElementsByTagName("input")[0].value = "";
   };
 
-  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#5120bd";
+  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#ff1922";
 
   useEffect(() => {
     const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];
@@ -193,7 +193,7 @@ export default function AdminCallsManagement() {
         canEdit={false}
         headers={[
           { name: "Usuário" },
-          { name: "Médico" },
+          { name: "Intérprete" },
           { name: "Início", width: 180 },
           // { name: "Término", width: 180 },
           // { name: "Gravação", width: 100 },

@@ -16,7 +16,7 @@ export default function Calls() {
 
   return (
     user.type == "admin" && (
-      <UsersManagementView title="Cadastrar Médicos" userListType={3} />
+      <UsersManagementView title="Cadastrar Intérpretes" userListType={3} />
     )
   );
 }

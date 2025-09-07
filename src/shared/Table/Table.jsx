@@ -374,7 +374,7 @@ export default function Table({
           <StyledInput
             disabled
             value={speciality}
-            htmlLabel={"Especialidade"}
+            htmlLabel={"Função"}
             fullWidth
           />
         </InputContainer>

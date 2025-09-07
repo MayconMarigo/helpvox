@@ -41,11 +41,11 @@ export default function UsersManagement({ title, userListType }) {
         {title
           ? title
           : user.type == "admin"
-          ? "Cadastrar Empresa ou Médico"
+          ? "Cadastrar Empresa ou Intérprete"
           : "Funcionários"}
       </h2>
 
-      <TabsContainer colorScheme={user.colorScheme || "#5120bd"}>
+      <TabsContainer colorScheme={user.colorScheme || "#ff1922"}>
         {settings?.map((setting) => (
           <Tabs
             selected={selected == setting.value}

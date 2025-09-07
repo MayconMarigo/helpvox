@@ -73,7 +73,10 @@ export default function RatingView() {
             style={{ height: "auto", width: "100%", maxWidth: 200 }}
           />
           <div style={{ textAlign: "center", color: "#fff" }}>
-            <h2 style={{ fontWeight: 500 }}>Avalie o seu atendimento</h2>
+            <h1 style={{ color: "#000" }}>Avalie o seu atendimento</h1>
+            <h3 style={{ fontWeight: 500, color: "#000", marginTop: "1rem" }}>
+              Como foi a sua experiência utilizando a central de intérpretes?
+            </h3>
           </div>
           <StarContainer>
             {Array(5)
@@ -96,7 +99,6 @@ export default function RatingView() {
 
           <StyledButton
             text="ENVIAR"
-            inverse
             type="button"
             onClick={handleSubmitRating}
           />

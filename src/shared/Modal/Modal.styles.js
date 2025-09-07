@@ -11,6 +11,7 @@ export const ModalBackground = styled.div`
   justify-content: center;
   align-items: center;
   background-color: rgba(0, 0, 0, 0.5);
+  padding: 1rem;
 `;
 
 export const ModalContainer = styled.form`
@@ -33,7 +34,7 @@ export const ModalContainer = styled.form`
   }
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
-    height: 100%;
+    height: 32%;
     width: 100%;
     overflow-y: scroll;
     button {
@@ -48,4 +49,10 @@ export const CloseIconContainer = styled.strong`
   padding: 0.75rem;
   right: 0;
   top: 0;
+  color: ${({ inverseCloseButton }) => (!inverseCloseButton ? "#fff" : "#000")};
+
+  ${({ theme }) => theme.devices.tabletOrMobile} {
+    color: ${({ inverseCloseButton }) =>
+      !inverseCloseButton ? "#fff" : "#000"};
+  }
 `;
