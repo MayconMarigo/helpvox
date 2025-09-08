@@ -64,13 +64,20 @@ export default function CallModal({
             alt=""
             width={120}
           />
-          <h3 style={{ marginTop: "1rem" }}>{text}</h3>
+          <h3 style={{ marginTop: "1rem", color: "#fff" }}>{text}</h3>
           {modal.type == "caller" && positionInQueue > 0 && (
-            <h3 style={{ marginTop: "1rem" }}>
-              Posição na fila: {positionInQueue}
-            </h3>
+            <>
+              <h3 style={{ marginTop: "1rem", color: "#fff" }}>
+                Sua posição na fila é:
+              </h3>
+              <h3
+                style={{ marginTop: "1rem", color: "#fff", fontSize: "4rem" }}
+              >
+                {positionInQueue}
+              </h3>
+            </>
           )}
-          <Image src={PhoneGif} />
+          {/* <Image src={PhoneGif} /> */}
           {modal.type !== "caller" && (
             <StyledButton text="Atender" onClick={handleAcceptCall} />
           )}

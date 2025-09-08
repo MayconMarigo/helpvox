@@ -15,7 +15,8 @@ export const ModalContainer = styled.div`
   height: auto;
   padding: 2rem;
   text-align: center;
-  background-color: #fff;
+  /* background-color: #fff; */
+  background-color: ${({ theme }) => theme.colors.primary};
   width: 95%;
   max-width: 500px;
   border-radius: ${({ theme }) => theme.borders.radius};
@@ -24,8 +25,8 @@ export const ModalContainer = styled.div`
   border: ${({ theme }) => `2px solid ${theme.colors.primary}`};
 
   img {
-    mix-blend-mode: multiply;
-    max-width: 220px;
-    height: auto;
+    /* mix-blend-mode: multiply; */
+    /* max-width: 220px; */
+    /* height: auto; */
   }
 `;
