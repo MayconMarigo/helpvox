@@ -189,6 +189,7 @@ export default function Login() {
       <LoginForm onSubmit={handleSubmitForm}>
         {modal && (
           <Modal
+            id="modal"
             handleCloseIconClick={handleToggleModal}
             style={{ overflowY: "hidden" }}
             inverseCloseButton

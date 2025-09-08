@@ -34,6 +34,10 @@ export const LoginForm = styled.form`
     max-height: none;
     align-self: flex-start;
   }
+
+  #modal {
+    max-width: 625px;
+  }
 `;
 
 export const FormHeader = styled.div`

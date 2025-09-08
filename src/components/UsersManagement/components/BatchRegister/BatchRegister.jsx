@@ -43,39 +43,36 @@ export default function BatchRegister() {
       const sheet = workbook.Sheets[sheetName];
       const json = XLSX.utils.sheet_to_json(sheet);
 
-      const CSVRows = [
-        "Id",
-        "Nome",
-        "Usuário",
-        "Telefone",
-        "CPF",
-        "Setor",
-        "Senha",
-      ];
+      const CSVRows = ["Id", "Nome", "Telefone", "Setor"];
 
       let error = false;
 
-      json.forEach((jsonObject, index) => {
-        let csvRowValue = 0;
-        for (const [key, value] of Object.entries(jsonObject)) {
-          if (CSVRows[csvRowValue] !== key) {
-            error = true;
-            return alert(
-              `Erro: Valor inválido ${CSVRows[csvRowValue]} na linha ${
-                index + 2
-              }`
-            );
-          }
-
-          csvRowValue++;
-        }
-        csvRowValue = 0;
+      const mapped = json.map((value) => {
+        delete value["Código do Setor"];
+        return value;
       });
 
-      if (error) {
-        window.document.getElementById("file").value = "";
-        return;
-      }
+      // mapped.forEach((jsonObject, index) => {
+      //   let csvRowValue = 0;
+      //   for (const [key, value] of Object.entries(jsonObject)) {
+      //     if (CSVRows[csvRowValue] !== key) {
+      //       error = true;
+      //       return alert(
+      //         `Erro: Valor inválido ${CSVRows[csvRowValue]} na linha ${
+      //           index + 2
+      //         }`
+      //       );
+      //     }
+
+      //     csvRowValue++;
+      //   }
+      //   csvRowValue = 0;
+      // });
+
+      // if (error) {
+      //   window.document.getElementById("file").value = "";
+      //   return;
+      // }
 
       setBulkUsers(json);
     };
@@ -88,24 +85,21 @@ export default function BatchRegister() {
       setPageLoading(true);
 
       const payload = [];
-      const c = ["uid", "nm", "em", "pn", "doc", "esp", "pw"];
+      const c = ["uid", "nm", "pn", "esp"];
 
       bulkUsers.forEach((user, outerIndex) => {
         const obj = {};
         let counter = 0;
         for (const [key, value] of Object.entries(user)) {
           const payloadKey = c[counter];
-          if (
-            String(value).toLowerCase() == "ativo" ||
-            String(value).toLowerCase() == "inativo"
-          ) {
-            const types = {
-              Ativo: 1,
-              Inativo: 0,
-            };
-            obj[payloadKey] = encryptWithCypher(types[value].toString());
-          } else if (key == "Setor") {
+          if (key == "Setor") {
             obj[payloadKey] = value;
+          } else if (key == "Id") {
+            obj["em"] = encryptWithCypher(value.toString());
+            obj["uid"] = encryptWithCypher(value.toString());
+          } else if (key == "Telefone") {
+            obj["pw"] = encryptWithCypher(value.toString());
+            obj["pn"] = encryptWithCypher(value.toString());
           } else {
             obj[payloadKey] = encryptWithCypher(value.toString());
           }
