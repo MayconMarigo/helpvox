@@ -77,25 +77,28 @@ export default function Login() {
         password,
       });
 
-      setToken(TOTP.token);
-      setTotp(TOTP.qrCodeDataJson);
-      setStep("qrCodeForm");
+      const { token } = TOTP;
+
+      setToken(token);
+
+      handleSuccessfullLogin(token);
+      // setStep("qrCodeForm");
     } catch (error) {
       const message = checkErrorType(error.message);
       setContent({ message: message, type: "erro", isOpen: true });
     } finally {
-      setLoading(false);
+      // setLoading(false);
     }
   };
 
-  const handleSuccessfullLogin = async (url) => {
+  const handleSuccessfullLogin = async (tokenValue) => {
     setContent({
       message: "Autenticado com sucesso, estamos redirecionando você.",
       type: "sucesso",
       isOpen: true,
     });
 
-    await setValueInCookies("t", token);
+    await setValueInCookies("t", tokenValue);
 
     window.location.href = "/authenticated/redirect";
   };

@@ -29,7 +29,7 @@ import {
   RightContent,
 } from "./AuthenticatedLayout.styles";
 
-import * as logo from "../../assets/imgs/logo-bemmais.png";
+import * as logo from "../../assets/imgs/logo-kof.png";
 
 const AuthenticatedLayout = ({ children }) => {
   const { user } = useUser();

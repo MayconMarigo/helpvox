@@ -48,7 +48,8 @@ export default function BatchRegister() {
       let error = false;
 
       const mapped = json.map((value) => {
-        delete value["Código do Setor"];
+        delete value["Área RH"];
+        delete value["Área RH"];
         return value;
       });
 
@@ -74,7 +75,7 @@ export default function BatchRegister() {
       //   return;
       // }
 
-      setBulkUsers(json);
+      setBulkUsers(mapped);
     };
 
     reader.readAsArrayBuffer(file);
@@ -85,24 +86,25 @@ export default function BatchRegister() {
       setPageLoading(true);
 
       const payload = [];
-      const c = ["uid", "nm", "pn", "esp"];
+      const c = ["id", "name", "phone", "especiality"];
 
       bulkUsers.forEach((user, outerIndex) => {
         const obj = {};
         let counter = 0;
         for (const [key, value] of Object.entries(user)) {
           const payloadKey = c[counter];
-          if (key == "Setor") {
-            obj[payloadKey] = value;
-          } else if (key == "Id") {
-            obj["em"] = encryptWithCypher(value.toString());
-            obj["uid"] = encryptWithCypher(value.toString());
-          } else if (key == "Telefone") {
-            obj["pw"] = encryptWithCypher(value.toString());
-            obj["pn"] = encryptWithCypher(value.toString());
-          } else {
-            obj[payloadKey] = encryptWithCypher(value.toString());
-          }
+          obj[payloadKey] = value;
+          // if (key == "Setor" || key == "Área RH" || key == "Área RH") {
+          //   obj[payloadKey] = value;
+          // } else if (key.toLowerCase() == "re") {
+          //   obj["em"] = encryptWithCypher(value.toString());
+          //   obj["uid"] = encryptWithCypher(value.toString());
+          // } else if (key == "Telefone") {
+          //   obj["pw"] = encryptWithCypher(value.toString());
+          //   obj["pn"] = encryptWithCypher(value.toString());
+          // } else {
+          //   obj[payloadKey] = encryptWithCypher(value.toString());
+          // }
           counter++;
         }
         payload.push(obj);
@@ -155,14 +157,8 @@ export default function BatchRegister() {
           <strong>"Cadastrar Usuários"</strong> para finalizar o cadastro.
         </p>
         <input type="file" name="file" id="file" onChange={handleUploadCSV} />
-        <StyledButton
-          text="Baixar planilha de exemplo"
-          type="submit"
-          style={{ marginTop: "1rem" }}
-          onClick={handleDownloadCSVExample}
-        />
-        <a href="/planilha_exemplo_usuarios.xlsx" download id="download-csv" />
-        <div>
+
+        <div style={{ marginTop: "0.5rem" }}>
           <StyledButton
             text="Carregar Planilha"
             type="button"
@@ -175,11 +171,17 @@ export default function BatchRegister() {
                 text="Cadastrar Usuários"
                 type="button"
                 onClick={handleAddBulkUsersFromCSV}
-                style={{ marginTop: "1rem" }}
               />
             </>
           )}
         </div>
+        <StyledButton
+          text="Baixar planilha de exemplo"
+          type="submit"
+          inverse
+          onClick={handleDownloadCSVExample}
+        />
+        <a href="/planilha_exemplo_usuarios.xlsx" download id="download-csv" />
       </BulkRegisterButtonsContainer>
     </BulkRegisterContainer>
   );

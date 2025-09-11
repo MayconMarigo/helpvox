@@ -199,7 +199,7 @@ export default function Login() {
               <iframe
                 width="560"
                 height="315"
-                src="https://www.youtube.com/embed/_y46kF5CEaA?rel=0&amp;controls=0&amp;showinfo=0&amp;modestbranding=1&amp;fs=0&amp;autohide=1&amp;loop=1&amp;playlist=_y46kF5CEaA&amp;autoplay=1&amp;mute=1"
+                src="https://www.youtube.com/embed/WkEEWxJ8UuU?si=ulyQ65XK5_Yj1Knb&rel=0&controls=0&showinfo=0&modestbranding=1&fs=0&autohide=1&loop=1&playlist=WkEEWxJ8UuU&autoplay=1"
                 title="YouTube video player"
                 frameborder="0"
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
@@ -211,14 +211,16 @@ export default function Login() {
         )}
         <FormHeader>
           <Image src={LoginLogo} width={250} alt="login" />
-          <h3>Central de Intérpretes 🤟</h3>
+          <h3 style={{ textAlign: "center" }}>
+            CILKOF - Central de Intermediação em Língua de Sinais 🤟
+          </h3>
           <p style={{ textAlign: "center" }}>
             Por favor, coloque suas credenciais e faça o login no sistema
           </p>
         </FormHeader>
         <FormBody>
           <StyledInput
-            htmlLabel="Matrícula RE"
+            htmlLabel="Matrícula/RE"
             placeHolder="Digite sua matrícula"
             required={true}
             value={email}
@@ -226,7 +228,7 @@ export default function Login() {
             disabled={loading}
           />
           <StyledInput
-            htmlLabel="Telefone com DDD na KOF BR"
+            htmlLabel="Telefone com DDD, cadastrado em KOF BR"
             placeHolder="Digite seu telefone"
             required={true}
             value={credentials}

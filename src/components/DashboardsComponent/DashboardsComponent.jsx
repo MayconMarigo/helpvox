@@ -177,9 +177,9 @@ export default function DashboardsComponent({
           )}
 
           <CardsContainer>
-            {list.map((item) => (
+            {list?.map((item) => (
               <DashboardCard
-                key={item.title}
+                key={item?.title}
                 title={item?.title}
                 value={item?.value}
               />

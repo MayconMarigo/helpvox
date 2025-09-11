@@ -14,7 +14,7 @@ export default function DepartmentManagement({ title, userListType }) {
   const settings = [
     { value: "Visualização", component: "visualizacao" },
     { value: "Cadastro", component: "cadastro" },
-    { value: "Planilha de Cadastro", component: "planilha" },
+    // { value: "Planilha de Cadastro", component: "planilha" },
   ];
   const [selected, setSelected] = useState("Visualização");
   const [step, setStep] = useState("visualizacao");
