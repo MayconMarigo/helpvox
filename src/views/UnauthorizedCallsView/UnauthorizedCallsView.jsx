@@ -127,8 +127,9 @@ export default function UnauthorizedCallsView() {
           style={{ maxHeight: "auto", maxWidth: "200px" }}
         />
         <h3 style={{ textAlign: "center" }}>
-          Bem vindo à central de <br />
-          Intérpretes! ❤️
+          Bem vindo à CILKOF
+          <br />
+          Central de Intermediação em Língua de Sinais 🤟
         </h3>
         {/* <Image src={logo.default} alt="" /> */}
         <iframe
