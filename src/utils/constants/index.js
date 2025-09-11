@@ -7,7 +7,7 @@ export const BASE_SOCKET_API_URL = "wss://api-kof.helpvox.app";
 
 export const BASE_SMS_2FA_URL = "https://rest.clicksend.com/v3/sms/send";
 
-export const BASE_DAILY_JS_URL = "https://hublab.daily.co";
+export const BASE_DAILY_JS_URL = "https://helpvox-kof.daily.co";
 
 export const ALERT_DIALOG_CLEANUP_TIMER = 5000;
 export const CALL_RESPONSE_TIME = 15000;

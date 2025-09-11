@@ -98,7 +98,7 @@ export default function ListDepartments({ type = 2 }) {
   // };
 
   const CSVHeaders = [
-    { label: "Id", key: "id" },
+    // { label: "Id", key: "id" },
     { label: "Setor", key: "name" },
     { label: "Código", key: "code" },
   ];
@@ -132,7 +132,7 @@ export default function ListDepartments({ type = 2 }) {
   };
 
   const customHeaders = [
-    { name: "Id" },
+    // { name: "Id" },
     { name: "Setor", width: 300 },
     { name: "Código", width: 200 },
   ];

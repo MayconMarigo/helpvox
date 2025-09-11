@@ -77,9 +77,19 @@ export default function CallModal({
               </h3>
             </>
           )}
-          {/* <Image src={PhoneGif} /> */}
           {modal.type !== "caller" && (
-            <StyledButton text="Atender" onClick={handleAcceptCall} />
+            <StyledButton
+              style={{
+                marginTop: "2rem",
+                borderRadius: "2rem",
+                height: "80px",
+                fontSize: "1.5rem",
+                backgroundColor: "#0dc45f",
+                border: "none",
+              }}
+              text="Atender"
+              onClick={handleAcceptCall}
+            />
           )}
         </ModalContainer>
       </ModalBackground>

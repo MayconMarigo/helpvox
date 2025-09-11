@@ -43,7 +43,7 @@ export const formatDateToBackend = (date) => {
 };
 
 export const formatDateToDayMonthAndYear = (date) =>
-  toISOStringWithTimezone(date).split("T")[0].split("-").reverse().join("-");
+  toISOStringWithTimezone(date).split("T")[0].split("-").reverse().join("/");
 
 export const formatDateToYearMonthDate = (date) =>
   toISOStringWithTimezone(date).split("T")[0]

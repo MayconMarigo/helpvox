@@ -113,12 +113,6 @@ export default function Login() {
 
       const { random } = smsData;
 
-      const temp = [...alreadyPreviouslyLoggedUsers];
-      temp.push(email);
-      const crypt = JSON.stringify(temp);
-
-      setValueInStorage("plu", crypt);
-
       setRandomSMSValue(random);
 
       setStep("smsValidationForm");
@@ -136,6 +130,12 @@ export default function Login() {
       type: "sucesso",
       isOpen: true,
     });
+
+    const temp = [...alreadyPreviouslyLoggedUsers];
+    temp.push(email);
+    const crypt = JSON.stringify(temp);
+    setValueInStorage("plu", crypt);
+
     await setValueInCookies("t", authToken || token);
 
     window.location.replace("/authenticated/redirect");

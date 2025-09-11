@@ -42,7 +42,7 @@ export default function UsersManagement({ title, userListType }) {
           ? title
           : user.type == "admin"
           ? "Cadastrar Empresa ou Intérprete"
-          : "Funcionários"}
+          : "Usuários"}
       </h2>
 
       <TabsContainer colorScheme={user.colorScheme || "#ff1922"}>

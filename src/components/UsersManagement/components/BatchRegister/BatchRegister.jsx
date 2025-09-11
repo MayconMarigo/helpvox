@@ -86,7 +86,7 @@ export default function BatchRegister() {
       setPageLoading(true);
 
       const payload = [];
-      const c = ["id", "name", "phone", "especiality"];
+      const c = ["id", "name", "phone", "speciality"];
 
       bulkUsers.forEach((user, outerIndex) => {
         const obj = {};

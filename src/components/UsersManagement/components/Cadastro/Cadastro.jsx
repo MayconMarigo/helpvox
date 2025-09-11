@@ -347,6 +347,7 @@ export default function Cadastro({ type }) {
             setValue={setDocument}
             fullWidth
             maxLength={14}
+            required={false}
           />
         )}
 

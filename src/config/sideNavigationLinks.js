@@ -94,7 +94,7 @@ export const navItems = {
           url: "/schedule",
         },
         {
-          title: "Consultório Online",
+          title: "Área de Atendimento",
           url: "/attendance",
         },
       ],

@@ -1,11 +1,9 @@
 import Daily from "@daily-co/daily-js";
-import CiclicLogo from "assets/svgs/CiclicLogo";
+import { useUser } from "contexts/User/User";
 import { useEffect } from "react";
 import { BASE_DAILY_JS_URL } from "utils/constants";
+import * as logo from "../../assets/imgs/logo-kof.png";
 import { Header } from "./PublicRoomCallsView.styles";
-import * as logo from "../../assets/imgs/logo-bemmais.png";
-import Image from "next/image";
-import { useUser } from "contexts/User/User";
 
 export default function PublicRoomCallsView() {
   const { user } = useUser();
