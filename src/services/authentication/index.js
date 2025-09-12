@@ -55,7 +55,7 @@ const authenticateWithCredentials = async (payload) => {
     method: "POST",
     body: JSON.stringify({
       em: encryptWithCypher(email),
-      pw: encryptWithCypher(credentials),
+      pn: encryptWithCypher(credentials),
     }),
     headers: {
       ...commonHeaders,

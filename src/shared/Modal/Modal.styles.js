@@ -49,10 +49,13 @@ export const CloseIconContainer = styled.strong`
   padding: 0.75rem;
   right: 0;
   top: 0;
-  color: ${({ inverseCloseButton }) => (!inverseCloseButton ? "#fff" : "#000")};
+  /* color: ${({ inverseCloseButton }) =>
+    !inverseCloseButton ? "#fff" : "#000"}; */
+  color: #000;
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
-    color: ${({ inverseCloseButton }) =>
-      !inverseCloseButton ? "#fff" : "#000"};
+    /* color: ${({ inverseCloseButton }) =>
+      !inverseCloseButton ? "#fff" : "#000"}; */
+    color: #000;
   }
 `;

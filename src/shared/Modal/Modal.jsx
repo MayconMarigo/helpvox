@@ -21,7 +21,7 @@ export default function Modal({
         {children}
 
         <CloseIconContainer
-          inverseCloseButton={inverseCloseButton}
+          // inverseCloseButton={inverseCloseButton}
           onClick={handleCloseIconClick}
         >
           X
