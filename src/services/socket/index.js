@@ -34,7 +34,6 @@ export const loadAgentSocketEvents = (
   setCallObject
 ) => {
   socket.on("incomingCall", (message) => {
-    console.log(message);
     setModal({ open: true });
     setIsCalling(true);
     setCallObject(message);
@@ -76,3 +75,6 @@ export const handleChangeAgentStatusToAvailable = (socket) => {
   socket.emit("handleChangeAgentStatusToAvailable", { id: socket.id });
   socket.emit("checkCompaniesOnHold", (res) => {});
 };
+
+export const handleDisconectAgent = (socket) =>
+  socket.emit("handleDisconnectAgent");

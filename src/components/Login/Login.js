@@ -87,7 +87,7 @@ export default function Login() {
       const message = checkErrorType(error.message);
       setContent({ message: message, type: "erro", isOpen: true });
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
   };
 

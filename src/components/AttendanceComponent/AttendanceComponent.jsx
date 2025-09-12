@@ -10,6 +10,7 @@ import {
   handleAnswerIncomingCallSocket,
   handleChangeAgentStatusToAvailable,
   handleChangeAgentStatusToBusy,
+  handleDisconectAgent,
   handleIncomingCallNotAnsweredSocket,
   handleRegisterNotAnsweredCallSocket,
   loadAgentSocketEvents,
@@ -82,7 +83,7 @@ export default function AttendanceComponent() {
 
     setTriggerNotAnswered(false);
     setModal({ isOpen: false });
-    handleChangeAgentStatusToBusy(socket);
+    handleDisconectAgent(socket);
     handleChangeAvailability();
 
     return;
@@ -131,17 +132,28 @@ export default function AttendanceComponent() {
 
   const buttonText = isOnline ? "Ficar indisponível" : "Ficar disponível";
 
-  const handleChangeAvailability = () => setIsOnline((prev) => !prev);
+  const handleChangeAvailability = () => {
+    if (isOnline) {
+      handleDisconectAgent(socket);
+    }
+    setIsOnline((prev) => !prev);
+  };
 
   useEffect(() => {
     if (!socket) return;
-    if (!isOnline) {
-      handleChangeAgentStatusToBusy(socket);
+
+    if (isOnline) {
+      socket.connect();
+
+      loadAgentSocketEvents(
+        socket,
+        setModal,
+        setIsCalling,
+        setRedirectToRoom,
+        setCallObject
+      );
       return;
     }
-    handleChangeAgentStatusToAvailable(socket);
-
-    return;
   }, [isOnline]);
 
   const image = logo2.default;
