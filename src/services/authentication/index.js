@@ -67,11 +67,12 @@ const authenticateWithCredentials = async (payload) => {
   if (authJson.message) throw new Error(authJson.message);
 
   const authToken = authJson.token;
+  const phone = authJson.phone;
 
-  return { authToken };
+  return { authToken, phone };
 };
 
-const generateSMSCredentials = async () => {
+const generateSMSCredentials = async (phone) => {
   const authSMS = btoa(
     `${process.env.NEXT_PUBLIC_SMS_USER}:${process.env.NEXT_PUBLIC_SMS_API_KEY}`
   );
@@ -98,8 +99,8 @@ const generateSMSCredentials = async () => {
         {
           source: "php",
           from: "Helpvox",
-          body: `BEM+ Security - O seu código de acesso é ${random}`,
-          to: "+5543991474319",
+          body: `Helpvox Security - O seu código de acesso é ${random}`,
+          to: `+55${phone}`,
         },
       ],
     }),

@@ -18,7 +18,7 @@ import {
 import { formatDateToBackend } from "utils/date/date";
 import { CALL_RESPONSE_TIME } from "utils/constants";
 import * as logo2 from "../../assets/imgs/logo-kof.png";
-import * as logo from "../../assets/imgs/ui-calls.jpg";
+import * as logo from "../../assets/imgs/attendance-calls.jpg";
 
 export default function AttendanceComponent() {
   const [triggerNotAnswered, setTriggerNotAnswered] = useState(false);
@@ -130,7 +130,7 @@ export default function AttendanceComponent() {
     return (window.location.href = `/authenticated/room?name=${callObject.room.name}&t=${callObject.agent.token}&returnUrl=${window.location.pathname}`);
   };
 
-  const buttonText = isOnline ? "Ficar indisponível" : "Ficar disponível";
+  const buttonText = isOnline ? "Desconectar" : "Conectar";
 
   const handleChangeAvailability = () => {
     if (isOnline) {
@@ -162,7 +162,7 @@ export default function AttendanceComponent() {
     <>
       <LoaderContainer />
       <Container>
-        <h2>Consultório Online</h2>
+        <h2>Sala de Atendimento</h2>
         <img src={image.src} style={{ maxHeight: "auto", maxWidth: "200px" }} />
 
         <h4 style={{ fontSize: "2rem" }}>

@@ -13,6 +13,7 @@ import Dropdown from "shared/Dropdown";
 import { DateRange } from "react-date-range";
 import {
   formatDateToDayMonthAndYear,
+  formatDateToFirstDayOfMonth,
   substractDaysFromNewDate,
   toISOStringWithTimezone,
 } from "utils/date/date";
@@ -33,7 +34,9 @@ export default function EnterpriseCallsManagement() {
 
   const [date, setDate] = useState([
     {
-      startDate: substractDaysFromNewDate(30),
+      startDate: substractDaysFromNewDate(
+        formatDateToFirstDayOfMonth(new Date())
+      ),
       endDate: new Date(),
       key: "selection",
     },

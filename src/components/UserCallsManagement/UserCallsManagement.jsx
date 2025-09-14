@@ -12,6 +12,7 @@ import Dropdown from "shared/Dropdown";
 import { DateRange } from "react-date-range";
 import {
   formatDateToDayMonthAndYear,
+  formatDateToFirstDayOfMonth,
   substractDaysFromNewDate,
   toISOStringWithTimezone,
 } from "utils/date/date";
@@ -27,7 +28,9 @@ export default function AdminCallsManagement() {
 
   const [date, setDate] = useState([
     {
-      startDate: substractDaysFromNewDate(30),
+      startDate: substractDaysFromNewDate(
+        formatDateToFirstDayOfMonth(new Date())
+      ),
       endDate: new Date(),
       key: "selection",
     },
@@ -193,11 +196,11 @@ export default function AdminCallsManagement() {
         canEdit={false}
         headers={[
           { name: "Usuário" },
-          { name: "Intérprete" },
           { name: "Início", width: 180 },
+          { name: "Duração", width: 180 },
+          // { name: "Intérprete" },
           // { name: "Término", width: 180 },
           // { name: "Gravação", width: 100 },
-          // { name: "Duração", width: 60 },
         ]}
         content={filteredCalls || callsList}
       />

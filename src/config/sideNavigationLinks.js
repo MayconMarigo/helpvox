@@ -1,6 +1,8 @@
 import DataDisplay from "assets/svgs/DataDisplay";
 import MultiplePeopleCrm from "assets/svgs/MultiplePeopleCrm";
 import Profile from "assets/svgs/Profile";
+import { TbReport } from "react-icons/tb";
+import { PiVideoConference } from "react-icons/pi";
 
 export const navItems = {
   admin: [
@@ -25,8 +27,8 @@ export const navItems = {
     },
     {
       id: 1,
-      title: "Histórico",
-      icon: <MultiplePeopleCrm />,
+      title: "Relatórios",
+      icon: <TbReport />,
       subMenus: [
         {
           title: "Atendimentos",
@@ -61,8 +63,8 @@ export const navItems = {
     },
     {
       id: 1,
-      title: "Histórico",
-      icon: <MultiplePeopleCrm />,
+      title: "Relatórios",
+      icon: <TbReport />,
       subMenus: [
         {
           title: "Agendamentos",
@@ -73,7 +75,7 @@ export const navItems = {
           url: "enterprise/chamadas",
         },
         {
-          title: "Credenciais",
+          title: "Credenciais API",
           url: "enterprise/credentials",
         },
       ],
@@ -93,16 +95,23 @@ export const navItems = {
           title: "Agendamentos",
           url: "/schedule",
         },
+      ],
+    },
+    {
+      id: 0,
+      title: "Área de atendimento",
+      icon: <PiVideoConference  />,
+      subMenus: [
         {
-          title: "Área de Atendimento",
+          title: "Sala de Atendimento",
           url: "/attendance",
         },
       ],
     },
     {
       id: 1,
-      title: "Histórico",
-      icon: <MultiplePeopleCrm />,
+      title: "Relatórios",
+      icon: <TbReport />,
       subMenus: [
         {
           title: "Atendimentos",

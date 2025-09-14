@@ -94,7 +94,7 @@ export default function Login() {
         credentials,
       });
 
-      const { authToken } = data;
+      const { authToken, phone } = data;
       setToken(authToken);
 
       const findEmailInLoggedHistory = !!alreadyPreviouslyLoggedUsers.find(
@@ -106,10 +106,7 @@ export default function Login() {
         return;
       }
 
-      const smsData = await AuthenticationService.generateSMSCredentials({
-        email,
-        credentials,
-      });
+      const smsData = await AuthenticationService.generateSMSCredentials(phone);
 
       const { random } = smsData;
 
@@ -118,6 +115,12 @@ export default function Login() {
       setStep("smsValidationForm");
     } catch (error) {
       const message = checkErrorType(error.message);
+
+      if (message == ERROR_MESSAGES.HAS_NO_PHONE) {
+        setErrorModal(true);
+        return;
+      }
+
       setContent({ message: message, type: "erro", isOpen: true });
     } finally {
       setLoading(false);
@@ -181,8 +184,10 @@ export default function Login() {
   };
 
   const [modal, setModal] = useState(false);
+  const [errorModal, setErrorModal] = useState(false);
 
   const handleToggleModal = () => setModal((prev) => !prev);
+  const handleToggleErrorModal = () => setErrorModal(false);
 
   const steps = {
     loginForm: (
@@ -207,6 +212,24 @@ export default function Login() {
                 allowfullscreen=""
               ></iframe>
             </IframeContainer>
+          </Modal>
+        )}
+        {errorModal && (
+          <Modal
+            id="modal"
+            handleCloseIconClick={handleToggleErrorModal}
+            style={{
+              overflowY: "hidden",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+            fullWidth
+          >
+            <h2 style={{ textAlign: "center" }}>
+              {ERROR_MESSAGES.HAS_NO_PHONE}
+            </h2>
           </Modal>
         )}
         <FormHeader>
@@ -275,7 +298,7 @@ export default function Login() {
 
   const RenderSteps = useMemo(() => {
     return steps[step];
-  }, [step, email, credentials, totpInput, loading, modal]);
+  }, [step, email, credentials, totpInput, loading, modal, errorModal]);
 
   return loading ? (
     <LoaderContainer>

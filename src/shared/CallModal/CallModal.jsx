@@ -65,7 +65,7 @@ export default function CallModal({
             width={120}
           />
           <h3 style={{ marginTop: "1rem", color: "#fff" }}>{text}</h3>
-          {modal.type == "caller" && positionInQueue > 0 && (
+          {modal.type == "caller" && positionInQueue >= 0 && (
             <>
               <h3 style={{ marginTop: "1rem", color: "#fff" }}>
                 Sua posição na fila é:
@@ -73,7 +73,7 @@ export default function CallModal({
               <h3
                 style={{ marginTop: "1rem", color: "#fff", fontSize: "4rem" }}
               >
-                {positionInQueue}
+                {positionInQueue == 0 ? "Chamando" : positionInQueue}
               </h3>
             </>
           )}

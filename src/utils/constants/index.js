@@ -20,6 +20,8 @@ export const ERROR_MESSAGES = {
   USER_ALREADY_EXISTS: "Usuário já existe na base de dados.",
   SEND_SMS: "Erro ao enviar SMS, tente novamente em alguns instantes.",
   INVALID_SMS_CODE: "Código inválido, por favor tente novamente.",
+  HAS_NO_PHONE:
+    "Telefone não cadastrado, por favor acesse a plataforma de talentos para atualizar seus dados.",
 };
 
 export const SUCCESS_MESSAGES = {

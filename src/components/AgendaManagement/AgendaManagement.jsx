@@ -6,6 +6,7 @@ import { DateShowContainer } from "components/AdminCallsManagement/AdminCallsMan
 import StyledButton from "shared/Button";
 import {
   formatDateToDayMonthAndYear,
+  formatDateToFirstDayOfMonth,
   substractDaysFromNewDate,
 } from "utils/date/date";
 import { useUser } from "contexts/User/User";
@@ -64,7 +65,9 @@ export default function AgendaManagement() {
 
   const [date, setDate] = useState([
     {
-      startDate: substractDaysFromNewDate(30),
+      startDate: substractDaysFromNewDate(
+        formatDateToFirstDayOfMonth(new Date())
+      ),
       endDate: new Date(),
       key: "selection",
     },

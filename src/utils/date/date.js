@@ -46,4 +46,11 @@ export const formatDateToDayMonthAndYear = (date) =>
   toISOStringWithTimezone(date).split("T")[0].split("-").reverse().join("/");
 
 export const formatDateToYearMonthDate = (date) =>
-  toISOStringWithTimezone(date).split("T")[0]
+  toISOStringWithTimezone(date).split("T")[0];
+
+export const formatDateToFirstDayOfMonth = (date) => {
+  const today = date.getUTCDate();
+  const daysToSubstract = Math.abs(1 - today);
+
+  return daysToSubstract;
+};

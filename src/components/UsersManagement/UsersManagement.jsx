@@ -26,7 +26,7 @@ export default function UsersManagement({ title, userListType }) {
   };
 
   const bodySettings = {
-    visualizacao: <ListUsers type={userListType} canEdit={true}/>,
+    visualizacao: <ListUsers type={userListType} canEdit={true} />,
     cadastro: <Cadastro type={userListType} />,
   };
 

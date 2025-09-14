@@ -11,6 +11,7 @@ import Modal from "shared/Modal";
 import Table from "shared/Table";
 import {
   formatDateToDayMonthAndYear,
+  formatDateToFirstDayOfMonth,
   substractDaysFromNewDate,
 } from "utils/date/date";
 import {
@@ -32,7 +33,9 @@ export default function AdminCallsManagement() {
 
   const [date, setDate] = useState([
     {
-      startDate: substractDaysFromNewDate(30),
+      startDate: substractDaysFromNewDate(
+        formatDateToFirstDayOfMonth(new Date())
+      ),
       endDate: new Date(),
       key: "selection",
     },
@@ -50,7 +53,15 @@ export default function AdminCallsManagement() {
 
       const response = await CallsService.getAllCalls(startDate, endDate);
 
-      setCallsList(response.calls);
+      const mapper = response.calls.map((call) => {
+        return {
+          ...call,
+          rating: call.rating ? `${call.rating}⭐` : "",
+          callDuration: `${call.callDuration} min`,
+        };
+      });
+
+      setCallsList(mapper);
       setDashboardItemsList(response?.dashboardItems);
     } catch (error) {
       console.log(error);
@@ -68,10 +79,18 @@ export default function AdminCallsManagement() {
 
   const handleFilterCalls = (e) => {
     const sumCallDurations = (calls) => {
-      return calls.reduce((total, call) => {
-        const [hours, minutes] = call.callDuration.split(":").map(Number);
-        const durationInMinutes = hours * 60 + minutes;
-        return total + durationInMinutes;
+      const mapper = calls.map((call) => {
+        return {
+          ...call,
+          callDuration: Number(String(call.callDuration?.split(" min")[0])),
+        };
+      });
+
+      return mapper.reduce((total, call) => {
+        // const [hours, minutes] = call.callDuration.split(":").map(Number);
+        // const durationInMinutes = hours * 60 + minutes;
+        // return total + durationInMinutes;
+        return total + call.callDuration;
       }, 0);
     };
 
@@ -234,9 +253,9 @@ export default function AdminCallsManagement() {
           { name: "Usuário" },
           { name: "Intérprete" },
           { name: "Setor", width: 180 },
-          { name: "Função", width: 180 },
           { name: "Início", width: 180 },
           { name: "Duração", width: 60 },
+          { name: "", width: 60 },
         ]}
         content={filteredCalls || callsList}
       />

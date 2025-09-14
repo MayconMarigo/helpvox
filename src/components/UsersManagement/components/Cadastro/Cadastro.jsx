@@ -112,7 +112,7 @@ export default function Cadastro({ type }) {
       }
 
       if (userType == "4") {
-        payload.doc = encryptWithCypher(document);
+        // payload.doc = encryptWithCypher(document);
         payload.rl = encryptWithCypher(role);
       }
 
@@ -338,7 +338,7 @@ export default function Cadastro({ type }) {
           required={false}
           maxLength={15}
         />
-        {userType == "4" && (
+        {/* {userType == "4" && (
           <StyledInput
             disabled={loading}
             value={cpfMask(document)}
@@ -349,8 +349,7 @@ export default function Cadastro({ type }) {
             maxLength={14}
             required={false}
           />
-        )}
-
+        )} */}
         {user.type != "company" && (
           <Dropdown
             disabled
