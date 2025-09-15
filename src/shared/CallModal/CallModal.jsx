@@ -54,7 +54,6 @@ export default function CallModal({
   const { user } = useUser();
 
   const { positionInQueue } = useCompanySocketObjects();
-  console.log(positionInQueue)
 
   return (
     modal.open && (
