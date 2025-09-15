@@ -54,6 +54,7 @@ export default function CallModal({
   const { user } = useUser();
 
   const { positionInQueue } = useCompanySocketObjects();
+  console.log(positionInQueue)
 
   return (
     modal.open && (
@@ -73,7 +74,7 @@ export default function CallModal({
               <h3
                 style={{ marginTop: "1rem", color: "#fff", fontSize: "4rem" }}
               >
-                {positionInQueue == 0 ? "Chamando" : positionInQueue}
+                {positionInQueue == 0 ? "Chamando" : positionInQueue }
               </h3>
             </>
           )}

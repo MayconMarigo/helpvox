@@ -25,7 +25,7 @@ import {
   TotpInput,
   TotpInputContainer,
 } from "./Login.styles";
-import * as logo from "../../assets/imgs/logo-kof.png";
+import * as logo from "../../assets/imgs/logo2-login.webp";
 import { ERROR_MESSAGES } from "utils/constants";
 import { decryptWithCypher } from "utils/encryption";
 import Modal from "shared/Modal";
@@ -233,7 +233,7 @@ export default function Login() {
           </Modal>
         )}
         <FormHeader>
-          <Image src={LoginLogo} width={250} alt="login" />
+          <Image src={LoginLogo} width={450} alt="login" />
           <h3 style={{ textAlign: "center" }}>
             CILKOF - Central de Intermediação em Língua de Sinais 🤟
           </h3>
@@ -271,7 +271,7 @@ export default function Login() {
     smsValidationForm: (
       <LoginForm onSubmit={handleSubmit2faSMS}>
         <QrCodeContainer>
-          <Image src={LoginLogo} width={250} alt="login" />
+          <Image src={LoginLogo} width={450} alt="login" />
           <h3>Digite os números de segurança enviado por sms.</h3>
           <TotpInputContainer>
             {[1, 2, 3, 4, 5, 6].map((inpt) => (

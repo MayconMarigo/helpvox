@@ -365,7 +365,7 @@ export default function Cadastro({ type }) {
           <Dropdown
             style={{ maxWidth: "300px", width: "100%" }}
             value={role}
-            htmlLabel={"Setor"}
+            htmlLabel={"Unidade"}
             onChange={setRole}
             content={
               companyRoles || [{ value: null, text: "Selecionar cargo..." }]

@@ -57,6 +57,7 @@ export default function EnterpriseCallsManagement() {
         endDate,
         user.id
       );
+
       const mapper = response.calls.map((call) => {
         return {
           ...call,
@@ -66,6 +67,7 @@ export default function EnterpriseCallsManagement() {
       });
 
       setCallsList(mapper);
+      setFilteredCalls(mapper);
       setDashboardItemsList(response?.dashboardItems);
     } catch (error) {
       console.log(error);
@@ -255,8 +257,7 @@ export default function EnterpriseCallsManagement() {
         headers={[
           { name: "Usuário" },
           { name: "Intérprete" },
-          { name: "Setor", width: 180 },
-          { name: "Função", width: 180 },
+          { name: "Unidade", width: 180 },
           { name: "Início", width: 180 },
           { name: "Duração", width: 60 },
           { name: "", width: 60 },

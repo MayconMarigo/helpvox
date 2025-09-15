@@ -90,24 +90,6 @@ export default function AttendanceComponent() {
   }, [triggerNotAnswered]);
 
   useEffect(() => {
-    if (!socket) return;
-    const socketType = {
-      agent: () =>
-        loadAgentSocketEvents(
-          socket,
-          setModal,
-          setIsCalling,
-          setRedirectToRoom,
-          setCallObject
-        ),
-    };
-
-    socketType["agent"]();
-
-    return;
-  }, [socket]);
-
-  useEffect(() => {
     if (!modal.open) return;
 
     setModalCaller(callObject.company.name);

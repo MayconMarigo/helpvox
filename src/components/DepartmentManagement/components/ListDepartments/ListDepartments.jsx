@@ -133,7 +133,7 @@ export default function ListDepartments({ type = 2 }) {
 
   const customHeaders = [
     // { name: "Id" },
-    { name: "Setor", width: 300 },
+    { name: "Unidade", width: 300 },
     { name: "Código", width: 200 },
   ];
 
@@ -175,7 +175,7 @@ export default function ListDepartments({ type = 2 }) {
     <>
       <FilterContainer>
         <StyledInput
-          htmlLabel={"Filtrar por Setor"}
+          htmlLabel={"Filtrar por Unidade"}
           required={false}
           onChange={handleFilterUsers}
         />
