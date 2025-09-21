@@ -18,6 +18,7 @@ import {
 import { phoneMask } from "utils/mask/mask";
 import { v4 as uuidv4 } from "uuid";
 import {
+  ButtonsContainer,
   InputContainer,
   NumberedButton,
   PaginationContainer,
@@ -540,19 +541,25 @@ export default function Table({
           >
             &larr;
           </button>
-          {pagesQuantity &&
-            Array(pagesQuantity)
-              .fill()
-              .map((page, index) => (
-                <NumberedButton
-                  key={uuidv4()}
-                  colorScheme={user.colorScheme}
-                  selected={index + 1 == actualPage}
-                  onClick={() => handlePage(index + 1)}
-                >
-                  {index + 1}
-                </NumberedButton>
-              ))}
+          <ButtonsContainer>
+            {pagesQuantity &&
+              Array(pagesQuantity)
+                .fill()
+                .map(
+                  (page, index) =>
+                    index <= actualPage + 8 &&
+                    index >= actualPage - 8 && (
+                      <NumberedButton
+                        key={uuidv4()}
+                        colorScheme={user.colorScheme}
+                        selected={index + 1 == actualPage}
+                        onClick={() => handlePage(index + 1)}
+                      >
+                        {index + 1}
+                      </NumberedButton>
+                    )
+                )}
+          </ButtonsContainer>
           <button
             style={{
               border: "none",

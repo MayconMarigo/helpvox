@@ -223,7 +223,7 @@ export default function ListUsers({ type = 2, canEdit = true }) {
       )}
       <FilterContainer>
         <StyledInput
-          htmlLabel={"Filtrar por email"}
+          htmlLabel={"Filtrar por RE"}
           required={false}
           onChange={handleFilterUsers}
         />

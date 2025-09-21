@@ -93,7 +93,13 @@ export default function BatchRegister() {
         let counter = 0;
         for (const [key, value] of Object.entries(user)) {
           const payloadKey = c[counter];
-          obj[payloadKey] = value;
+          if (key?.toLowerCase()?.trim().includes("tel")) {
+            const temp =
+              value == 0 ? null : value.toString()?.trim().replaceAll("-", "");
+            obj[payloadKey] = temp;
+          } else {
+            obj[payloadKey] = value;
+          }
           // if (key == "Setor" || key == "Área RH" || key == "Área RH") {
           //   obj[payloadKey] = value;
           // } else if (key.toLowerCase() == "re") {
@@ -105,11 +111,24 @@ export default function BatchRegister() {
           // } else {
           //   obj[payloadKey] = encryptWithCypher(value.toString());
           // }
+
           counter++;
         }
         payload.push(obj);
         counter = 0;
       });
+
+      // const phoneCorrector = payload.map((value) => {
+      //   if (value.phone) {
+      //     let temp = String(value.phone);
+      //     temp = temp.trim();
+      //     temp = temp.replaceAll("-", "");
+
+      //     return temp;
+      //   }
+
+      //   return value;
+      // });
 
       await AuthenticationService.bulkAddUsers(payload, user.id);
 

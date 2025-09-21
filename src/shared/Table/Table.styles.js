@@ -164,3 +164,12 @@ export const InputContainer = styled.div`
     }
   }
 `;
+
+export const ButtonsContainer = styled.div`
+  display: flex;
+  gap: 0.25rem;
+  ${({ theme }) => theme.devices.tabletOrMobile} {
+    max-width: 250px;
+    overflow-x: scroll;
+  }
+`;
