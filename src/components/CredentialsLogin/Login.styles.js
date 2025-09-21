@@ -58,6 +58,14 @@ export const FormHeader = styled.div`
   img {
     margin-bottom: 0.5rem;
   }
+
+  ${({ theme }) => theme.devices.tabletOrMobile} {
+    img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
+    }
+  }
 `;
 
 export const FormBody = styled.div`
@@ -80,6 +88,12 @@ export const QrCodeContainer = styled.div`
   ${({ theme }) => theme.devices.tabletOrMobile} {
     h3 {
       font-size: 16px;
+    }
+
+    img {
+      width: auto;
+      max-width: 100%;
+      height: auto;
     }
   }
 `;
