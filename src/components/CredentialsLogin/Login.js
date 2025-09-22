@@ -235,9 +235,10 @@ export default function Login() {
         <FormHeader>
           <Image src={LoginLogo} width={450} alt="login" />
           <h3 style={{ textAlign: "center" }}>
-            CILKOF - Central de Intermediação em Língua de Sinais 🤟
+            CILKOF 🤟
+            <br /> Central de Intermediação em Língua de Sinais
           </h3>
-          <p style={{ textAlign: "center" }}>
+          <p style={{ textAlign: "center", marginTop: "0.5rem" }}>
             Por favor, coloque suas credenciais e faça o login no sistema
           </p>
         </FormHeader>

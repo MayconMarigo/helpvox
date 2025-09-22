@@ -62,8 +62,12 @@ export const FormHeader = styled.div`
   ${({ theme }) => theme.devices.tabletOrMobile} {
     img {
       width: auto;
-      max-width: 100%;
+      max-width: 60%;
       height: auto;
+    }
+
+    h3 {
+      font-size: 18px;
     }
   }
 `;
