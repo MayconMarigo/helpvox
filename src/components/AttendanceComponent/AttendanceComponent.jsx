@@ -17,9 +17,8 @@ import {
 } from "services/socket";
 import { formatDateToBackend } from "utils/date/date";
 import { CALL_RESPONSE_TIME } from "utils/constants";
-import * as logo2 from "../../assets/imgs/logo-kof.png";
+import * as logo2 from "../../assets/imgs/logo-blue-help.webp";
 import * as logo from "../../assets/imgs/attendance-calls.jpg";
-// import * as RingingAudio from "../../assets/audio/ring.mpeg";
 
 export default function AttendanceComponent() {
   const [triggerNotAnswered, setTriggerNotAnswered] = useState(false);
@@ -46,7 +45,7 @@ export default function AttendanceComponent() {
   const { socket, setUser, setSocketType } = useSocket();
   useEffect(() => {
     setSocketType(user.type);
-    setUser({ name: user.name, id: user.id });
+    setUser({ name: user.name, id: user.id, recordCall: false });
   }, [user]);
 
   useEffect(() => {
@@ -148,22 +147,20 @@ export default function AttendanceComponent() {
   const image = logo2.default;
 
   const audioRef = useRef(null);
-  const [isPlaying, setIsPlaying] = useState(false);
 
-  const togglePlayPause = () => {
-    if (isPlaying) {
+  const togglePlayPause = (play) => {
+    if (!play) {
       audioRef.current.pause();
     } else {
       audioRef.current.play();
     }
-    setIsPlaying(!isPlaying);
   };
 
   useEffect(() => {
     if (!isCalling) return;
 
-    togglePlayPause();
-  }, [isCalling, redirectToRoom]);
+    togglePlayPause(true);
+  }, [isCalling]);
 
   return (
     <>
@@ -187,11 +184,7 @@ export default function AttendanceComponent() {
           <StyledButton text={buttonText} onClick={handleChangeAvailability} />
         </div>
 
-        <audio
-          ref={audioRef}
-          src={"/ring.mpeg"}
-          onEnded={() => setIsPlaying(false)}
-        />
+        <audio ref={audioRef} src={"/ring.mpeg"} loop />
         {/* <button onClick={togglePlayPause}>
           {isPlaying ? "Pause" : "Play"}
         </button> */}

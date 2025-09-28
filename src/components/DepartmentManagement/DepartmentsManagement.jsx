@@ -36,7 +36,7 @@ export default function DepartmentManagement({ title, userListType }) {
     <Container>
       <h2>Departamentos</h2>
 
-      <TabsContainer colorScheme={user.colorScheme || "#ff1922"}>
+      <TabsContainer colorScheme={user.colorScheme || "#183088"}>
         {settings?.map((setting) => (
           <Tabs
             selected={selected == setting.value}

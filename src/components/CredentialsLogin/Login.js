@@ -25,7 +25,7 @@ import {
   TotpInput,
   TotpInputContainer,
 } from "./Login.styles";
-import * as logo from "../../assets/imgs/logo2-login.webp";
+import * as logo from "../../assets/imgs/logo-blue-help.webp";
 import { ERROR_MESSAGES } from "utils/constants";
 import { decryptWithCypher } from "utils/encryption";
 import Modal from "shared/Modal";
@@ -101,10 +101,10 @@ export default function Login() {
         (user) => user == email
       );
 
-      if (findEmailInLoggedHistory) {
-        handleSuccessfullLogin(authToken);
-        return;
-      }
+      // if (findEmailInLoggedHistory) {
+      handleSuccessfullLogin(authToken);
+      return;
+      // }
 
       const smsData = await AuthenticationService.generateSMSCredentials(phone);
 
@@ -235,25 +235,21 @@ export default function Login() {
         <FormHeader>
           <Image src={LoginLogo} width={450} alt="login" />
           <h3 style={{ textAlign: "center" }}>
-            CILKOF 🤟
-            <br /> Central de Intermediação em Língua de Sinais
+            Bem vindo à Central de Intérpretes de Libras 🤟
           </h3>
-          <p style={{ textAlign: "center", marginTop: "0.5rem" }}>
-            Por favor, coloque suas credenciais e faça o login no sistema
-          </p>
         </FormHeader>
         <FormBody>
           <StyledInput
-            htmlLabel="Matrícula/RE"
-            placeHolder="Digite sua matrícula"
+            htmlLabel="Login"
+            placeHolder="Digite seu login"
             required={true}
             value={email}
             setValue={setEmail}
             disabled={loading}
           />
           <StyledInput
-            htmlLabel="Telefone com DDD, cadastrado em KOF BR"
-            placeHolder="Digite seu telefone"
+            htmlLabel="Senha"
+            placeHolder="Digite sua senha"
             required={true}
             value={credentials}
             setValue={setCredentials}
@@ -261,12 +257,12 @@ export default function Login() {
           />
         </FormBody>
         <StyledButton text="Acessar" type="submit" loading={loading} />
-        <div
+        {/* <div
           style={{ marginTop: "30px", textAlign: "center", cursor: "pointer" }}
           onClick={handleToggleModal}
         >
           <HowToUseButton>Como utilizar a plataforma?</HowToUseButton>
-        </div>
+        </div> */}
       </LoginForm>
     ),
     smsValidationForm: (

@@ -8,6 +8,7 @@ export default function F({
   onClick,
   disabled = false,
   colorScheme,
+  ...props
 }) {
   const handleClick = () => {
     if (disabled) return;
@@ -15,7 +16,7 @@ export default function F({
     onClick();
   };
   return (
-    <Container fullWidth={fullWidth} onClick={handleClick}>
+    <Container fullWidth={fullWidth} onClick={handleClick} {...props}>
       <label htmlFor={htmlLabel}>{`${htmlLabel ?? ""}${
         required ? " *" : ""
       }`}</label>

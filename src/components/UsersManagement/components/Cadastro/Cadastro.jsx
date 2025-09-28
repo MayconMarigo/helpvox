@@ -64,7 +64,7 @@ export default function Cadastro({ type }) {
 
   const isDisabled =
     userType == "4"
-      ? !fullName || !email || !phone || !document || !password || loading
+      ? !fullName || !email || !phone || !password || loading
       : !fullName || !email || !password || !userType || loading;
 
   useEffect(() => {

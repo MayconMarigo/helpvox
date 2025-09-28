@@ -55,10 +55,14 @@ export const navItems = {
           title: "Usuários",
           url: "enterprise/usuarios",
         },
-        {
-          title: "Unidades",
-          url: "enterprise/setores",
-        },
+        // {
+        //   title: "Unidades",
+        //   url: "enterprise/setores",
+        // },
+        // {
+        //   title: "Configurações",
+        //   url: "enterprise/configuracoes",
+        // },
       ],
     },
     {

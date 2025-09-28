@@ -125,7 +125,7 @@ export default function AdminCallsManagement() {
     document.getElementsByTagName("input")[0].value = "";
   };
 
-  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#ff1922";
+  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#183088";
 
   useEffect(() => {
     const dias = ["Seg", "Ter", "Qua", "Qui", "Sex", "Sáb", "Dom"];

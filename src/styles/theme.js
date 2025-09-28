@@ -5,13 +5,13 @@ const DEVICE_SIZES = {
 
 export const GLOBAL_THEME = {
   colors: {
-    primary: "#ff1922",
-    primaryHover: "#f47479ff",
+    primary: "#183088",
+    primaryHover: "#4160ceff",
     screen: {
       bg: "#F3F4F6",
     },
     navigator: {
-      bg: "#ff1922",
+      bg: "#183088",
     },
     listItems: {
       text: {

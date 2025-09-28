@@ -199,7 +199,7 @@ export default function AgentAgendaManagement() {
     <>
       <LoaderContainer />
       <Container>
-        <h2 style={{ color: "#ff1922" }}>Cadastro de disponibilidade</h2>
+        <h2 style={{ color: "#183088" }}>Cadastro de disponibilidade</h2>
 
         <h4>Selecione uma data abaixo</h4>
         <RegisterContainer>
@@ -208,7 +208,7 @@ export default function AgentAgendaManagement() {
             weekStartsOn={1}
             date={date}
             onChange={handleChangeDate}
-            color={user?.colorScheme ? `rgb(${user?.colorScheme})` : "#ff1922"}
+            color={user?.colorScheme ? `rgb(${user?.colorScheme})` : "#183088"}
           />
 
           <RegisterNewAgendaContainer>

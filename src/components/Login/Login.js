@@ -19,7 +19,7 @@ import {
   TotpInput,
   TotpInputContainer,
 } from "./Login.styles";
-import * as logo from "../../assets/imgs/logo-kof.png";
+import * as logo from "../../assets/imgs/logo-blue-help.webp";
 
 export default function Login() {
   const { user } = useUser();

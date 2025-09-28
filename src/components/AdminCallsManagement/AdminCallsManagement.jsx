@@ -142,10 +142,10 @@ export default function AdminCallsManagement() {
       value: "receiverName",
       text: "Intérprete",
     },
-    {
-      value: "department",
-      text: "Setor",
-    },
+    // {
+    //   value: "department",
+    //   text: "Setor",
+    // },
   ];
 
   const handleToogleDatePicker = () => setShowDatePicker(true);
@@ -252,7 +252,7 @@ export default function AdminCallsManagement() {
         headers={[
           { name: "Usuário" },
           { name: "Intérprete" },
-          { name: "Setor", width: 180 },
+          // { name: "Setor", width: 180 },
           { name: "Início", width: 180 },
           { name: "Duração", width: 60 },
           { name: "", width: 60 },

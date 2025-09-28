@@ -35,6 +35,7 @@ export const ModalContainer = styled.form`
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
     height: 32%;
+    min-height: 400px;
     width: 100%;
     overflow-y: scroll;
     button {

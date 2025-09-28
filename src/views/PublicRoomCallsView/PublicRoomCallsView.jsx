@@ -21,8 +21,8 @@ export default function PublicRoomCallsView() {
         width: "100%",
         height: "calc(100% - 6rem)",
         border: 0,
-        backgroundColor: "#ff1922",
-        color: "#ff1922",
+        backgroundColor: "#183088",
+        color: "#183088",
       },
       showLeaveButton: true,
       showFullscreenButton: true,
@@ -30,13 +30,19 @@ export default function PublicRoomCallsView() {
 
     call.setTheme({
       colors: {
-        accent: "#ff1922",
+        accent: "#183088",
         accentText: "#fff",
-        mainAreaBg: "#ff1922",
+        mainAreaBg: "#183088",
       },
     });
     const parent = document.getElementById("call-provider");
     parent.appendChild(call.iframe());
+
+    call.on("joined-meeting", () => {
+      if (user.userTypeId == "3") {
+        call.startRecording();
+      }
+    });
 
     call.on("left-meeting", () => {
       if (user.userTypeId == "4") {

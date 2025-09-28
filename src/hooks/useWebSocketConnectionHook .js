@@ -15,6 +15,7 @@ const useWebSocketConnection = (type, user) => {
           name: user.name,
           id: user.id,
         }),
+        recordCall: JSON.stringify(user.recordCall),
       },
     });
 

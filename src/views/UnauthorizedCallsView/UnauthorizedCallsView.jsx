@@ -8,33 +8,54 @@ import {
 import Badge from "shared/Badge/Badge";
 import StyledButton from "shared/Button";
 import {
+  CallCard,
+  CallsContainer,
   ContentBody,
   ContentContainer,
   ContentHeader,
   CredentialsContainer,
+  DeafCenterCardsContainer,
+  DFCardContainer,
+  DFCardTitle,
   LayoutContainer,
   NavigatorBody,
   NavigatorContainer,
   NavigatorHeader,
   RightContent,
+  SuperTabContainer,
+  Tab,
+  TabContainer,
+  TabsHeader,
 } from "./styles";
+
+import parse from "react-html-parser";
 
 import { useCompanySocketObjects } from "contexts/CompanySocketObjects/CompanySocketObjects";
 // import Image from "next/image";
 import * as logo from "../../assets/imgs/ui-calls.jpg";
 import { useUser } from "contexts/User/User";
 import * as logo2 from "../../assets/imgs/logo-kof.png";
+import * as superTabsImage from "../../assets/imgs/logo-supertabs.png";
 import { AuthenticationService } from "services/authentication";
+import Modal from "shared/Modal";
+import { usePageLoader } from "contexts/Page Loader/PageLoader";
+import LoaderContainer from "shared/LoaderContainer";
+import { miscelaneousService } from "services/miscelaneous";
+import { workerService } from "services/worker";
+import { dailyJsService } from "services/dailyJs";
+import { useAlert } from "contexts/Alert/Alert";
 
 export default function UnauthorizedCallsView() {
   const { user } = useUser();
   const { socket, setSocketType, setUser } = useSocket();
+  const { setPageLoading } = usePageLoader();
+
   useEffect(() => {
     if (user == null || user == undefined) return;
     if (user == false) return window.location.replace("/login");
 
     setSocketType("company");
-    setUser({ name: user.name, id: user.id });
+    setUser({ name: user.name, id: user.id, recordCall: user.recordCall });
   }, [user]);
   const {
     redirectToRoom,
@@ -73,6 +94,7 @@ export default function UnauthorizedCallsView() {
     handleCallAvailableAgent(socket, setPositionOnQueue);
   };
   const image = logo2.default;
+  const imageSuperTab = superTabsImage.default;
 
   const handleLogout = async (userType) =>
     await AuthenticationService.logout(userType);
@@ -118,50 +140,205 @@ export default function UnauthorizedCallsView() {
     return () => clearInterval(interval); // limpa ao desmontar
   }, []);
 
-  return (
-    <LayoutContainer>
+  const [dcCardsArray, setDcCardsArray] = useState([]);
+  const [workerCalls, setWorkerCalls] = useState([]);
+
+  const [tab, setTab] = useState("startCall");
+
+  const getAllDcCards = async () => {
+    try {
+      setPageLoading(true);
+
+      const dcCards = await miscelaneousService.getAllDCCards();
+      setDcCardsArray(dcCards);
+    } catch (error) {
+    } finally {
+      setPageLoading(false);
+    }
+  };
+
+  const getAllWorkerCalls = async () => {
+    try {
+      setPageLoading(true);
+
+      const wCalls = await workerService.getAllWorkerCalls(user.id);
+      setWorkerCalls(wCalls);
+    } catch (error) {
+    } finally {
+      setPageLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    if (tab !== "deafCenter") return;
+
+    getAllDcCards();
+  }, [tab]);
+
+  useEffect(() => {
+    if (tab !== "myCalls") return;
+
+    getAllWorkerCalls();
+  }, [tab]);
+
+  const tabs = [
+    { key: "startCall", content: "Central de ligações 🤟" },
+    { key: "myCalls", content: "Minhas Ligações" },
+    { key: "deafCenter", content: "Central do Surdo" },
+  ];
+
+  const [modal, setContentModal] = useState({ isOpen: false, content: "" });
+
+  const DeafCenterCard = ({ img, title, content }) => (
+    <DFCardContainer>
+      <img src={img} alt="" />
+      <DFCardTitle>{title}</DFCardTitle>
+      <StyledButton
+        text="Saber Mais"
+        onClick={() => setContentModal({ isOpen: true, content })}
+        style={{ fontSize: "1.2rem" }}
+      />
+    </DFCardContainer>
+  );
+
+  const { setContent } = useAlert();
+
+  const handleDownloadCall = async (callId) => {
+    try {
+      const callDownloadUrl = await dailyJsService.getRecordFromRoomId(callId);
+
+      window.open(callDownloadUrl);
+      setContent({
+        message: "Download realizado com sucesso.",
+        type: "sucesso",
+        isOpen: true,
+      });
+    } catch (error) {
+      setContent({
+        message:
+          "Erro ao realizar download, tente novamente em alguns instantes.",
+        type: "erro",
+        isOpen: true,
+      });
+    }
+  };
+
+  const superTabs = {
+    startCall: (
       <ContentBody>
         <img
           // src={user?.logoImage}
-          src={image.src}
+          src={user.logoImage ? user.logoImage : image.src}
           style={{ maxHeight: "auto", maxWidth: "200px" }}
         />
         <h3 style={{ textAlign: "center" }}>
-          Bem vindo à CILKOF
-          <br />
-          Central de Intermediação em Língua de Sinais 🤟
+          Bem vindo à Central de Intérpretes de Libras 🤟
         </h3>
         {/* <Image src={logo.default} alt="" /> */}
         <iframe
           // width="560"
           height="315"
-          src="https://www.youtube.com/embed/MzCMYvCyKMA?si=ulyQ65XK5_Yj1Knb&rel=0&controls=0&showinfo=0&modestbranding=1&fs=0&autohide=1&loop=1&playlist=MzCMYvCyKMA&autoplay=1"
+          src="https://www.youtube.com/embed/sgoLD9M5h_4?si=XdmwgNTOf6xUAdXA&rel=0&controls=0&showinfo=0&modestbranding=1&fs=0&autohide=1&loop=1&playlist=sgoLD9M5h_4&autoplay=1"
           title="YouTube video player"
           frameborder="0"
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
         ></iframe>
-        <p style={{ color }}>{status}</p>
+        <p style={{ color, fontSize: "20px" }}>{status}</p>
         <StyledButton
           onClick={callAvailableAgent}
           text="Fazer Videochamada"
           type="button"
           style={{
             borderRadius: "2rem",
-            height: "80px",
-            fontSize: "1.5rem",
+            height: "120px",
+            fontSize: "2rem",
             backgroundColor: "#0dc45f",
             border: "none",
           }}
         />
         <p
           onClick={() => handleLogout("4")}
-          style={{ cursor: "pointer", marginTop: "3rem" }}
+          style={{ cursor: "pointer", marginTop: "3rem", fontSize: "1.5rem" }}
         >
           Fazer Logout
         </p>
       </ContentBody>
-    </LayoutContainer>
+    ),
+    myCalls: (
+      <CallsContainer>
+        {workerCalls.map((call) => (
+          <CallCard>
+            <p>Ligação feita em {call.startTime.replace(" ", " às ")}</p>
+            <p>Duração: {call.callDuration} min</p>
+
+            {call.callId && user.recordCall && (
+              <StyledButton
+                text="Baixar gravação"
+                style={{
+                  maxWidth: "300px",
+                  marginTop: "2rem",
+                  fontSize: "1.2rem",
+                }}
+                onClick={() => handleDownloadCall(call.callId)}
+              />
+            )}
+          </CallCard>
+        ))}
+      </CallsContainer>
+    ),
+    deafCenter: (
+      <DeafCenterCardsContainer>
+        <LoaderContainer />
+        {modal.isOpen && (
+          <Modal
+            handleCloseIconClick={() =>
+              setContentModal({ ...modal, isOpen: false })
+            }
+          >
+            {parse(modal.content)}
+          </Modal>
+        )}
+        {/* <h2 style={{ width: "100%", textAlign: "center", color: "#fff" }}>
+          Central do Surdo
+        </h2> */}
+        {dcCardsArray.map((card) => (
+          <DeafCenterCard
+            title={card.title || ""}
+            content={card.content || ""}
+            img={card.img || ""}
+          />
+        ))}
+      </DeafCenterCardsContainer>
+    ),
+  };
+
+  const handleSelectTab = (value) => setTab(value);
+
+  return (
+    <SuperTabContainer>
+      <img
+        src={imageSuperTab.src}
+        style={{ maxHeight: "auto", maxWidth: "350px", marginBottom: "1rem" }}
+      />
+      <LayoutContainer colorScheme={user.colorScheme}>
+        <TabsHeader>
+          <TabContainer colorScheme={user.colorScheme}>
+            {tabs.map((value, index) => (
+              <Tab
+                colorScheme={user.colorScheme}
+                onClick={() => handleSelectTab(value.key)}
+                selected={tab == value.key}
+                position={index}
+              >
+                {value.content}
+              </Tab>
+            ))}
+          </TabContainer>
+        </TabsHeader>
+        {superTabs[tab]}
+      </LayoutContainer>
+    </SuperTabContainer>
   );
 }

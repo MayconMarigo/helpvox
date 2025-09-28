@@ -177,6 +177,32 @@ const updateUser = async (payload, userType, type) => {
   return updatedJson;
 };
 
+const updateCompanyRecordCall = async (isActive, userId) => {
+  const encryptedToken = await getValueFromCookies("t");
+  const token = decryptWithCypher(encryptedToken);
+
+  if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
+
+  const url = "enterprise/user/self/update";
+
+  const updated = await customFetch(`${BASE_API_URL}/${url}`, {
+    method: "PUT",
+    body: JSON.stringify({ rc: isActive, uid: encryptWithCypher(userId) }),
+    headers: {
+      ...commonHeaders,
+      authorization: `Bearer ${token}`,
+    },
+  });
+
+  if (updated.ok) return;
+
+  const updatedJson = await updated.json();
+
+  if (updatedJson.message) throw new Error(updatedJson.message);
+
+  return updatedJson;
+};
+
 const relogin = async () => {};
 
 const validateToken = async (token) => {
@@ -695,4 +721,5 @@ export const AuthenticationService = {
   generateSMSCredentials,
   getAllDepartmentsByCompanyId,
   getDashboardCSVInfo,
+  updateCompanyRecordCall,
 };

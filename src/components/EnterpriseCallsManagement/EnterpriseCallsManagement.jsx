@@ -148,10 +148,10 @@ export default function EnterpriseCallsManagement() {
       value: "receiverName",
       text: "Intérprete",
     },
-    {
-      value: "department",
-      text: "Setor",
-    },
+    // {
+    //   value: "department",
+    //   text: "Setor",
+    // },
   ];
 
   const handleToogleDatePicker = () => setShowDatePicker(true);
@@ -257,7 +257,7 @@ export default function EnterpriseCallsManagement() {
         headers={[
           { name: "Usuário" },
           { name: "Intérprete" },
-          { name: "Unidade", width: 180 },
+          // { name: "Unidade", width: 180 },
           { name: "Início", width: 180 },
           { name: "Duração", width: 60 },
           { name: "", width: 60 },

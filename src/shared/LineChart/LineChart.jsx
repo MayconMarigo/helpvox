@@ -23,7 +23,7 @@ export default function BasicLineChart({ firstLabel = [], secondLabel = [] }) {
     text[0].innerHTML = CHART_NO_DATA_TO_SHOW;
   }, [firstLabel]);
 
-  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#ff1922";
+  const color = user.colorScheme ? `rgb(${user.colorScheme})` : "#183088";
 
   const formattedSecondLabel = (values) => {
     const total = months.map((month) => {

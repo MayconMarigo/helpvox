@@ -92,7 +92,7 @@ export default function ListUsers({ type = 2, canEdit = true }) {
     const types = {
       2: [
         { label: "Nome", key: "name" },
-        { label: "RE", key: "email" },
+        { label: "Usuário", key: "email" },
         { label: "Telefone", key: "phone" },
         { label: "Status", key: "status" },
       ],
@@ -105,10 +105,10 @@ export default function ListUsers({ type = 2, canEdit = true }) {
       4: [
         { label: "Id", key: "id" },
         { label: "Nome", key: "name" },
-        { label: "RE", key: "email" },
+        { label: "Usuário", key: "email" },
         { label: "Telefone", key: "phone" },
         // { label: "CPF", key: "cpf" },
-        { label: "Setor", key: "speciality" },
+        // { label: "Setor", key: "speciality" },
         { label: "Status", key: "status" },
       ],
     };
@@ -124,7 +124,7 @@ export default function ListUsers({ type = 2, canEdit = true }) {
     const types = {
       2: [
         { name: "Nome" },
-        { name: "RE" },
+        { name: "Usuário" },
         { name: "Telefone", width: 160 },
         { name: "Status", width: 80 },
       ],
@@ -136,10 +136,10 @@ export default function ListUsers({ type = 2, canEdit = true }) {
       ],
       4: [
         { name: "Nome", width: 380 },
-        { name: "RE", width: 380 },
+        { name: "Usuário", width: 380 },
         { name: "Telefone", width: 160 },
         // { name: "CPF", width: 150 },
-        { name: "Setor", width: 150 },
+        // { name: "Setor", width: 150 },
         { name: "Status", width: 80 },
       ],
     };
@@ -223,7 +223,7 @@ export default function ListUsers({ type = 2, canEdit = true }) {
       )}
       <FilterContainer>
         <StyledInput
-          htmlLabel={"Filtrar por RE"}
+          htmlLabel={"Filtrar por Usuário"}
           required={false}
           onChange={handleFilterUsers}
         />

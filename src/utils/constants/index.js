@@ -1,13 +1,13 @@
-export const BASE_API_URL = "https://api-kof.helpvox.app/api";
-// export const BASE_API_URL = "http://localhost:8082/api";
-// export const BASE_SOCKET_API_URL = process.env.NEXT_PUBLIC_IS_LOCAL
-//   ? "http://localhost:8083"
-//   : "wss://saude.nr1pro.com.br";
-export const BASE_SOCKET_API_URL = "wss://api-kof.helpvox.app";
+// export const BASE_API_URL = "https://api-kof.helpvox.app/api";
+export const BASE_API_URL = "http://localhost:8082/api";
+export const BASE_SOCKET_API_URL = process.env.NEXT_PUBLIC_IS_LOCAL
+  ? "http://localhost:8083"
+  : "wss://saude.nr1pro.com.br";
+// export const BASE_SOCKET_API_URL = "wss://api-kof.helpvox.app";
 
 export const BASE_SMS_2FA_URL = "https://rest.clicksend.com/v3/sms/send";
 
-export const BASE_DAILY_JS_URL = "https://helpvox-kof.daily.co";
+export const BASE_DAILY_JS_URL = "https://helpvoxapp.daily.co";
 
 export const ALERT_DIALOG_CLEANUP_TIMER = 5000;
 export const CALL_RESPONSE_TIME = 15000;
