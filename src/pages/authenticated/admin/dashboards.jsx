@@ -42,15 +42,15 @@ export default function Dashboards() {
         setPageLoading(true);
         const users = await AuthenticationService.getAllUsers("admin", 0, 2);
 
-        const dropdownContent = users.map((user) => {
+        const dropdownContent = users?.map((user) => {
           return {
-            text: user.name,
-            value: user.id,
+            text: user?.name,
+            value: user?.id,
           };
         });
 
         setCompanyUsers(dropdownContent);
-        setCompany(dropdownContent[0].value);
+        setCompany(dropdownContent[0]?.value);
 
         fetchDashboardData();
       } catch (error) {
