@@ -22,7 +22,7 @@ export const GLOBAL_THEME = {
       background: {
         default: "",
         selected: "#E2E4E7",
-        hover: "#f47479ff",
+        hover: "#4160ceff",
       },
     },
     alerts: {
