@@ -5,7 +5,8 @@ export const Header = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: ${({ theme }) => theme.colors.primary};
+  background-color: ${({ theme, colorScheme }) =>
+    colorScheme ? `rgb(${colorScheme})` : theme.colors.primary};
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
     height: 4rem;

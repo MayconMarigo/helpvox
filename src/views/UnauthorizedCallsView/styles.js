@@ -1,4 +1,5 @@
 import { styled } from "styled-components";
+import { getContrastFontColorFromRGB } from "utils/formatter";
 
 export const SuperTabContainer = styled.div`
   padding: 2rem;
@@ -23,13 +24,14 @@ export const SuperTabContainer = styled.div`
 export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100vh + 6rem;
+  /* height: calc(100vh - 8rem); */
   background-color: ${({ colorScheme }) =>
     colorScheme ? `rgb(${colorScheme})` : "red"};
   border-radius: 2rem;
   align-items: center;
-  justify-content: center;
+  /* justify-content: center; */
   padding-bottom: 4rem;
+  min-height: ${({ expand }) => expand && "100vh"};
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
     /* height: 100%; */
@@ -107,7 +109,9 @@ export const ContentBody = styled.main`
   align-items: center;
   padding: ${({ theme }) => theme.spacing.padding.container.desktop};
   gap: 1rem;
-  background-color: #fff;
+  /* background-color: #fff; */
+  color: ${({ colorScheme }) =>
+    colorScheme && getContrastFontColorFromRGB(colorScheme)};
 
   img {
     max-width: 500px;
@@ -117,25 +121,27 @@ export const ContentBody = styled.main`
 
   button {
     max-width: 450px;
+    height: 80px;
   }
 
   iframe {
     width: 100%;
+    max-width: 556px;
     /* max-width: 560px; */
-    height: 37.8%;
+    /* height: 37.8%; */
+    /* height: auto; */
   }
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
-    /* min-height: calc(100vh - 15rem); */
+    min-height: 100%;
     padding: ${({ theme }) => theme.spacing.padding.container.tabletOrMobile};
 
     margin-top: 1rem;
     justify-content: flex-start;
-    height: auto;
 
     iframe {
-      max-width: none;
-      height: 100%;
+      max-width: 350px;
+      height: auto;
       min-height: 200px;
     }
     button {
@@ -223,7 +229,7 @@ export const CallsContainer = styled.div`
   align-items: center;
   width: 100%;
   gap: 1rem;
-  padding: 8rem 0 2rem 0;
+  padding: 4rem 0 0rem 0;
   min-height: calc(100vh - 17.5rem);
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
@@ -267,7 +273,7 @@ export const DeafCenterCardsContainer = styled.div`
   gap: 2rem;
   max-width: 80%;
   justify-content: center;
-  padding-top: 10rem;
+  padding-top: 4rem;
 
   ${({ theme }) => theme.devices.tabletOrMobile} {
     max-width: 100%;

@@ -11,6 +11,7 @@ import {
 import LoaderContainer from "shared/LoaderContainer";
 import { useAlert } from "contexts/Alert/Alert";
 import { useUser } from "contexts/User/User";
+import { getContrastFontColorFromRGB } from "utils/formatter";
 
 export default function RatingView() {
   const { user } = useUser();
@@ -73,8 +74,18 @@ export default function RatingView() {
             style={{ height: "auto", width: "100%", maxWidth: 200 }}
           />
           <div style={{ textAlign: "center", color: "#fff" }}>
-            <h1 style={{ color: "#000" }}>Avalie o seu atendimento</h1>
-            <h3 style={{ fontWeight: 500, color: "#000", marginTop: "1rem" }}>
+            <h1
+              style={{ color: getContrastFontColorFromRGB(user.colorScheme) }}
+            >
+              Avalie o seu atendimento
+            </h1>
+            <h3
+              style={{
+                fontWeight: 500,
+                color: getContrastFontColorFromRGB(user.colorScheme),
+                marginTop: "1rem",
+              }}
+            >
               Como foi a sua experiência utilizando a central de intérpretes?
             </h3>
           </div>
@@ -101,6 +112,12 @@ export default function RatingView() {
             text="ENVIAR"
             type="button"
             onClick={handleSubmitRating}
+            style={{
+              backgroundColor: "green",
+              borderRadius: "2rem",
+              height: "60px",
+              fontSize: "1rem",
+            }}
           />
         </RatingContainer>
       </Container>

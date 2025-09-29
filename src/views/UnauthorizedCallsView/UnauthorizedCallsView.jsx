@@ -29,6 +29,7 @@ import {
 } from "./styles";
 
 import parse from "react-html-parser";
+import { IoCall } from "react-icons/io5";
 
 import { useCompanySocketObjects } from "contexts/CompanySocketObjects/CompanySocketObjects";
 // import Image from "next/image";
@@ -225,7 +226,7 @@ export default function UnauthorizedCallsView() {
 
   const superTabs = {
     startCall: (
-      <ContentBody>
+      <ContentBody colorScheme={user.colorScheme}>
         <img
           // src={user?.logoImage}
           src={user.logoImage ? user.logoImage : image.src}
@@ -236,7 +237,7 @@ export default function UnauthorizedCallsView() {
         </h3>
         {/* <Image src={logo.default} alt="" /> */}
         <iframe
-          // width="560"
+          width="560"
           height="315"
           src="https://www.youtube.com/embed/sgoLD9M5h_4?si=XdmwgNTOf6xUAdXA&rel=0&controls=0&showinfo=0&modestbranding=1&fs=0&autohide=1&loop=1&playlist=sgoLD9M5h_4&autoplay=1"
           title="YouTube video player"
@@ -245,22 +246,32 @@ export default function UnauthorizedCallsView() {
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
         ></iframe>
-        <p style={{ color, fontSize: "20px" }}>{status}</p>
+        <p
+          style={{
+            color,
+            fontSize: "20px",
+            backgroundColor: "#fff",
+            padding: "1rem",
+            borderRadius: "1rem",
+          }}
+        >
+          {status}
+        </p>
         <StyledButton
           onClick={callAvailableAgent}
           text="Fazer Videochamada"
           type="button"
           style={{
             borderRadius: "2rem",
-            height: "120px",
-            fontSize: "2rem",
+            fontSize: "1.5rem",
             backgroundColor: "#0dc45f",
             border: "none",
+            margin: "3rem 0",
           }}
         />
         <p
           onClick={() => handleLogout("4")}
-          style={{ cursor: "pointer", marginTop: "3rem", fontSize: "1.5rem" }}
+          style={{ cursor: "pointer", fontSize: "1.5rem" }}
         >
           Fazer Logout
         </p>
@@ -270,7 +281,7 @@ export default function UnauthorizedCallsView() {
       <CallsContainer>
         {workerCalls.map((call) => (
           <CallCard>
-            <p>Ligação feita em {call.startTime.replace(" ", " às ")}</p>
+            <p>📞 Ligação feita em {call.startTime.replace(" ", " às ")}</p>
             <p>Duração: {call.callDuration} min</p>
 
             {call.callId && user.recordCall && (
@@ -322,7 +333,10 @@ export default function UnauthorizedCallsView() {
         src={imageSuperTab.src}
         style={{ maxHeight: "auto", maxWidth: "350px", marginBottom: "1rem" }}
       />
-      <LayoutContainer colorScheme={user.colorScheme}>
+      <LayoutContainer
+        colorScheme={user.colorScheme}
+        expand={dcCardsArray.length > 0}
+      >
         <TabsHeader>
           <TabContainer colorScheme={user.colorScheme}>
             {tabs.map((value, index) => (

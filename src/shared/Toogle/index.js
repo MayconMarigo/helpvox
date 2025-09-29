@@ -1,3 +1,3 @@
-import StyledToogle from "./Toogle.styles";
+import StyledToogle from "./Toogle";
 
 export default StyledToogle;

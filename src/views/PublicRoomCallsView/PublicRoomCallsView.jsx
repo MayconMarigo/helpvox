@@ -21,8 +21,8 @@ export default function PublicRoomCallsView() {
         width: "100%",
         height: "calc(100% - 6rem)",
         border: 0,
-        backgroundColor: "#183088",
-        color: "#183088",
+        // backgroundColor: "#183088",
+        // color: "#183088",
       },
       showLeaveButton: true,
       showFullscreenButton: true,
@@ -30,9 +30,9 @@ export default function PublicRoomCallsView() {
 
     call.setTheme({
       colors: {
-        accent: "#183088",
-        accentText: "#fff",
-        mainAreaBg: "#183088",
+        // accent: "#183088",
+        // accentText: "#fff",
+        // mainAreaBg: "#183088",
       },
     });
     const parent = document.getElementById("call-provider");
@@ -61,7 +61,7 @@ export default function PublicRoomCallsView() {
 
   return (
     <div style={{ height: "calc(100vh)", overflow: "hidden" }}>
-      <Header>
+      <Header colorScheme={user.colorScheme}>
         {user && (
           <img
             src={

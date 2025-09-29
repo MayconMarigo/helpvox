@@ -60,7 +60,7 @@ export default function CallModal({
       <ModalBackground>
         <ModalContainer>
           <img
-            src={user?.userTypeId == "3" ? BemmaisLogo.src : BemmaisLogo.src}
+            src={user?.userTypeId == "4" ? user.logoImage : BemmaisLogo.src}
             alt=""
             width={120}
           />
@@ -73,7 +73,7 @@ export default function CallModal({
               <h3
                 style={{ marginTop: "1rem", color: "#fff", fontSize: "4rem" }}
               >
-                {positionInQueue == 0 ? "Chamando" : positionInQueue }
+                {positionInQueue == 0 ? "Chamando" : positionInQueue}
               </h3>
             </>
           )}

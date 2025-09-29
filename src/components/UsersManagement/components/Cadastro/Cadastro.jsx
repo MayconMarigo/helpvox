@@ -30,6 +30,7 @@ import {
 } from "./Cadastro.styles";
 import { useUser } from "contexts/User/User";
 import { DepartmentService } from "services/department";
+import StyledToogle from "shared/Toogle";
 
 export default function Cadastro({ type }) {
   const { user } = useUser();
@@ -37,7 +38,7 @@ export default function Cadastro({ type }) {
   const [fullName, setFullName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [phone, setPhone] = useState("");
+  const [phone, setPhone] = useState(null);
   const [userType, setUserType] = useState(type);
   const [loading, setLoading] = useState(false);
   const { setContent } = useAlert();
@@ -105,6 +106,7 @@ export default function Cadastro({ type }) {
       if (userType == "2") {
         payload.cl = formatRGBForBackend(color);
         payload.fl = base64String;
+        payload.rc = recordingToggle;
       }
 
       if (userType == "3") {
@@ -278,6 +280,10 @@ export default function Cadastro({ type }) {
     3: "Intérprete",
     4: "Nome Completo",
   };
+  const [recordingToggle, setRecordingToggle] = useState("0");
+
+  const handleToogleRecording = () =>
+    setRecordingToggle((prev) => (prev == "1" ? "0" : "1"));
 
   return (
     <Container onSubmit={handleSubmit}>
@@ -316,8 +322,8 @@ export default function Cadastro({ type }) {
           />
         )}
       </InputContainer>
-      <InputContainer>
-        {user.type != "company" && (
+      {user.type !== "company" && (
+        <InputContainer>
           <StyledInput
             disabled={loading}
             value={password}
@@ -327,18 +333,17 @@ export default function Cadastro({ type }) {
             type="password"
             fullWidth
           />
-        )}
-        <StyledInput
-          disabled={loading}
-          value={phoneMask(phone)}
-          htmlLabel={"Telefone"}
-          placeHolder="Digite o telefone..."
-          setValue={setPhone}
-          fullWidth
-          required={false}
-          maxLength={15}
-        />
-        {/* {userType == "4" && (
+          <StyledInput
+            disabled={loading}
+            value={phoneMask(phone)}
+            htmlLabel={"Telefone"}
+            placeHolder="Digite o telefone..."
+            setValue={setPhone}
+            fullWidth
+            required={false}
+            maxLength={15}
+          />
+          {/* {userType == "4" && (
           <StyledInput
             disabled={loading}
             value={cpfMask(document)}
@@ -350,7 +355,6 @@ export default function Cadastro({ type }) {
             required={false}
           />
         )} */}
-        {user.type != "company" && (
           <Dropdown
             disabled
             value={userType}
@@ -358,11 +362,11 @@ export default function Cadastro({ type }) {
             onChange={setUserType}
             fullWidth
           />
-        )}
-      </InputContainer>
+        </InputContainer>
+      )}
       {userType == "4" && (
         <InputContainer>
-          <Dropdown
+          {/* <Dropdown
             style={{ maxWidth: "300px", width: "100%" }}
             value={role}
             htmlLabel={"Unidade"}
@@ -370,6 +374,16 @@ export default function Cadastro({ type }) {
             content={
               companyRoles || [{ value: null, text: "Selecionar cargo..." }]
             }
+          /> */}
+          <StyledInput
+            disabled={loading}
+            value={phoneMask(phone)}
+            htmlLabel={"Telefone"}
+            placeHolder="Digite o telefone..."
+            setValue={setPhone}
+            fullWidth
+            required={false}
+            maxLength={15}
           />
           <StyledInput
             disabled={loading}
@@ -394,67 +408,85 @@ export default function Cadastro({ type }) {
         </InputContainer>
       )} */}
       {user.type == "admin" && userType == "2" && (
-        <InputContainer>
-          <ImageUploadContainer>
-            <ImageUploading
-              value={logo}
-              onChange={onChange}
-              maxNumber={1}
-              dataURLKey="data_url"
-            >
-              {({ onImageUpload, dragProps }) => (
+        <>
+          <InputContainer>
+            <ImageUploadContainer>
+              <ImageUploading
+                value={logo}
+                onChange={onChange}
+                maxNumber={1}
+                dataURLKey="data_url"
+              >
+                {({ onImageUpload, dragProps }) => (
+                  <StyledInput
+                    disabled={loading}
+                    required={true}
+                    value={logo?.file?.name || ""}
+                    htmlLabel={"Logotipo"}
+                    placeHolder="Clique ou arraste a imagem aqui..."
+                    setValue={setLogo}
+                    fullWidth
+                    onClick={onImageUpload}
+                    style={{ minWidth: "300px" }}
+                    {...dragProps}
+                  />
+                )}
+              </ImageUploading>
+
+              {imageSizeError && (
+                <p style={{ color: "red" }}>
+                  Imagem precisa ser menor que 1mb.
+                </p>
+              )}
+              {logo && (
+                <div
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                  }}
+                >
+                  <img
+                    src={logo["data_url"]}
+                    alt=""
+                    width="100"
+                    height="auto"
+                  />
+                  <StyledButton
+                    text="Remover imagem"
+                    type="button"
+                    loading={loading}
+                    onClick={removeImage}
+                    style={{ maxWidth: 300 }}
+                  />
+                </div>
+              )}
+            </ImageUploadContainer>
+            <StyledToogle
+              htmlLabel={"Gravar em núvem"}
+              onClick={handleToogleRecording}
+              active={recordingToggle}
+            />
+          </InputContainer>
+          <InputContainer>
+            <ColorPickerContainer isClicked={false}>
+              <div style={{ display: "flex", flexDirection: "column" }}>
                 <StyledInput
                   disabled={loading}
-                  required={true}
-                  value={logo?.file?.name || ""}
-                  htmlLabel={"Logotipo"}
-                  placeHolder="Clique ou arraste a imagem aqui..."
-                  setValue={setLogo}
+                  value={formatRGBColorObjectToString(color)}
+                  htmlLabel={"Cor primária"}
+                  placeHolder="Selecione a cor..."
+                  setValue={setPhone}
                   fullWidth
-                  onClick={onImageUpload}
-                  {...dragProps}
                 />
-              )}
-            </ImageUploading>
-            {imageSizeError && (
-              <p style={{ color: "red" }}>Imagem precisa ser menor que 1mb.</p>
-            )}
-            {logo && (
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <img src={logo["data_url"]} alt="" width="100" height="auto" />
-                <StyledButton
-                  text="Remover imagem"
-                  type="button"
-                  loading={loading}
-                  onClick={removeImage}
-                  style={{ maxWidth: 300 }}
-                />
+                <span style={{ marginTop: "2rem", color: "#4b5563" }}>
+                  Selecione a cor na palela de cores ao lado.
+                </span>
               </div>
-            )}
-          </ImageUploadContainer>
-          <ColorPickerContainer isClicked={false}>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <StyledInput
-                disabled={loading}
-                value={formatRGBColorObjectToString(color)}
-                htmlLabel={"Cor primária"}
-                placeHolder="Selecione a cor..."
-                setValue={setPhone}
-                fullWidth
-              />
-              <span style={{ marginTop: "2rem", color: "#4b5563" }}>
-                Selecione a cor na palela de cores ao lado.
-              </span>
-            </div>
-            {true && <RgbColorPicker color={color} onChange={setColor} />}
-          </ColorPickerContainer>
-        </InputContainer>
+              {true && <RgbColorPicker color={color} onChange={setColor} />}
+            </ColorPickerContainer>
+          </InputContainer>
+        </>
       )}
 
       <ButtonContainer>

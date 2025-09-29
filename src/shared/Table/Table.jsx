@@ -195,7 +195,7 @@ export default function Table({
     };
 
     if (modal.type == "4") {
-      payload.esp = role;
+      // payload.esp = role;
     }
 
     try {
@@ -421,13 +421,13 @@ export default function Table({
             required={false}
             fullWidth
           />
-          <StyledInput
+          {/* <StyledInput
             disabled={true}
             value={document}
             htmlLabel={"CPF"}
             fullWidth
             required={false}
-          />
+          /> */}
           <StyledInput
             disabled={loading}
             value={phoneMask(phone)}
@@ -439,7 +439,7 @@ export default function Table({
             maxLength={15}
           />
         </InputContainer>
-        {companyRoles && (
+        {/* {companyRoles && (
           <InputContainer>
             <Dropdown
               id="dropdown"
@@ -449,7 +449,7 @@ export default function Table({
               content={companyRoles}
             />
           </InputContainer>
-        )}
+        )} */}
 
         <StyledButton text="Salvar alteração" type="submit" loading={loading} />
       </>

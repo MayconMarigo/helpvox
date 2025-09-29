@@ -18,7 +18,7 @@ export const RatingContainer = styled.div`
   width: 95%;
   max-width: 600px;
   border-radius: 1rem;
-  background-color: #fff;
+  border: 1px solid #fff;
 
   button {
     max-width: 300px;
