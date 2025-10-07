@@ -233,7 +233,7 @@ export default function Login() {
           </Modal>
         )}
         <FormHeader>
-          <Image src={LoginLogo} width={450} alt="login" />
+          <Image src={LoginLogo} width={250} alt="login" />
           <h3 style={{ textAlign: "center" }}>
             Bem vindo à Central de Intérpretes de Libras 🤟
           </h3>

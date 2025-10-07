@@ -12,11 +12,17 @@ export default function Modal({
   handleCloseIconClick,
   fullWidth = true,
   inverseCloseButton = false,
+  fullHeight = false,
   ...props
 }) {
   return (
-    <ModalBackground>
-      <ModalContainer onSubmit={handleSubmit} fullWidth={fullWidth} {...props}>
+    <ModalBackground fullHeight={fullHeight}>
+      <ModalContainer
+        fullHeight={fullHeight}
+        onSubmit={handleSubmit}
+        fullWidth={fullWidth}
+        {...props}
+      >
         <h3>{title}</h3>
         {children}
 

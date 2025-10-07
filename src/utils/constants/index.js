@@ -10,7 +10,7 @@ export const BASE_SMS_2FA_URL = "https://rest.clicksend.com/v3/sms/send";
 export const BASE_DAILY_JS_URL = "https://helpvoxapp.daily.co";
 
 export const ALERT_DIALOG_CLEANUP_TIMER = 5000;
-export const CALL_RESPONSE_TIME = 15000;
+export const CALL_RESPONSE_TIME = 25000;
 
 export const ERROR_MESSAGES = {
   INVALID_COOKIE: "Cookie inválido ou expirado.",

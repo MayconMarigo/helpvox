@@ -304,6 +304,7 @@ export default function UnauthorizedCallsView() {
         <LoaderContainer />
         {modal.isOpen && (
           <Modal
+            fullHeight={true}
             handleCloseIconClick={() =>
               setContentModal({ ...modal, isOpen: false })
             }

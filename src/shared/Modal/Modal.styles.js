@@ -2,7 +2,7 @@ import { styled } from "styled-components";
 
 export const ModalBackground = styled.div`
   width: 100%;
-  height: 100vh;
+  height: ${({ fullHeight }) => (fullHeight ? "100%" : "100vh")};
   left: 0;
   top: 0;
   position: absolute;
@@ -16,7 +16,7 @@ export const ModalBackground = styled.div`
 
 export const ModalContainer = styled.form`
   position: relative;
-  height: auto;
+  height: ${({ fullHeight }) => (fullHeight ? "100%" : "auto")};
   padding: 2rem;
   background-color: #fff;
   width: ${({ fullWidth }) => fullWidth && "95%"};
