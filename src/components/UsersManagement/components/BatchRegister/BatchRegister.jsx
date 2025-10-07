@@ -93,6 +93,7 @@ export default function BatchRegister() {
         let counter = 0;
         for (const [key, value] of Object.entries(user)) {
           const payloadKey = c[counter];
+          if (!payloadKey) continue;
           if (key?.toLowerCase()?.trim().includes("tel")) {
             const temp =
               value == 0 ? null : value.toString()?.trim().replaceAll("-", "");
