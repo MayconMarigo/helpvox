@@ -23,6 +23,10 @@ export const navItems = {
           title: "Intérpretes",
           url: "admin/interpretes",
         },
+        {
+          title: "Ajustes",
+          url: "admin/ajustes",
+        },
       ],
     },
     {
