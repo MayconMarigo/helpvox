@@ -697,6 +697,31 @@ const createManualCall = async (company, quantity) => {
   return dataJson;
 };
 
+const generateToken = async (companyId, userToGenerateTokenId) => {
+  const encryptedToken = await getValueFromCookies("t");
+  const token = decryptWithCypher(encryptedToken);
+
+  if (!token) throw new Error(ERROR_MESSAGES.INVALID_COOKIE);
+
+  const data = await customFetch(
+    `${BASE_API_URL}/${companyId}/token/${userToGenerateTokenId}/create`,
+    {
+      headers: {
+        ...commonHeaders,
+        authorization: `Bearer ${token}`,
+      },
+    }
+  );
+
+  if (!data.ok) return;
+
+  const dataJson = await data.json();
+
+  if (dataJson.message) throw new Error(dataJson.message);
+
+  return dataJson;
+};
+
 // const adminGetAllCompanyUsers = async (companyId) => {
 //   const encryptedToken = await getValueFromCookies("t");
 //   const token = decryptWithCypher(encryptedToken);
@@ -747,4 +772,5 @@ export const AuthenticationService = {
   getDashboardCSVInfo,
   updateCompanyRecordCall,
   createManualCall,
+  generateToken,
 };

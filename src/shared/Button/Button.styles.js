@@ -33,6 +33,7 @@ export const CustomButton = styled.button`
     `
       background-color: #fff;
       color: ${theme.colors.primary};
+      border: 1px solid #d1d5db;
 
       &:hover {
         color: #fff;
